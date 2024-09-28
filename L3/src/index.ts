@@ -4,3 +4,4 @@ const game = new Game()
 
 console.log('index')
 console.log(game)
+
