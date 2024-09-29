@@ -1,9 +1,13 @@
+
+
 export class GameBoard {
+    private numberOfSigns : number = 5
     private gameArr : string [] = []
     private gameBoard : any
     
     
-    constructor(gameArr: string[]) {
+    constructor(numberOfSigns: number, gameArr: string[]) {
+        this.numberOfSigns = numberOfSigns
         this.gameArr = gameArr
         this.gameBoard = document.getElementById('game-board')
         this.createGameBoard()
@@ -11,20 +15,33 @@ export class GameBoard {
 
     createGameBoard() {
         console.log('create')
-        for (let i = 0; i < this.gameArr.length; i++) {
-            const box = document.createElement('div')
-            box.textContent = 'box'
-            box.className = 'boxes'
-            this.gameBoard.appendChild(box)
+
+        const playerRow = document.getElementById('player-row')
+        
+        if (playerRow) {
+            for (let i = 0; i < this.numberOfSigns; i++) {
+                const playerGuess = document.createElement('div')
+                playerGuess.className = 'player-guess'
+                playerRow.appendChild(playerGuess)
+            }
+        }        
+
+        this.gameBoard.appendChild(playerRow)
+
+        const optionRow = document.getElementById('option-row')
+
+        if(optionRow) {
+            for (let i = 0; i < this.gameArr.length; i++) {
+                const option = document.createElement('div')
+                option.className = 'option'
+                optionRow.appendChild(option)
+            }
         }
+
+        this.gameBoard.appendChild(optionRow)
         const message = document.createElement('p')
         message.textContent = 'Start Game'
         this.gameBoard.appendChild(message)
 
     }
-
-
-
-
-
 }

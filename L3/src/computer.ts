@@ -1,9 +1,10 @@
-import { ComputerRow } from './computer-row';
+import { ComputerRow } from './computer-row.ts';
 
 export class Computer {
     private computerRow: string[] = []
     private numberOfSigns: number
     private answerWithFeedback: object[] = []
+    private numberOfGuesses : number = 0
 
     constructor(numberOfSigns = 5, themeArr: string[]) {
         this.numberOfSigns = numberOfSigns
@@ -40,6 +41,8 @@ export class Computer {
         else {
             result = this.answerWithFeedback
         }
+        this.numberOfGuesses ++
+        console.log(`Number of guesses: ${this.numberOfGuesses}`)
         return result
     }
 }

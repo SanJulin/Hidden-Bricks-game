@@ -1,9 +1,9 @@
-import './style.css'
-import { Computer } from './computer'
-import { GameBoard } from './game-board'
-import { Theme } from './theme'
+import '../css/styles.css'
+import { Computer } from './computer.ts'
+import { GameBoard } from './game-board.ts'
+import { Theme } from './theme.ts'
 
-export class Game {
+class Game {
   private theme: Theme
   private gameArray : string [] = []
   private computer: Computer
@@ -18,7 +18,7 @@ export class Game {
 
     this.computer = new Computer(5, this.gameArray)
 
-    this.gameBoard = new GameBoard(['sweden', 'japan', 'italy', 'norway', 'kenya', 'china', 'brazil', 'uk'])
+    this.gameBoard = new GameBoard(5, ['sweden', 'japan', 'italy', 'norway', 'kenya', 'china', 'brazil', 'uk'])
 
     console.log(this.computer)
     console.log(this.gameBoard)
@@ -49,5 +49,6 @@ export class Game {
 
 }
 
+export default Game
 
 
