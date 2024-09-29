@@ -1,13 +1,11 @@
 export class Theme {
-    private theme: string = ''
+    private theme: string = 'animals'
 
     private colors = ['red', 'blue', 'green', 'yellow', 'pink', 'black', 'white', 'purple']
 
     private animals = ['tiger', 'elefant', 'gorilla', 'whale', 'giraff', 'zebra', 'bear', 'crocodile']
 
     private flags = ['sweden', 'japan', 'italy', 'norway', 'kenya', 'china', 'brazil', 'uk']
-
-    private letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 
     private arr : string[] = []
 
@@ -37,9 +35,6 @@ export class Theme {
         }
         if (this.theme === 'flags') {
             this.arr = this.flags
-        } 
-        if (this.theme === 'letters') {
-            this.arr = this.letters
         } else {
             this.arr = this.animals
         }

@@ -1,18 +1,18 @@
-import { ComputerRow } from './computer-row.ts';
+import { ComputerRow } from './computer-row';
 
 export class Computer {
     private computerRow: string[] = []
-    private numberOfCharacters: number
+    private numberOfSigns: number
     private answerWithFeedback: object[] = []
 
-    constructor(numberOfCharacters = 5, themeArr: string[]) {
-        this.numberOfCharacters = numberOfCharacters
+    constructor(numberOfSigns = 5, themeArr: string[]) {
+        this.numberOfSigns = numberOfSigns
 
         this.computerRow = this.createComputerRow(themeArr)
     }
 
     private createComputerRow(themeArr: string[]) {
-        const computerRow = new ComputerRow(this.numberOfCharacters, themeArr)
+        const computerRow = new ComputerRow(this.numberOfSigns, themeArr)
 
         return computerRow.generateRow()
     }
@@ -20,12 +20,12 @@ export class Computer {
     public checkAnswer(answer: string[]) {
         const answerFromPlayer = answer
         console.log(`Answer from player: ${answerFromPlayer}`)
-        let correctCharacters = 0
+        let correctSigns = 0
         let result: any
         let signObject: object = { sign: String, comment: String }
         for (let i = 0; i < answerFromPlayer.length; i++) {
             if (answerFromPlayer[i] === this.computerRow[i]) {
-                correctCharacters++
+                correctSigns++
                 signObject = { sign: answerFromPlayer[i], comment: 'correct place' }
             } else if (answerFromPlayer[i] !== this.computerRow[i] && this.computerRow.includes(answerFromPlayer[i])) {
                 signObject = { sign: answerFromPlayer[i], comment: 'available, but in the wrong place' }
@@ -34,7 +34,7 @@ export class Computer {
             }
             this.answerWithFeedback.push(signObject)
         }
-        if (correctCharacters === this.numberOfCharacters) {
+        if (correctSigns === this.numberOfSigns) {
             result = 'Congratulations! You won! All the signs are in the correct place'
         }
         else {

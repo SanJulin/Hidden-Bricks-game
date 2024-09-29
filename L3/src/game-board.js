@@ -10,14 +10,12 @@ var GameBoard = /** @class */ (function () {
     }
     GameBoard.prototype.createGameBoard = function () {
         console.log('create');
-        var boxRow = document.createElement('ul');
-        boxRow.className = 'boxrow';
         for (var i = 0; i < this.gameArr.length; i++) {
             var box = document.createElement('div');
+            box.textContent = 'box';
             box.className = 'boxes';
-            boxRow.appendChild(box);
+            this.gameBoard.appendChild(box);
         }
-        this.gameBoard.appendChild(boxRow);
         var message = document.createElement('p');
         message.textContent = 'Start Game';
         this.gameBoard.appendChild(message);
