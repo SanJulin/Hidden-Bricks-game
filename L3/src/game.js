@@ -36,20 +36,22 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Game = void 0;
-require("./style.css");
+require("../css/styles.css");
 var computer_1 = require("./computer");
 var game_board_1 = require("./game-board");
 var theme_1 = require("./theme");
+/**
+ * Class that represents the game.
+ */
 var Game = /** @class */ (function () {
     function Game() {
         var _this = this;
         this.gameArray = [];
-        this.theme = new theme_1.Theme('flags');
-        this.gameArray = this.theme.getArr();
+        this.theme = new theme_1.default('flags');
+        this.gameArray = this.theme.getItemArray();
         console.log(this.gameArray);
-        this.computer = new computer_1.Computer(5, this.gameArray);
-        this.gameBoard = new game_board_1.GameBoard(['sweden', 'japan', 'italy', 'norway', 'kenya', 'china', 'brazil', 'uk']);
+        this.computer = new computer_1.default(5, this.gameArray);
+        this.gameBoard = new game_board_1.default(5, this.gameArray);
         console.log(this.computer);
         console.log(this.gameBoard);
         var answerButton = document.getElementById('answer-button');
@@ -74,7 +76,7 @@ var Game = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         console.log('in check answer method');
-                        return [4 /*yield*/, this.computer.checkAnswer(['sweden', 'japan', 'italy', 'norway', 'kenya'])];
+                        return [4 /*yield*/, this.computer.checkAnswer([{ name: 'sweden' }, { name: 'uk' }, { name: 'japan' }, { name: 'china' }, { name: 'kenya' }])];
                     case 1:
                         result = _a.sent();
                         console.log(result);
@@ -85,4 +87,4 @@ var Game = /** @class */ (function () {
     };
     return Game;
 }());
-exports.Game = Game;
+exports.default = Game;

@@ -1,24 +1,28 @@
 import '../css/styles.css'
-import { Computer } from './computer.ts'
-import { GameBoard } from './game-board.ts'
-import { Theme } from './theme.ts'
+import Computer from './computer'
+import GameBoard from './game-board'
+import Theme from './theme'
 
+/**
+ * Class that represents the game.
+ */
 class Game {
   private theme: Theme
-  private gameArray : string [] = []
-  private computer: Computer
-  private gameBoard: GameBoard
+  private gameArray : object [] = []
+  private computer: object
+  private gameBoard: object
   private answerButton?: HTMLButtonElement
 
   constructor() {
 
     this.theme = new Theme('flags')
-    this.gameArray = this.theme.getArr()
+    this.gameArray = this.theme.getItemArray()
     console.log(this.gameArray)
 
     this.computer = new Computer(5, this.gameArray)
+    console.log(this.computer)
 
-    this.gameBoard = new GameBoard(5, ['sweden', 'japan', 'italy', 'norway', 'kenya', 'china', 'brazil', 'uk'])
+    this.gameBoard = new GameBoard(5, this.gameArray)
 
     console.log(this.computer)
     console.log(this.gameBoard)
@@ -41,11 +45,10 @@ class Game {
 
   async checkAnswer() {
     console.log('in check answer method')
-    const result = await this.computer.checkAnswer(['sweden', 'japan', 'italy', 'norway', 'kenya'])
+    const result = await this.computer.checkAnswer([{name : 'sweden'}, {name : 'uk'}, {name : 'japan'}, {name : 'china'}, {name : 'kenya'}])
     console.log(result)
     return result
   }
-
 
 }
 
