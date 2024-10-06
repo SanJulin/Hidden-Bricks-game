@@ -2,21 +2,25 @@ import '../css/styles.css'
 import GameBoard from './gameboard.ts'
 import Theme from './theme.ts'
 import Computer from './computer.ts'
+import Item from './item'
 
 /**
  * Class that represents the game.
  */
 class Game {
-  private theme: Theme
-  private gameArray : object [] = []
-  private gameBoard: object
+  private theme: string = ''
+  private themeObject: Theme
+  private gameArray : Item[] = []
+  private gameBoard: GameBoard
   private answerButton?: HTMLButtonElement
 
   constructor() {
-
-    this.theme = new Theme('flags')
-    this.gameArray = this.theme.getItemArray()
-    console.log(this.gameArray)
+    this.theme = 'flags'
+    this.themeObject = new Theme(this.theme)
+    this.gameArray = this.themeObject.getItemArray()
+    for (let i = 0; i < this.gameArray.length; i++) {
+      console.log(`this gameArray: ${this.gameArray[i].getName()}`)
+    }
 
     const computer = new Computer(5, this.gameArray)
     console.log(computer)

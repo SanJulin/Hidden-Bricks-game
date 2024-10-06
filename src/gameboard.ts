@@ -1,15 +1,17 @@
+import Item from "./item"
+
 /**
  * Class that represents the game board.
  */
 class GameBoard {
     private numberOfSigns : number = 5
-    private gameArr : object [] = []
+    private gameArray : Item[]
     private gameBoard : any = ''
     
     
-    constructor(numberOfSigns: number, gameArr: object[]) {
+    constructor(numberOfSigns: number, gameArr: Item[]) {
         this.numberOfSigns = numberOfSigns
-        this.gameArr = gameArr
+        this.gameArray = gameArr
         this.gameBoard = document.getElementById('game-board')
         this.createGameBoard()
     }
@@ -32,12 +34,13 @@ class GameBoard {
         const optionRow = document.getElementById('option-row')
 
         if(optionRow) {
-            for (let i = 0; i < this.gameArr.length; i++) {
+            for (let i = 0; i < this.gameArray.length; i++) {
                 const option = document.createElement('div')
                 option.className = 'option'
+                option.textContent = `hello ${(this.gameArray[i].getName())}`
                 const img = document.createElement('img')
-                img.setAttribute('src', `/img/flags/${i}.webp`)
-                img.setAttribute('alt', `${this.gameArr[i]}`)
+                img.setAttribute('src', `../img/flags/${(this.gameArray[i].getName())}.webp`)
+                img.setAttribute('alt', `${(this.gameArray[i].getName())}`)
                 option.appendChild(img)
                 optionRow.appendChild(option)
             }

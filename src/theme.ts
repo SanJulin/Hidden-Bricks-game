@@ -6,7 +6,7 @@ import Item from './item.ts'
 class Theme {
     private theme: string = ''
     private themeArray: string[] = []
-    private itemArray: object[] = []
+    private itemArray: Item[] = []
     private availableThemes: string[] = ['flags', 'animals', 'colors', 'professions', 'movies']
 
     constructor(theme?: string) {
@@ -55,7 +55,7 @@ class Theme {
      * 
      * @returns { object [] } - an array with items.
      */
-    public getItemArray(): object[] {
+    public getItemArray(): Item[] {
         try {
             return this.itemArray
         } catch (error) {
@@ -70,7 +70,7 @@ class Theme {
      * @param theme { string } - the name of the theme
      * @param themeArray { object [] } - the array with 8 items that should be included in the itemArray.
      */
-    public setOtherTheme(theme: string, themeArray: object[]): void {
+    public setOtherTheme(theme: string, themeArray: string[]): void {
         if (themeArray.length !== 8) {
             throw Error('The themeArray must contain 8 items.')
         }
@@ -78,7 +78,8 @@ class Theme {
             throw Error('Pls provide a theme "name" for the game')
         } else {
             this.theme = theme
-            this.itemArray = themeArray
+            this.themeArray = themeArray
+            this.createItemArray()
         }
     }
 
@@ -88,7 +89,7 @@ class Theme {
     private setThemeArray(): void {
         if (this.theme !== undefined) {
             if (this.theme === 'flags') {
-                this.themeArray = ['sweden', 'japan', 'italy', 'norway', 'kenya', 'china', 'brazil', 'uk']
+                this.themeArray = ['sweden', 'japan', 'italy', 'newzealand', 'kenya', 'china', 'brazil', 'uk']
             }
             if (this.theme === 'animals') {
                 this.themeArray = ['tiger', 'elefant', 'gorilla', 'whale', 'giraff', 'zebra', 'bear', 'crocodile']
