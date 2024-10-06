@@ -1,15 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var item_1 = require("./item");
+var item_ts_1 = require("./item.ts");
 /**
  * Class that represents the theme of the game.
  */
 var Theme = /** @class */ (function () {
     function Theme(theme) {
         this.theme = '';
+        this.themeArray = [];
         this.itemArray = [];
         this.availableThemes = ['flags', 'animals', 'colors', 'professions', 'movies'];
-        this.setTheme(theme);
+        if (theme !== undefined) {
+            this.setTheme(theme);
+        }
     }
     /**
     * Gets the current theme of the game which will be used when the items are created.
@@ -55,6 +58,7 @@ var Theme = /** @class */ (function () {
         }
         catch (error) {
             console.log(error);
+            return [];
         }
     };
     /**
@@ -107,7 +111,7 @@ var Theme = /** @class */ (function () {
     Theme.prototype.createItemArray = function () {
         if (this.themeArray !== undefined) {
             for (var i = 0; i < this.themeArray.length; i++) {
-                var item = new item_1.default(i + 1, this.themeArray[i]);
+                var item = new item_ts_1.default(i + 1, this.themeArray[i]);
                 this.itemArray.push(item);
             }
         }

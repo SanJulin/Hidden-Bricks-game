@@ -1,4 +1,3 @@
-
 /**
  * Class that represents the game board.
  */
