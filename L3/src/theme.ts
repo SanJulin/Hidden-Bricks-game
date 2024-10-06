@@ -1,16 +1,18 @@
-import Item from "./item"
+import Item from './item.ts'
 
 /**
  * Class that represents the theme of the game. 
  */
 class Theme {
     private theme: string = ''
-    private themeArray: string[]
+    private themeArray: string[] = []
     private itemArray: object[] = []
     private availableThemes: string[] = ['flags', 'animals', 'colors', 'professions', 'movies']
 
     constructor(theme?: string) {
-        this.setTheme(theme)
+        if (theme !== undefined) {
+            this.setTheme(theme)
+        }
     }
 
     /**
@@ -58,6 +60,7 @@ class Theme {
             return this.itemArray
         } catch (error) {
             console.log(error)
+            return []
         }
     }
 

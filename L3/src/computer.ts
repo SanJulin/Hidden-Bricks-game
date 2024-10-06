@@ -1,4 +1,4 @@
-import  ComputerRow from './computer-row';
+import  ComputerRow from './computer-row.ts';
 
 /**
  * Class that represents the computer in the game.

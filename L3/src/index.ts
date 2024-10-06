@@ -1,4 +1,4 @@
-import Game from "./game.ts";
+import Game from './game.ts'
 
 const game = new Game()
 

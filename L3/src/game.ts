@@ -1,7 +1,7 @@
 import '../css/styles.css'
-import Computer from './computer'
-import GameBoard from './game-board'
-import Theme from './theme'
+import Computer from './computer.ts'
+import GameBoard from './game-board.ts'
+import Theme from './theme.ts'
 
 /**
  * Class that represents the game.
@@ -9,7 +9,6 @@ import Theme from './theme'
 class Game {
   private theme: Theme
   private gameArray : object [] = []
-  private computer: object
   private gameBoard: object
   private answerButton?: HTMLButtonElement
 
@@ -19,12 +18,12 @@ class Game {
     this.gameArray = this.theme.getItemArray()
     console.log(this.gameArray)
 
-    this.computer = new Computer(5, this.gameArray)
-    console.log(this.computer)
+    const computer = new Computer(5, this.gameArray)
+    console.log(computer)
 
     this.gameBoard = new GameBoard(5, this.gameArray)
 
-    console.log(this.computer)
+    console.log(computer)
     console.log(this.gameBoard)
 
     const answerButton = document.getElementById('answer-button')
@@ -37,15 +36,15 @@ class Game {
     if (this.answerButton) {
       this.answerButton.addEventListener('click', (event) => {
         event.preventDefault()
-        const result = this.checkAnswer()
+        const result = this.checkAnswer(computer)
         console.log(result)
       })
     }
   }
 
-  async checkAnswer() {
+  async checkAnswer(computer: Computer) {
     console.log('in check answer method')
-    const result = await this.computer.checkAnswer([{name : 'sweden'}, {name : 'uk'}, {name : 'japan'}, {name : 'china'}, {name : 'kenya'}])
+    const result = await computer.checkAnswer([{name : 'sweden'}, {name : 'uk'}, {name : 'japan'}, {name : 'china'}, {name : 'kenya'}])
     console.log(result)
     return result
   }
@@ -53,5 +52,4 @@ class Game {
 }
 
 export default Game
-
 
