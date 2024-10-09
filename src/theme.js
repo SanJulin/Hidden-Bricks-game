@@ -76,7 +76,8 @@ var Theme = /** @class */ (function () {
         }
         else {
             this.theme = theme;
-            this.itemArray = themeArray;
+            this.themeArray = themeArray;
+            this.createItemArray();
         }
     };
     /**
@@ -85,7 +86,7 @@ var Theme = /** @class */ (function () {
     Theme.prototype.setThemeArray = function () {
         if (this.theme !== undefined) {
             if (this.theme === 'flags') {
-                this.themeArray = ['sweden', 'japan', 'italy', 'norway', 'kenya', 'china', 'brazil', 'uk'];
+                this.themeArray = ['sweden', 'japan', 'italy', 'newzealand', 'kenya', 'china', 'brazil', 'uk'];
             }
             if (this.theme === 'animals') {
                 this.themeArray = ['tiger', 'elefant', 'gorilla', 'whale', 'giraff', 'zebra', 'bear', 'crocodile'];

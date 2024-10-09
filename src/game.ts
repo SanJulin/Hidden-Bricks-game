@@ -9,12 +9,31 @@ import Item from './item'
  */
 class Game {
   private theme: string = ''
-  private themeObject: Theme
+  private themeObject: Theme | undefined
   private gameArray : Item[] = []
-  private gameBoard: GameBoard
+  private gameBoard: GameBoard | undefined
   private answerButton?: HTMLButtonElement
 
   constructor() {
+
+    const usernameText = document.createElement('p')
+    usernameText.textContent = 'Welcome! Enter your username and click on start to start the game!'
+    const startButton = document.createElement('button')
+    startButton.textContent = 'start'
+    const inputName = document.createElement('input')
+    const startElement = document.getElementById('start')
+    startElement?.appendChild(usernameText)
+    startElement?.appendChild(startButton)
+    startElement?.appendChild(inputName)
+
+
+    startButton.addEventListener('click', (event) =>{
+      event.preventDefault()
+      this.createGame()
+    })
+  }
+
+  createGame() {
     this.theme = 'flags'
     this.themeObject = new Theme(this.theme)
     this.gameArray = this.themeObject.getItemArray()
@@ -44,6 +63,7 @@ class Game {
         console.log(result)
       })
     }
+
   }
 
   async checkAnswer(computer: Computer) {

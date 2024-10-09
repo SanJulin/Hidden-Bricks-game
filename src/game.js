@@ -46,10 +46,30 @@ var computer_ts_1 = require("./computer.ts");
 var Game = /** @class */ (function () {
     function Game() {
         var _this = this;
+        this.theme = '';
         this.gameArray = [];
-        this.theme = new theme_ts_1.default('flags');
-        this.gameArray = this.theme.getItemArray();
-        console.log(this.gameArray);
+        var usernameText = document.createElement('p');
+        usernameText.textContent = 'Welcome! Enter your username and click on start to start the game!';
+        var startButton = document.createElement('button');
+        startButton.textContent = 'start';
+        var inputName = document.createElement('input');
+        var startElement = document.getElementById('start');
+        startElement === null || startElement === void 0 ? void 0 : startElement.appendChild(usernameText);
+        startElement === null || startElement === void 0 ? void 0 : startElement.appendChild(startButton);
+        startElement === null || startElement === void 0 ? void 0 : startElement.appendChild(inputName);
+        startButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            _this.createGame();
+        });
+    }
+    Game.prototype.createGame = function () {
+        var _this = this;
+        this.theme = 'flags';
+        this.themeObject = new theme_ts_1.default(this.theme);
+        this.gameArray = this.themeObject.getItemArray();
+        for (var i = 0; i < this.gameArray.length; i++) {
+            console.log("this gameArray: ".concat(this.gameArray[i].getName()));
+        }
         var computer = new computer_ts_1.default(5, this.gameArray);
         console.log(computer);
         this.gameBoard = new gameboard_ts_1.default(5, this.gameArray);
@@ -69,7 +89,7 @@ var Game = /** @class */ (function () {
                 console.log(result);
             });
         }
-    }
+    };
     Game.prototype.checkAnswer = function (computer) {
         return __awaiter(this, void 0, void 0, function () {
             var result;
