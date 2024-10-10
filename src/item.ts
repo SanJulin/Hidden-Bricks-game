@@ -2,6 +2,9 @@
  * Class that represents one item in the game. 
  */
 class Item {
+    appendChild(chosenItem: any) {
+        throw new Error("Method not implemented.")
+    }
     private id : number = 0
     private name : string = ''
     private color: string = ''

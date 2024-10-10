@@ -60,6 +60,9 @@ var Game = /** @class */ (function () {
         startButton.addEventListener('click', function (event) {
             event.preventDefault();
             _this.createGame();
+            usernameText.textContent = '';
+            startButton.style.display = 'none';
+            inputName.style.display = 'none';
         });
     }
     Game.prototype.createGame = function () {

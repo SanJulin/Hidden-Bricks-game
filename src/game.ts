@@ -30,6 +30,9 @@ class Game {
     startButton.addEventListener('click', (event) =>{
       event.preventDefault()
       this.createGame()
+      usernameText.textContent = ''
+      startButton.style.display = 'none'
+      inputName.style.display = 'none'
     })
   }
 

@@ -8,66 +8,85 @@ class GameBoard {
     private gameArray: Item[]
     private gameBoard: any = ''
 
-
     constructor(numberOfItems: number, gameArr: Item[]) {
         this.numberOfItems = numberOfItems
         this.gameArray = gameArr
         this.gameBoard = document.getElementById('game-board')
+        this.dragstartHandler = this.dragstartHandler.bind(this)
+        this.dragoverHandler = this.dragoverHandler.bind(this)
+        this.dropHandler = this.dropHandler.bind(this)
         this.createGameBoard()
     }
 
     createGameBoard() {
         console.log('create')
-
+    
         const playerRow = document.getElementById('player-row')
-
+    
         if (playerRow) {
             for (let i = 0; i < this.numberOfItems; i++) {
-                const playerGuessItem = document.createElement('div')
-                playerGuessItem.className = 'player-guess'
-
-                playerRow.appendChild(playerGuessItem)
-
-                playerGuessItem.addEventListener('drop', (event) => {
-                    event.preventDefault()
-                    const chosenItem = event.detail
-                    this.addPlayerGuessItem(chosenItem)
-
-                })
-
+                const playerGuessBox = document.createElement('div')
+                playerGuessBox.className = 'guess'
+                playerGuessBox.id = `guess${i + 1}`
+                playerGuessBox.addEventListener('dragover', this.dragoverHandler)
+                playerGuessBox.addEventListener('drop', this.dropHandler)
+                playerRow.appendChild(playerGuessBox)
             }
-
-            this.gameBoard.appendChild(playerRow)
-
-            const optionRow = document.getElementById('option-row')
-
-            if (optionRow) {
-                for (let i = 0; i < this.gameArray.length; i++) {
-                    const option = document.createElement('div')
-                    option.className = 'option'
+        }
+    
+        this.gameBoard.appendChild(playerRow)
+    
+        const optionRow = document.getElementById('option-row')
+    
+        if (optionRow) {
+            for (let i = 0; i < this.gameArray.length; i++) {
+                const option = document.getElementById(`option${i + 1}`)
+                if (option) {
                     option.textContent = this.gameArray[i].getName()
                     const img = document.createElement('img')
                     img.setAttribute('src', `../img/flags/${(this.gameArray[i].getName())}.webp`)
                     img.setAttribute('alt', `${this.gameArray[i].getName()}`)
-
+    
                     option.appendChild(img)
-                    optionRow.appendChild(option)
+                    option.addEventListener('dragstart', this.dragstartHandler)
                 }
-                this.gameBoard.appendChild(optionRow)
-
             }
-
-
-            const message = document.createElement('p')
-            message.textContent = `Guess which ${this.numberOfItems} items that should be in the computer row by dropping the pictures in the computer row and click on check answer!`
-            this.gameBoard.appendChild(message)
-
         }
+        this.gameBoard.appendChild(optionRow)
+    
+        const message = document.createElement('p')
+        message.textContent = `Guess which ${this.numberOfItems} items that should be in the computer row by dropping the pictures in the above row and click on check answer!`
+        this.gameBoard.appendChild(message)
     }
-    addPlayerGuessItem(chosen: any) {
+    
+    updatePlayerGuessItem(playerGuessItem: any, chosen: any) {
         const chosenItem = chosen
+        playerGuessItem.appendChild(chosenItem)
         console.log('added')
     }
+
+    dragstartHandler(event: DragEvent) {
+        if (event.target instanceof HTMLElement) {
+        event.dataTransfer?.setData("text/plain", event.target.id)
+        }
+    }
+
+    dragoverHandler(event: DragEvent) {
+        event.preventDefault()
+        event.dataTransfer!.dropEffect = "copy"
+    }
+
+    dropHandler(event: DragEvent) {
+        event.preventDefault()
+        const data = event.dataTransfer!.getData("text/plain")
+        const droppedElement = document.getElementById(data)
+        if (droppedElement && event.target instanceof HTMLElement) {
+            event.target.appendChild(droppedElement)
+            console.log('dropped')
+        }
+    }
+    
 }
 
 export default GameBoard
+

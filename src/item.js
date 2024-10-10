@@ -11,6 +11,9 @@ var Item = /** @class */ (function () {
         this.setId(id);
         this.setName(name);
     }
+    Item.prototype.appendChild = function (chosenItem) {
+        throw new Error("Method not implemented.");
+    };
     /**
      * Gets the name of the current item used in the game.
      *
