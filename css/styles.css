@@ -12,7 +12,7 @@ html {
     border: black;
   }
    
-  #player-row {
+  #player-guess-row {
     background-color: cadetblue;
     border: 10px black;
     display: flex;

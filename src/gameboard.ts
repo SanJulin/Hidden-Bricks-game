@@ -7,6 +7,7 @@ class GameBoard {
     private numberOfItems: number = 5
     private gameArray: Item[]
     private gameBoard: any = ''
+    private playerGuessRow: any
 
     constructor(numberOfItems: number, gameArr: Item[]) {
         this.numberOfItems = numberOfItems
@@ -21,20 +22,30 @@ class GameBoard {
     createGameBoard() {
         console.log('create')
     
-        const playerRow = document.getElementById('player-row')
+        this.playerGuessRow = document.getElementById('player-guess-row')
     
-        if (playerRow) {
+        if (this.playerGuessRow) {
             for (let i = 0; i < this.numberOfItems; i++) {
                 const playerGuessBox = document.createElement('div')
                 playerGuessBox.className = 'guess'
                 playerGuessBox.id = `guess${i + 1}`
                 playerGuessBox.addEventListener('dragover', this.dragoverHandler)
                 playerGuessBox.addEventListener('drop', this.dropHandler)
-                playerRow.appendChild(playerGuessBox)
+                this.playerGuessRow.appendChild(playerGuessBox)
             }
         }
+
+        const clearButton = document.createElement('button')
+        clearButton.textContent = 'clear all'
+
+        clearButton.addEventListener('click', (event) => {
+            event.preventDefault()
+            this.clearPlayerGuesses()
+        })
+
+        this.playerGuessRow.appendChild(clearButton)
     
-        this.gameBoard.appendChild(playerRow)
+        this.gameBoard.appendChild(this.playerGuessRow)
     
         const optionRow = document.getElementById('option-row')
     
@@ -80,12 +91,23 @@ class GameBoard {
         event.preventDefault()
         const data = event.dataTransfer!.getData("text/plain")
         const droppedElement = document.getElementById(data)
-        if (droppedElement && event.target instanceof HTMLElement) {
-            event.target.appendChild(droppedElement)
+        const droppedElementCopy = droppedElement?.cloneNode(true)
+
+        if (droppedElementCopy && event.target instanceof HTMLElement) {
+            event.target.appendChild(droppedElementCopy)
             console.log('dropped')
         }
     }
-    
+
+    clearPlayerGuesses() {
+        for (let i = 0; i < this.playerGuessRow.children.length; i++) {
+            if (this.playerGuessRow.children[i].firstElementChild !== null) {
+                const child = this.playerGuessRow.children[i].firstElementChild
+                console.log(child)
+                this.playerGuessRow.children[i].removeChild(child)
+            }
+        }
+    }
 }
 
 export default GameBoard
