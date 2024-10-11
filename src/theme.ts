@@ -65,6 +65,20 @@ class Theme {
     }
 
     /**
+ * Gets the current array with items.
+ * 
+ * @returns { String [] } - an array with items.
+ */
+    public getThemeArray(): String[] {
+        try {
+            return this.themeArray
+        } catch (error) {
+            console.log(error)
+            return []
+        }
+    }
+
+    /**
      * Sets the theme and itemArray for other themes than the available themes included in the module. The user of the module must provide a theme name and an array that includes 8 items in order to create a themes of their choice.
      * 
      * @param theme { string } - the name of the theme

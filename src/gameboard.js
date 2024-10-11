@@ -16,19 +16,27 @@ var GameBoard = /** @class */ (function () {
         this.createGameBoard();
     }
     GameBoard.prototype.createGameBoard = function () {
+        var _this = this;
         console.log('create');
-        var playerRow = document.getElementById('player-row');
-        if (playerRow) {
+        this.playerGuessRow = document.getElementById('player-guess-row');
+        if (this.playerGuessRow) {
             for (var i = 0; i < this.numberOfItems; i++) {
                 var playerGuessBox = document.createElement('div');
                 playerGuessBox.className = 'guess';
                 playerGuessBox.id = "guess".concat(i + 1);
                 playerGuessBox.addEventListener('dragover', this.dragoverHandler);
                 playerGuessBox.addEventListener('drop', this.dropHandler);
-                playerRow.appendChild(playerGuessBox);
+                this.playerGuessRow.appendChild(playerGuessBox);
             }
         }
-        this.gameBoard.appendChild(playerRow);
+        var clearButton = document.createElement('button');
+        clearButton.textContent = 'clear all';
+        clearButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            _this.clearPlayerGuesses();
+        });
+        this.playerGuessRow.appendChild(clearButton);
+        this.gameBoard.appendChild(this.playerGuessRow);
         var optionRow = document.getElementById('option-row');
         if (optionRow) {
             for (var i = 0; i < this.gameArray.length; i++) {
@@ -67,10 +75,32 @@ var GameBoard = /** @class */ (function () {
         event.preventDefault();
         var data = event.dataTransfer.getData("text/plain");
         var droppedElement = document.getElementById(data);
-        if (droppedElement && event.target instanceof HTMLElement) {
-            event.target.appendChild(droppedElement);
+        var droppedElementCopy = droppedElement === null || droppedElement === void 0 ? void 0 : droppedElement.cloneNode(true);
+        if (droppedElementCopy && event.target instanceof HTMLElement) {
+            event.target.appendChild(droppedElementCopy);
             console.log('dropped');
         }
+    };
+    GameBoard.prototype.clearPlayerGuesses = function () {
+        for (var i = 0; i < this.playerGuessRow.children.length; i++) {
+            if (this.playerGuessRow.children[i].firstElementChild !== null) {
+                var child = this.playerGuessRow.children[i].firstElementChild;
+                console.log(child);
+                this.playerGuessRow.children[i].removeChild(child);
+            }
+        }
+    };
+    GameBoard.prototype.getPlayerAnswer = function () {
+        var answerArray = [];
+        for (var i = 0; i < this.playerGuessRow.children.length; i++) {
+            if (this.playerGuessRow.children[i].firstElementChild !== null) {
+                var answer = this.playerGuessRow.children[i].firstElementChild.textContent;
+                console.log("answer ".concat(answer));
+                answerArray.push(answer);
+            }
+        }
+        console.log(answerArray);
+        return answerArray;
     };
     return GameBoard;
 }());

@@ -108,6 +108,30 @@ class GameBoard {
             }
         }
     }
+
+    getPlayerAnswer() {
+        let answerArray : String [] = []
+        for (let i = 0; i < this.playerGuessRow.children.length; i++) {
+            if (this.playerGuessRow.children[i].firstElementChild !== null) {
+                const answer = this.playerGuessRow.children[i].firstElementChild.textContent
+                console.log(`answer ${answer}`)
+                answerArray.push(answer)
+            }
+        }
+        console.log(answerArray)
+        return answerArray
+    }
+
+    updateBorderColors(result: Item[]) {
+        console.log('in update')
+        for (let i = 0; i < this.numberOfItems; i++) {
+            const guessFromUser = document.getElementById(`guess${i + 1}`)
+            if (guessFromUser) {
+                guessFromUser.style.border = '10px solid' + result[i].getColor()
+                console.log(`result in updateB ${result[i]}`)
+            }
+        }
+    }
 }
 
 export default GameBoard

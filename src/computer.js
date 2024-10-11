@@ -5,12 +5,12 @@ var computer_row_ts_1 = require("./computer-row.ts");
  * Class that represents the computer in the game.
  */
 var Computer = /** @class */ (function () {
-    function Computer(numberOfItems, themeArray) {
+    function Computer(numberOfItems, theme) {
         this.computerRow = [];
         this.numberOfItems = 0;
         this.numberOfGuesses = 0;
         this.setNumberOfItems(numberOfItems);
-        this.createComputerRow(themeArray);
+        this.createComputerRow(theme);
     }
     /**
      * Gets the number of items that is used in the game.
@@ -42,9 +42,10 @@ var Computer = /** @class */ (function () {
      * @param themeArray { object [] } - the array with items from the chosen theme.
      * @returns
      */
-    Computer.prototype.createComputerRow = function (themeArray) {
+    Computer.prototype.createComputerRow = function (theme) {
+        console.log("theme ".concat(theme));
         if (this.numberOfItems !== undefined) {
-            var computerRow = new computer_row_ts_1.default(this.numberOfItems, themeArray);
+            var computerRow = new computer_row_ts_1.default(this.numberOfItems, theme);
             this.computerRow = computerRow.generateRow();
         }
         else {
@@ -78,32 +79,31 @@ var Computer = /** @class */ (function () {
      * @returns { object [] } - An array with objects if the user´s guess wasn´t correct.
      */
     Computer.prototype.checkAnswer = function (answer) {
+        console.log("computerrow ".concat(this.computerRow));
         if (answer.length !== this.computerRow.length) {
             throw new Error("The guess must contain ".concat(this.computerRow.length, " items."));
         }
         var answerFromPlayer = answer;
-        var answerWithFeedback = [];
         var numberOfCorrectItems = 0;
         for (var i = 0; i < answerFromPlayer.length; i++) {
-            var itemObject = { item: String, color: String };
-            if (answerFromPlayer[i] === this.computerRow[i]) {
+            if (answerFromPlayer[i].getName() === this.computerRow[i]) {
                 numberOfCorrectItems++;
-                itemObject = { item: answerFromPlayer[i], color: 'green' };
+                answerFromPlayer[i].setColor('green');
+                console.log("greenresult ".concat(answerFromPlayer[i]));
             }
-            else if (this.computerRow.includes(answerFromPlayer[i])) {
-                itemObject = { item: answerFromPlayer[i], color: 'yellow' };
+            else if (this.computerRow.includes(answerFromPlayer[i].getName())) {
+                answerFromPlayer[i].setColor('yellow');
             }
             else {
-                itemObject = { item: answerFromPlayer[i], color: 'red' };
+                answerFromPlayer[i].setColor('red');
             }
-            answerWithFeedback.push(itemObject);
         }
         this.numberOfGuesses++;
         if (numberOfCorrectItems >= this.numberOfItems) {
             return JSON.stringify('Congratulations! You made it!');
         }
         else {
-            return JSON.stringify(answerWithFeedback);
+            return JSON.stringify(answerFromPlayer);
         }
     };
     return Computer;

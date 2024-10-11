@@ -27,6 +27,7 @@ html {
     background-color: bisque;
     display: flex;
     align-items: center;
+    border: 10px solid black;
   }
   
   
@@ -44,6 +45,7 @@ html {
     cursor: pointer;
     background-color: aliceblue;
     display: block;
+    border: 10px solid black;
   }
   
   img {
@@ -57,5 +59,9 @@ html {
   }
 
   #answer-button {
+    margin: 20px;
+  }
+
+  #start button {
     margin: 20px;
   }

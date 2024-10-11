@@ -2,7 +2,7 @@ import '../css/styles.css'
 import GameBoard from './gameboard.ts'
 import Theme from './theme.ts'
 import Computer from './computer.ts'
-import Item from './item'
+import Item from './item.ts'
 
 /**
  * Class that represents the game.
@@ -10,7 +10,7 @@ import Item from './item'
 class Game {
   private theme: string = ''
   private themeObject: Theme | undefined
-  private gameArray : Item[] = []
+  private gameArray: Item[] = []
   private gameBoard: GameBoard | undefined
   private answerButton?: HTMLButtonElement
 
@@ -27,7 +27,7 @@ class Game {
     startElement?.appendChild(inputName)
 
 
-    startButton.addEventListener('click', (event) =>{
+    startButton.addEventListener('click', (event) => {
       event.preventDefault()
       this.createGame()
       usernameText.textContent = ''
@@ -44,10 +44,10 @@ class Game {
       console.log(`this gameArray: ${this.gameArray[i].getName()}`)
     }
 
-    const computer = new Computer(5, this.gameArray)
+    const computer = new Computer(3, this.theme)
     console.log(computer)
 
-    this.gameBoard = new GameBoard(5, this.gameArray)
+    this.gameBoard = new GameBoard(3, this.gameArray)
 
     console.log(computer)
     console.log(this.gameBoard)
@@ -62,8 +62,8 @@ class Game {
     if (this.answerButton) {
       this.answerButton.addEventListener('click', (event) => {
         event.preventDefault()
-        const result = this.checkAnswer(computer)
-        console.log(result)
+        this.checkAnswer(computer)
+
       })
     }
 
@@ -71,10 +71,34 @@ class Game {
 
   async checkAnswer(computer: Computer) {
     console.log('in check answer method')
-    const result = await computer.checkAnswer([{name : 'sweden'}, {name : 'uk'}, {name : 'japan'}, {name : 'china'}, {name : 'kenya'}])
-    console.log(result)
-    return result
+    if (this.gameBoard) {
+      const answer = this.gameBoard.getPlayerAnswer()
+      console.log(answer)
+      let answerCopy: Item[] = []
+      for (let i = 0; i < answer.length; i++) {
+        const item = new Item(i + 1, `${answer[i]}`)
+        console.log(`item ${item}`)
+        answerCopy.push(item)
+      }
+      console.log(`answercopy ${JSON.stringify(answerCopy)}`)
+      const result = await computer.checkAnswer(answerCopy)
+      console.log(result)
+      if (result === 'Congratulations! You made it!') {
+        const messageElement = document.getElementById('message')
+        const message = document.createElement('p')
+        message.textContent = result
+        messageElement?.appendChild(message)
+      } else {
+        console.log('not correct')
+        if (this.gameBoard) {
+          console.log('gameb')
+          this.gameBoard.updateBorderColors(result)
+        }
+      }
+
+    }
   }
+
 
 }
 

@@ -1,14 +1,16 @@
+import Theme from "./theme.ts"
+
 /**
  * Class that represents the computer row with items that the Computer is creating.  
  */
 class ComputerRow {
     private numberOfItems: number = 0
-    private itemArray: object[] = []
-    private computerRow: object[] = []
+    private computerRow: String [] = []
+    private themeArray: String [] = []
 
-    constructor(numberOfItems: number, itemArray: object[]) {
+    constructor(numberOfItems: number, theme: string) {
         this.setNumberOfItems(numberOfItems)
-        this.setItemArray(itemArray)
+        this.setItemArray(theme)
     }
 
     /**
@@ -41,11 +43,9 @@ class ComputerRow {
      * 
      * @param itemArray object [] - the array with themed items chosen for the game. 
      */
-    private setItemArray(itemArray: object[]) : void{
-        if (itemArray.length !== 8) {
-            throw new Error('The item array must contain 8 items')
-        }
-        this.itemArray = itemArray
+    private setItemArray(theme: string) : void{
+        const newTheme = new Theme(theme)
+        this.themeArray = newTheme.getThemeArray()
     }
 
     /**
@@ -53,11 +53,12 @@ class ComputerRow {
      * 
      * @returns {object [] } - A row with items. 
      */
-    public generateRow(): object[] {
+    public generateRow(): String[] {
+
         const rowLength = this.numberOfItems
         for (let i = 0; i < rowLength; i++) {
-            const nextItemIndex = Math.floor(Math.random() * this.itemArray.length)
-            const nextItem = this.itemArray[nextItemIndex]
+            const nextItemIndex = Math.floor(Math.random() * this.themeArray.length)
+            const nextItem = this.themeArray[nextItemIndex]
             this.computerRow.push(nextItem)
         }
         return this.computerRow

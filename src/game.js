@@ -40,6 +40,7 @@ require("../css/styles.css");
 var gameboard_ts_1 = require("./gameboard.ts");
 var theme_ts_1 = require("./theme.ts");
 var computer_ts_1 = require("./computer.ts");
+var item_ts_1 = require("./item.ts");
 /**
  * Class that represents the game.
  */
@@ -73,9 +74,9 @@ var Game = /** @class */ (function () {
         for (var i = 0; i < this.gameArray.length; i++) {
             console.log("this gameArray: ".concat(this.gameArray[i].getName()));
         }
-        var computer = new computer_ts_1.default(5, this.gameArray);
+        var computer = new computer_ts_1.default(3, this.theme);
         console.log(computer);
-        this.gameBoard = new gameboard_ts_1.default(5, this.gameArray);
+        this.gameBoard = new gameboard_ts_1.default(3, this.gameArray);
         console.log(computer);
         console.log(this.gameBoard);
         var answerButton = document.getElementById('answer-button');
@@ -95,16 +96,27 @@ var Game = /** @class */ (function () {
     };
     Game.prototype.checkAnswer = function (computer) {
         return __awaiter(this, void 0, void 0, function () {
-            var result;
+            var answer, answerCopy, i, item, result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         console.log('in check answer method');
-                        return [4 /*yield*/, computer.checkAnswer([{ name: 'sweden' }, { name: 'uk' }, { name: 'japan' }, { name: 'china' }, { name: 'kenya' }])];
+                        if (!this.gameBoard) return [3 /*break*/, 2];
+                        answer = this.gameBoard.getPlayerAnswer();
+                        console.log(answer);
+                        answerCopy = [];
+                        for (i = 0; i < answer.length; i++) {
+                            item = new item_ts_1.default(i + 1, "".concat(answer[i]));
+                            console.log("item ".concat(item));
+                            answerCopy.push(item);
+                        }
+                        console.log("answercopy ".concat(JSON.stringify(answerCopy)));
+                        return [4 /*yield*/, computer.checkAnswer(answerCopy)];
                     case 1:
                         result = _a.sent();
                         console.log(result);
-                        return [2 /*return*/, result];
+                        _a.label = 2;
+                    case 2: return [2 /*return*/, 'result'];
                 }
             });
         });
