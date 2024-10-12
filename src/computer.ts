@@ -104,9 +104,9 @@ class Computer {
         }
         this.numberOfGuesses ++
         if (numberOfCorrectItems >= this.numberOfItems) {
-            return JSON.stringify('Congratulations! You made it!')
+            return 'Congratulations! You made it!'
         } else {
-            return JSON.stringify(answerFromPlayer)
+            return answerFromPlayer
         }
     }
 }

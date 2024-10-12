@@ -21,9 +21,9 @@ class GameBoard {
 
     createGameBoard() {
         console.log('create')
-    
+
         this.playerGuessRow = document.getElementById('player-guess-row')
-    
+
         if (this.playerGuessRow) {
             for (let i = 0; i < this.numberOfItems; i++) {
                 const playerGuessBox = document.createElement('div')
@@ -44,11 +44,11 @@ class GameBoard {
         })
 
         this.playerGuessRow.appendChild(clearButton)
-    
+
         this.gameBoard.appendChild(this.playerGuessRow)
-    
+
         const optionRow = document.getElementById('option-row')
-    
+
         if (optionRow) {
             for (let i = 0; i < this.gameArray.length; i++) {
                 const option = document.getElementById(`option${i + 1}`)
@@ -57,19 +57,19 @@ class GameBoard {
                     const img = document.createElement('img')
                     img.setAttribute('src', `../img/flags/${(this.gameArray[i].getName())}.webp`)
                     img.setAttribute('alt', `${this.gameArray[i].getName()}`)
-    
+
                     option.appendChild(img)
                     option.addEventListener('dragstart', this.dragstartHandler)
                 }
             }
         }
         this.gameBoard.appendChild(optionRow)
-    
+
         const message = document.createElement('p')
         message.textContent = `Guess which ${this.numberOfItems} items that should be in the computer row by dropping the pictures in the above row and click on check answer!`
         this.gameBoard.appendChild(message)
     }
-    
+
     updatePlayerGuessItem(playerGuessItem: any, chosen: any) {
         const chosenItem = chosen
         playerGuessItem.appendChild(chosenItem)
@@ -78,7 +78,7 @@ class GameBoard {
 
     dragstartHandler(event: DragEvent) {
         if (event.target instanceof HTMLElement) {
-        event.dataTransfer?.setData("text/plain", event.target.id)
+            event.dataTransfer?.setData("text/plain", event.target.id)
         }
     }
 
@@ -105,12 +105,13 @@ class GameBoard {
                 const child = this.playerGuessRow.children[i].firstElementChild
                 console.log(child)
                 this.playerGuessRow.children[i].removeChild(child)
+                this.playerGuessRow.children[i].style.border = '3px solid black'
             }
         }
     }
 
     getPlayerAnswer() {
-        let answerArray : String [] = []
+        let answerArray: String[] = []
         for (let i = 0; i < this.playerGuessRow.children.length; i++) {
             if (this.playerGuessRow.children[i].firstElementChild !== null) {
                 const answer = this.playerGuessRow.children[i].firstElementChild.textContent
@@ -124,12 +125,11 @@ class GameBoard {
 
     updateBorderColors(result: Item[]) {
         console.log('in update')
-        for (let i = 0; i < this.numberOfItems; i++) {
-            const guessFromUser = document.getElementById(`guess${i + 1}`)
-            if (guessFromUser) {
-                guessFromUser.style.border = '10px solid' + result[i].getColor()
-                console.log(`result in updateB ${result[i]}`)
-            }
+        for (let i = 0; i < result.length; i++) {
+            const color = result[i].getColor()
+            console.log(color)
+
+            this.playerGuessRow.children[i].style.border = '10px solid ' + color
         }
     }
 }

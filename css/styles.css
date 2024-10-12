@@ -14,7 +14,7 @@ html {
    
   #player-guess-row {
     background-color: cadetblue;
-    border: 10px black;
+    border: 1px solid;
     display: flex;
   }
   
@@ -27,13 +27,13 @@ html {
     background-color: bisque;
     display: flex;
     align-items: center;
-    border: 10px solid black;
+    border: 3px solid;
   }
   
   
   #option-row {
     background-color: thistle;
-    border: 10px black;
+    border: 1px solid;
     display: flex;
   }
   
@@ -45,7 +45,7 @@ html {
     cursor: pointer;
     background-color: aliceblue;
     display: block;
-    border: 10px solid black;
+    border: 3px solid;
   }
   
   img {
