@@ -89,12 +89,9 @@ class Computer {
             throw new Error(`The guess must contain ${this.computerRow.length} items.`)
         } 
         const answerFromPlayer = answer
-        let numberOfCorrectItems: number = 0
 
         for (let i = 0; i < answerFromPlayer.length; i++) {
-            
             if (answerFromPlayer[i].getName() === this.computerRow[i]) {
-                numberOfCorrectItems++
                 answerFromPlayer[i].setColor('green')
                 } else if (this.computerRow.includes(answerFromPlayer[i].getName())) {
                     answerFromPlayer[i].setColor('yellow')    
@@ -103,11 +100,7 @@ class Computer {
             }
         }
         this.numberOfGuesses ++
-        if (numberOfCorrectItems >= this.numberOfItems) {
-            return 'Congratulations! You made it!'
-        } else {
-            return answerFromPlayer
-        }
+        return answerFromPlayer
     }
 }
 

@@ -8,6 +8,7 @@ class GameBoard {
     private gameArray: Item[]
     private gameBoard: any = ''
     private playerGuessRow: any
+    private optionRow: any
 
     constructor(numberOfItems: number, gameArr: Item[]) {
         this.numberOfItems = numberOfItems
@@ -47,23 +48,25 @@ class GameBoard {
 
         this.gameBoard.appendChild(this.playerGuessRow)
 
-        const optionRow = document.getElementById('option-row')
+        this.optionRow = document.getElementById('option-row')
 
-        if (optionRow) {
+        if (this.optionRow) {
             for (let i = 0; i < this.gameArray.length; i++) {
-                const option = document.getElementById(`option${i + 1}`)
-                if (option) {
-                    option.textContent = this.gameArray[i].getName()
-                    const img = document.createElement('img')
-                    img.setAttribute('src', `../img/flags/${(this.gameArray[i].getName())}.webp`)
-                    img.setAttribute('alt', `${this.gameArray[i].getName()}`)
+                const option = document.createElement(`div`)
+                option.className = 'option'
+                option.id = `option${i + 1}`
+                option.textContent = this.gameArray[i].getName()
+                option.setAttribute('draggable', 'true')
+                const img = document.createElement('img')
+                img.setAttribute('src', `../img/flags/${(this.gameArray[i].getName())}.webp`)
+                img.setAttribute('alt', `${this.gameArray[i].getName()}`)
 
-                    option.appendChild(img)
-                    option.addEventListener('dragstart', this.dragstartHandler)
-                }
+                option.appendChild(img)
+                option.addEventListener('dragstart', this.dragstartHandler)
+                this.optionRow.appendChild(option)
             }
         }
-        this.gameBoard.appendChild(optionRow)
+        this.gameBoard.appendChild(this.optionRow)
 
         const message = document.createElement('p')
         message.textContent = `Guess which ${this.numberOfItems} items that should be in the computer row by dropping the pictures in the above row and click on check answer!`
@@ -135,4 +138,3 @@ class GameBoard {
 }
 
 export default GameBoard
-
