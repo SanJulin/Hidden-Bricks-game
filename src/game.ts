@@ -41,6 +41,8 @@ class Game {
       usernameText.textContent = ''
       inputName.style.display = 'none'
       this.getUsersChoosenTheme()
+      startButton.removeEventListener
+      startButton.style.display = 'none'
     })
   }
 
@@ -48,6 +50,7 @@ class Game {
     const theme = new Theme()
     const availableThemes = theme.getAvailableThemes()
 
+    this.userMessage.textContent = 'Choose a theme for the game!'
     let themeButtons = []
     for (let i = 0; i < availableThemes.length; i++) {
       const themeButton = document.createElement('button')
@@ -62,6 +65,9 @@ class Game {
           this.themeString = theme
         }
         this.getUsersNumberOfItems()
+        for (let i = 0; i < themeButtons.length; i++) {
+          themeButtons[i].remove()
+        }
       })
     }
   }
@@ -72,12 +78,17 @@ class Game {
     this.gameElement.appendChild(numberOfItemsInput)
     const submitNumberButton = document.createElement('button')
     submitNumberButton.textContent = 'start game'
+    this.gameElement.appendChild(submitNumberButton)
 
     submitNumberButton.addEventListener('click', (event) => {
       if (numberOfItemsInput.value) {
         this.numberOfItems = parseInt(numberOfItemsInput.value)
       }
       this.createGame()
+      submitNumberButton.removeEventListener
+      submitNumberButton.style.display = 'none'
+      numberOfItemsInput.style.display = 'none'
+      this.userMessage.textContent = ''
     })
   }
 
@@ -92,6 +103,7 @@ class Game {
     this.gameBoard = new GameBoard(this.numberOfItems, this.gameArray)
     console.log(this.gameBoard)
     this.answerButton.textContent = 'check answer'
+    this.answerButton.style.display = 'block'
 
     this.answerButton.addEventListener('click', (event) => {
       event.preventDefault()
@@ -139,7 +151,7 @@ class Game {
   updateNumberOfGuesses(computer: Computer, resultElement?: HTMLElement): void {
     const numberOfGuessesElement = document.createElement('div')
     let numberOfGuesses = computer.getNumberOfGuesses()
-    numberOfGuessesElement.textContent = numberOfGuesses.toString()
+    numberOfGuessesElement.textContent = `Number of guesses used: ${numberOfGuesses.toString()}`
 
     resultElement?.appendChild(numberOfGuessesElement)
   }

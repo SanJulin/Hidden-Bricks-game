@@ -36,15 +36,24 @@ class GameBoard {
             }
         }
 
-        const clearButton = document.createElement('button')
-        clearButton.textContent = 'clear all'
+        const clearAllButton = document.createElement('button')
+        clearAllButton.textContent = 'clear all'
 
-        clearButton.addEventListener('click', (event) => {
+        clearAllButton.addEventListener('click', (event) => {
             event.preventDefault()
-            this.clearPlayerGuesses()
+            this.clearAllGuesses()
         })
 
-        this.playerGuessRow.appendChild(clearButton)
+        const clearWrongGuessesButton = document.createElement('button')
+        clearWrongGuessesButton.textContent = 'clear wrong guesses'
+
+        clearWrongGuessesButton.addEventListener('click', (event) => {
+            event.preventDefault()
+            this.clearWrongGuesses()
+        })
+
+        this.playerGuessRow.appendChild(clearAllButton)
+        this.playerGuessRow.appendChild(clearWrongGuessesButton)
 
         this.gameBoard.appendChild(this.playerGuessRow)
 
@@ -102,11 +111,20 @@ class GameBoard {
         }
     }
 
-    clearPlayerGuesses() {
+    clearAllGuesses() {
         for (let i = 0; i < this.playerGuessRow.children.length; i++) {
             if (this.playerGuessRow.children[i].firstElementChild !== null) {
                 const child = this.playerGuessRow.children[i].firstElementChild
-                console.log(child)
+                this.playerGuessRow.children[i].removeChild(child)
+                this.playerGuessRow.children[i].style.border = '3px solid black'
+            }
+        }
+    }
+
+    clearWrongGuesses() {
+        for (let i = 0; i < this.playerGuessRow.children.length; i++) {
+            if (this.playerGuessRow.children[i].firstElementChild !== null && this.playerGuessRow.children[i].style.borderColor !== 'green') {
+                const child = this.playerGuessRow.children[i].firstElementChild
                 this.playerGuessRow.children[i].removeChild(child)
                 this.playerGuessRow.children[i].style.border = '3px solid black'
             }
