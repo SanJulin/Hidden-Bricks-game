@@ -1,23 +1,32 @@
 import Item from "./item"
+import Theme from "./theme.ts"
 
 /**
  * Class that represents the game board.
  */
 class GameBoard {
     private numberOfItems: number = 5
-    private gameArray: Item[]
+    private theme: string
+    private gameArray: Item[] = []
     private gameBoard: any = ''
     private playerGuessRow: any
     private optionRow: any
 
-    constructor(numberOfItems: number, gameArr: Item[]) {
+    constructor(numberOfItems: number, theme: string) {
         this.numberOfItems = numberOfItems
-        this.gameArray = gameArr
+        this.theme = theme
         this.gameBoard = document.getElementById('game-board')
         this.dragstartHandler = this.dragstartHandler.bind(this)
         this.dragoverHandler = this.dragoverHandler.bind(this)
         this.dropHandler = this.dropHandler.bind(this)
+        this.gameArray = this.getGameArray()
         this.createGameBoard()
+    }
+
+    getGameArray() : Item [] {
+        const theme = new Theme(this.theme)
+        const themeArray = theme.getItemArray()
+        return themeArray
     }
 
     createGameBoard() {
@@ -67,7 +76,7 @@ class GameBoard {
                 option.textContent = this.gameArray[i].getName()
                 option.setAttribute('draggable', 'true')
                 const img = document.createElement('img')
-                img.setAttribute('src', `../img/flags/${(this.gameArray[i].getName())}.webp`)
+                img.setAttribute('src', `../img/${this.theme}/${(this.gameArray[i].getName())}.jpg`)
                 img.setAttribute('alt', `${this.gameArray[i].getName()}`)
 
                 option.appendChild(img)
@@ -107,7 +116,6 @@ class GameBoard {
 
         if (droppedElementCopy && event.target instanceof HTMLElement) {
             event.target.appendChild(droppedElementCopy)
-            console.log('dropped')
         }
     }
 

@@ -103,19 +103,19 @@ class Theme {
     private setThemeArray(): void {
         if (this.theme !== undefined) {
             if (this.theme === 'flags') {
-                this.themeArray = ['sweden', 'japan', 'italy', 'newzealand', 'kenya', 'china', 'brazil', 'uk']
+                this.themeArray = ['Sweden', 'Japan', 'Italy', 'New Zealand', 'Kenya', 'China', 'Brazil', 'United Kingdom']
             }
             if (this.theme === 'animals') {
                 this.themeArray = ['tiger', 'elefant', 'gorilla', 'whale', 'giraff', 'zebra', 'bear', 'crocodile']
             }
             if (this.theme === 'colors') {
-                this.themeArray = ['red', 'blue', 'green', 'yellow', 'pink', 'black', 'white', 'purple']
+                this.themeArray = ['Black', 'Blue', 'Green', 'Pink', 'Purple', 'Red', 'Turquoise', 'Yellow']
             }
             if (this.theme === 'professions') {
                 this.themeArray = ['police', 'doctor', 'pilot', 'developer', 'teacher', 'administrator', 'actor', 'chef']
             }
             if (this.theme === 'movies') {
-                this.themeArray = ['titanic', 'leon', 'matrix', 'pulp fiction', 'casablanca', 'lord of the rings', 'alive', 'the shawshank redemption']
+                this.themeArray = ['Alive', 'Casablanca', 'Leon', 'Lord of the rings', 'Matrix', 'Pulp fiction', 'The shawshank redemption', 'Titanic']
             }
         } else {
             throw new Error('There is no theme set for the game')

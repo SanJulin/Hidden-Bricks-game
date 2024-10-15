@@ -93,14 +93,9 @@ class Game {
   }
 
   createGame() {
-    this.themeObject = new Theme(this.themeString)
-    this.gameArray = this.themeObject.getItemArray()
-    for (let i = 0; i < this.gameArray.length; i++) {
-    }
-
     const computer = new Computer(this.numberOfItems, this.themeString)
 
-    this.gameBoard = new GameBoard(this.numberOfItems, this.gameArray)
+    this.gameBoard = new GameBoard(this.numberOfItems, this.themeString)
     console.log(this.gameBoard)
     this.answerButton.textContent = 'check answer'
     this.answerButton.style.display = 'block'
