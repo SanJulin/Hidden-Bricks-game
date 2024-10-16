@@ -53,7 +53,7 @@ class Theme {
     /**
      * Gets the current array with items.
      * 
-     * @returns { object [] } - an array with items.
+     * @returns { Item [] } - an array with items.
      */
     public getItemArray(): Item[] {
         try {
@@ -67,9 +67,9 @@ class Theme {
     /**
  * Gets the current array with items.
  * 
- * @returns { String [] } - an array with items.
+ * @returns { string [] } - an array with items.
  */
-    public getThemeArray(): String[] {
+    public getThemeArray(): string[] {
         try {
             return this.themeArray
         } catch (error) {
@@ -106,13 +106,13 @@ class Theme {
                 this.themeArray = ['Sweden', 'Japan', 'Italy', 'New Zealand', 'Kenya', 'China', 'Brazil', 'United Kingdom']
             }
             if (this.theme === 'animals') {
-                this.themeArray = ['tiger', 'elefant', 'gorilla', 'whale', 'giraff', 'zebra', 'bear', 'crocodile']
+                this.themeArray = ['Bear', 'Crocodile', 'Elefant', 'Giraff', 'Gorilla', 'Tiger', 'Whale', 'Zebra']
             }
             if (this.theme === 'colors') {
                 this.themeArray = ['Black', 'Blue', 'Green', 'Pink', 'Purple', 'Red', 'Turquoise', 'Yellow']
             }
             if (this.theme === 'professions') {
-                this.themeArray = ['police', 'doctor', 'pilot', 'developer', 'teacher', 'administrator', 'actor', 'chef']
+                this.themeArray = ['Actor', 'Chef', 'Developer', 'Doctor', 'Fireman', 'Pilot', 'Police', 'Teacher']
             }
             if (this.theme === 'movies') {
                 this.themeArray = ['Alive', 'Casablanca', 'Leon', 'Lord of the rings', 'Matrix', 'Pulp fiction', 'The shawshank redemption', 'Titanic']
@@ -126,7 +126,7 @@ class Theme {
     /**
      * Creates an array with items based on the provided theme array. 
      */
-    private createItemArray() {
+    private createItemArray() : void{
         if (this.themeArray !== undefined) {
             for (let i = 0; i < this.themeArray.length; i++) {
                 const item = new Item(i + 1, this.themeArray[i])

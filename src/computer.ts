@@ -5,7 +5,7 @@ import Item from './item';
  * Class that represents the computer in the game.
  */
 class Computer {
-    private computerRow: String[] = []
+    private computerRow: string[] = []
     private numberOfItems: number = 0
     private numberOfGuesses: number = 0
 
@@ -46,7 +46,6 @@ class Computer {
      * @returns 
      */
     private createComputerRow(theme: string) : void{
-        console.log(`theme ${theme}`)
         if (this.numberOfItems !== undefined) {
             const computerRow = new ComputerRow(this.numberOfItems, theme)
             this.computerRow = computerRow.generateRow()
@@ -58,9 +57,9 @@ class Computer {
     /**
      * Returns an array with the items that represent the current computer row.
      * 
-     * @returns { object [] } - an array with items
+     * @returns { string [] } - an array with items
      */
-    public getComputerRow(): String[] {
+    public getComputerRow(): string[] {
         if (this.computerRow === undefined) {
             throw new Error('The computer row has not been created yet')
         }
@@ -84,7 +83,6 @@ class Computer {
      * @returns { object [] } - An array with objects if the user´s guess wasn´t correct. 
      */
     public checkAnswer(answer: Item []): any {
-        console.log(`computerrow ${this.computerRow}`)
         if (answer.length !== this.computerRow.length ) {
             throw new Error(`The guess must contain ${this.computerRow.length} items.`)
         } 

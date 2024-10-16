@@ -6,6 +6,7 @@ html {
     margin: 20px;
     justify-content: center;
     background-color: rgb(213, 225, 228);
+    font-size: 18px;
   }
    
   #game-board {
@@ -21,15 +22,16 @@ html {
   }
   
   .guess {
-    width: 120px;
-    height: 140px;
-    margin: 15px;
+    width: 130px;
+    height: 150px;
+    margin: 10px;
     cursor: pointer;
     background-color: bisque;
     position: relative;
     display: flex;
     align-items: center;
     border: 3px solid;
+    border-radius: 5px;
   }
   
   
@@ -42,19 +44,21 @@ html {
   
   .option {
     width: 120px;
-    height: 130px;
-    padding: 3px;
+    height: 140px;
+    padding: 5px;
     cursor: pointer;
     background-color: aliceblue;
     display: block;
     border: 3px solid;
-    font-size: smaller;
+    font-size: 16px;
+    border-radius: 5px;
   }
   
   img {
     width: 100px;
     height: 100px;
     background-color: lightgreen;
+    border-radius: 10px;
   }
 
   #start {
@@ -66,10 +70,6 @@ html {
     display: none;
   }
 
-  #start button {
-    margin: 20px;
-  }
-
   h2 {
     justify-content: center;
     align-items: center;
@@ -77,4 +77,19 @@ html {
 
   .hidden {
     display: none;
+  }
+
+  button {
+    height: 30px;
+    width: auto;
+    padding: 5px;
+    margin: 10px;
+    font-size: 15px;
+    box-shadow: 10px gray;
+    border-radius: 5px;
+  }
+
+  input {
+    height: 25px;
+    border-radius: 5px;
   }

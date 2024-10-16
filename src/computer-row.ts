@@ -5,8 +5,8 @@ import Theme from "./theme.ts"
  */
 class ComputerRow {
     private numberOfItems: number = 0
-    private computerRow: String [] = []
-    private themeArray: String [] = []
+    private computerRow: string [] = []
+    private themeArray: string [] = []
 
     constructor(numberOfItems: number, theme: string) {
         this.setNumberOfItems(numberOfItems)
@@ -53,7 +53,7 @@ class ComputerRow {
      * 
      * @returns {object [] } - A row with items. 
      */
-    public generateRow(): String[] {
+    public generateRow(): string[] {
 
         const rowLength = this.numberOfItems
         for (let i = 0; i < rowLength; i++) {

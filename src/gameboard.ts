@@ -30,8 +30,6 @@ class GameBoard {
     }
 
     createGameBoard() {
-        console.log('create')
-
         this.playerGuessRow = document.getElementById('player-guess-row')
 
         if (this.playerGuessRow) {
@@ -46,7 +44,7 @@ class GameBoard {
         }
 
         const clearAllButton = document.createElement('button')
-        clearAllButton.textContent = 'clear all'
+        clearAllButton.textContent = 'Clear all'
 
         clearAllButton.addEventListener('click', (event) => {
             event.preventDefault()
@@ -54,7 +52,7 @@ class GameBoard {
         })
 
         const clearWrongGuessesButton = document.createElement('button')
-        clearWrongGuessesButton.textContent = 'clear wrong guesses'
+        clearWrongGuessesButton.textContent = 'Clear wrong guesses'
 
         clearWrongGuessesButton.addEventListener('click', (event) => {
             event.preventDefault()
@@ -74,12 +72,11 @@ class GameBoard {
                 option.className = 'option'
                 option.id = `option${i + 1}`
                 option.textContent = this.gameArray[i].getName()
-                option.setAttribute('draggable', 'true')
                 const img = document.createElement('img')
                 img.setAttribute('src', `../img/${this.theme}/${(this.gameArray[i].getName())}.jpg`)
                 img.setAttribute('alt', `${this.gameArray[i].getName()}`)
-
                 option.appendChild(img)
+                option.setAttribute('draggable', 'true')
                 option.addEventListener('dragstart', this.dragstartHandler)
                 this.optionRow.appendChild(option)
             }

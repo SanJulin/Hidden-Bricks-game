@@ -9,8 +9,6 @@ import Item from './item.ts'
  */
 class Game {
   private themeString: string = ''
-  private themeObject: Theme | undefined
-  private gameArray: Item[] = []
   private gameBoard: GameBoard | undefined
   private gameElement: HTMLElement
   private userMessage: HTMLElement
@@ -29,7 +27,7 @@ class Game {
     const usernameText = document.createElement('p')
     usernameText.textContent = 'Welcome! Enter your username and click on submit to begin!'
     const startButton = document.createElement('button')
-    startButton.textContent = 'submit'
+    startButton.textContent = 'Submit'
     const inputName = document.createElement('input')
     this.gameElement.appendChild(usernameText)
     this.gameElement.appendChild(startButton)
@@ -55,7 +53,6 @@ class Game {
     for (let i = 0; i < availableThemes.length; i++) {
       const themeButton = document.createElement('button')
       themeButton.textContent = `${availableThemes[i]}`
-      themeButton.className = 'themeButton'
       themeButtons.push(themeButton)
       this.gameElement.appendChild(themeButton)
       themeButton.addEventListener('click', (event) => {
@@ -96,7 +93,7 @@ class Game {
     const computer = new Computer(this.numberOfItems, this.themeString)
 
     this.gameBoard = new GameBoard(this.numberOfItems, this.themeString)
-    console.log(this.gameBoard)
+    
     this.answerButton.textContent = 'check answer'
     this.answerButton.style.display = 'block'
 
@@ -108,17 +105,14 @@ class Game {
 
   async checkAnswer(computer: Computer) {
 
-    console.log('in check answer method')
     if (this.gameBoard) {
       const answer = this.gameBoard.getPlayerAnswer()
-      console.log(answer)
       let answerCopy: Item[] = []
       for (let i = 0; i < answer.length; i++) {
         const item = new Item(i + 1, `${answer[i]}`)
-        console.log(`item ${item}`)
         answerCopy.push(item)
       }
-      console.log(`answercopy ${JSON.stringify(answerCopy)}`)
+
       const result = await computer.checkAnswer(answerCopy)
       console.log(result)
 
