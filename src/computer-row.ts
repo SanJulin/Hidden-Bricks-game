@@ -1,4 +1,4 @@
-import Theme from "./theme.ts"
+import Theme from './Theme.ts'
 
 /**
  * Class that represents the computer row with items that the Computer is creating.  

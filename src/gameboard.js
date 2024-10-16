@@ -1,23 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var Theme_ts_1 = require("./Theme.ts");
 /**
  * Class that represents the game board.
  */
 var GameBoard = /** @class */ (function () {
-    function GameBoard(numberOfItems, gameArr) {
+    function GameBoard(numberOfItems, theme) {
         this.numberOfItems = 5;
+        this.gameArray = [];
         this.gameBoard = '';
         this.numberOfItems = numberOfItems;
-        this.gameArray = gameArr;
+        this.theme = theme;
         this.gameBoard = document.getElementById('game-board');
         this.dragstartHandler = this.dragstartHandler.bind(this);
         this.dragoverHandler = this.dragoverHandler.bind(this);
         this.dropHandler = this.dropHandler.bind(this);
+        this.gameArray = this.getGameArray();
         this.createGameBoard();
     }
+    GameBoard.prototype.getGameArray = function () {
+        var theme = new Theme_ts_1.default(this.theme);
+        var themeArray = theme.getItemArray();
+        return themeArray;
+    };
     GameBoard.prototype.createGameBoard = function () {
         var _this = this;
-        console.log('create');
         this.playerGuessRow = document.getElementById('player-guess-row');
         if (this.playerGuessRow) {
             for (var i = 0; i < this.numberOfItems; i++) {
@@ -29,37 +36,42 @@ var GameBoard = /** @class */ (function () {
                 this.playerGuessRow.appendChild(playerGuessBox);
             }
         }
-        var clearButton = document.createElement('button');
-        clearButton.textContent = 'clear all';
-        clearButton.addEventListener('click', function (event) {
+        var clearAllButton = document.createElement('button');
+        clearAllButton.textContent = 'Clear all';
+        clearAllButton.addEventListener('click', function (event) {
             event.preventDefault();
-            _this.clearPlayerGuesses();
+            _this.clearAllGuesses();
         });
-        this.playerGuessRow.appendChild(clearButton);
+        var clearWrongGuessesButton = document.createElement('button');
+        clearWrongGuessesButton.textContent = 'Clear wrong guesses';
+        clearWrongGuessesButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            _this.clearWrongGuesses();
+        });
+        this.playerGuessRow.appendChild(clearAllButton);
+        this.playerGuessRow.appendChild(clearWrongGuessesButton);
         this.gameBoard.appendChild(this.playerGuessRow);
-        var optionRow = document.getElementById('option-row');
-        if (optionRow) {
+        this.optionRow = document.getElementById('option-row');
+        if (this.optionRow) {
             for (var i = 0; i < this.gameArray.length; i++) {
-                var option = document.getElementById("option".concat(i + 1));
-                if (option) {
-                    option.textContent = this.gameArray[i].getName();
-                    var img = document.createElement('img');
-                    img.setAttribute('src', "../img/flags/".concat((this.gameArray[i].getName()), ".webp"));
-                    img.setAttribute('alt', "".concat(this.gameArray[i].getName()));
-                    option.appendChild(img);
-                    option.addEventListener('dragstart', this.dragstartHandler);
-                }
+                var option = document.createElement("div");
+                option.className = 'option';
+                option.id = "option".concat(i + 1);
+                option.textContent = this.gameArray[i].getName();
+                var img = document.createElement('img');
+                img.setAttribute('src', "../img/".concat(this.theme, "/").concat((this.gameArray[i].getName()), ".jpg"));
+                img.setAttribute('alt', "".concat(this.gameArray[i].getName()));
+                option.appendChild(img);
+                option.setAttribute('draggable', 'true');
+                option.addEventListener('dragstart', this.dragstartHandler);
+                this.optionRow.appendChild(option);
             }
         }
-        this.gameBoard.appendChild(optionRow);
-        var message = document.createElement('p');
-        message.textContent = "Guess which ".concat(this.numberOfItems, " items that should be in the computer row by dropping the pictures in the above row and click on check answer!");
-        this.gameBoard.appendChild(message);
+        this.gameBoard.appendChild(this.optionRow);
     };
     GameBoard.prototype.updatePlayerGuessItem = function (playerGuessItem, chosen) {
         var chosenItem = chosen;
         playerGuessItem.appendChild(chosenItem);
-        console.log('added');
     };
     GameBoard.prototype.dragstartHandler = function (event) {
         var _a;
@@ -78,15 +90,23 @@ var GameBoard = /** @class */ (function () {
         var droppedElementCopy = droppedElement === null || droppedElement === void 0 ? void 0 : droppedElement.cloneNode(true);
         if (droppedElementCopy && event.target instanceof HTMLElement) {
             event.target.appendChild(droppedElementCopy);
-            console.log('dropped');
         }
     };
-    GameBoard.prototype.clearPlayerGuesses = function () {
+    GameBoard.prototype.clearAllGuesses = function () {
         for (var i = 0; i < this.playerGuessRow.children.length; i++) {
             if (this.playerGuessRow.children[i].firstElementChild !== null) {
                 var child = this.playerGuessRow.children[i].firstElementChild;
-                console.log(child);
                 this.playerGuessRow.children[i].removeChild(child);
+                this.playerGuessRow.children[i].style.border = '3px solid black';
+            }
+        }
+    };
+    GameBoard.prototype.clearWrongGuesses = function () {
+        for (var i = 0; i < this.playerGuessRow.children.length; i++) {
+            if (this.playerGuessRow.children[i].firstElementChild !== null && this.playerGuessRow.children[i].style.borderColor !== 'green') {
+                var child = this.playerGuessRow.children[i].firstElementChild;
+                this.playerGuessRow.children[i].removeChild(child);
+                this.playerGuessRow.children[i].style.border = '3px solid black';
             }
         }
     };
@@ -95,12 +115,16 @@ var GameBoard = /** @class */ (function () {
         for (var i = 0; i < this.playerGuessRow.children.length; i++) {
             if (this.playerGuessRow.children[i].firstElementChild !== null) {
                 var answer = this.playerGuessRow.children[i].firstElementChild.textContent;
-                console.log("answer ".concat(answer));
                 answerArray.push(answer);
             }
         }
-        console.log(answerArray);
         return answerArray;
+    };
+    GameBoard.prototype.updateBorderColors = function (result) {
+        for (var i = 0; i < result.length; i++) {
+            var color = result[i].getColor();
+            this.playerGuessRow.children[i].style.border = '10px solid ' + color;
+        }
     };
     return GameBoard;
 }());

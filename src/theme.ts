@@ -1,4 +1,4 @@
-import Item from './item.ts'
+import Item from './Item.ts'
 
 /**
  * Class that represents the theme of the game. 

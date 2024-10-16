@@ -11,9 +11,6 @@ var Item = /** @class */ (function () {
         this.setId(id);
         this.setName(name);
     }
-    Item.prototype.appendChild = function (chosenItem) {
-        throw new Error("Method not implemented.");
-    };
     /**
      * Gets the name of the current item used in the game.
      *
@@ -62,12 +59,7 @@ var Item = /** @class */ (function () {
      * @returns { string } - the color of the current item.
      */
     Item.prototype.getColor = function () {
-        if (this.color === undefined) {
-            throw Error('No color has been set for the item');
-        }
-        else {
-            return this.color;
-        }
+        return this.color;
     };
     /**
      * Sets the color for the current item that is used in the game, depending on if the player has put the item in the correct place (green), the wrong place (yellow) or if the item is not present in the row (red).

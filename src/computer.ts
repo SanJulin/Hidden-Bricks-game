@@ -1,5 +1,5 @@
-import  ComputerRow from './computer-row.ts';
-import Item from './item';
+import  ComputerRow from './Computer-row.ts';
+import Item from './Item.ts';
 
 /**
  * Class that represents the computer in the game.

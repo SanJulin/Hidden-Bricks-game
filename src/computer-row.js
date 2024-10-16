@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var theme_ts_1 = require("./theme.ts");
+var Theme_ts_1 = require("./Theme.ts");
 /**
  * Class that represents the computer row with items that the Computer is creating.
  */
@@ -42,7 +42,7 @@ var ComputerRow = /** @class */ (function () {
      * @param itemArray object [] - the array with themed items chosen for the game.
      */
     ComputerRow.prototype.setItemArray = function (theme) {
-        var newTheme = new theme_ts_1.default(theme);
+        var newTheme = new Theme_ts_1.default(theme);
         this.themeArray = newTheme.getThemeArray();
     };
     /**

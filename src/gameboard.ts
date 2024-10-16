@@ -1,5 +1,5 @@
-import Item from "./item"
-import Theme from "./theme.ts"
+import Item from './Item'
+import Theme from './Theme.ts'
 
 /**
  * Class that represents the game board.
@@ -82,16 +82,11 @@ class GameBoard {
             }
         }
         this.gameBoard.appendChild(this.optionRow)
-
-        const message = document.createElement('p')
-        message.textContent = `Guess which ${this.numberOfItems} items that should be in the computer row by dropping the pictures in the above row and click on check answer!`
-        this.gameBoard.appendChild(message)
     }
 
     updatePlayerGuessItem(playerGuessItem: any, chosen: any) {
         const chosenItem = chosen
         playerGuessItem.appendChild(chosenItem)
-        console.log('added')
     }
 
     dragstartHandler(event: DragEvent) {
@@ -141,20 +136,15 @@ class GameBoard {
         for (let i = 0; i < this.playerGuessRow.children.length; i++) {
             if (this.playerGuessRow.children[i].firstElementChild !== null) {
                 const answer = this.playerGuessRow.children[i].firstElementChild.textContent
-                console.log(`answer ${answer}`)
                 answerArray.push(answer)
             }
         }
-        console.log(answerArray)
         return answerArray
     }
 
     updateBorderColors(result: Item[]) {
-        console.log('in update')
         for (let i = 0; i < result.length; i++) {
             const color = result[i].getColor()
-            console.log(color)
-
             this.playerGuessRow.children[i].style.border = '10px solid ' + color
         }
     }

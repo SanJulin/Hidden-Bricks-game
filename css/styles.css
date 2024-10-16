@@ -85,11 +85,22 @@ html {
     padding: 5px;
     margin: 10px;
     font-size: 15px;
-    box-shadow: 10px gray;
+    border: 1px solid gray;
+    box-shadow: 2px 2px gray;
     border-radius: 5px;
   }
 
   input {
     height: 25px;
     border-radius: 5px;
+    box-shadow: 1px 1px gray;
+  }
+
+  #number-of-guesses {
+    margin: 40px;
+    font-weight: bold;
+  }
+
+  #result {
+    margin: 20px;
   }

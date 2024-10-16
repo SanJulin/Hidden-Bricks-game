@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var item_ts_1 = require("./item.ts");
+var Item_ts_1 = require("./Item.ts");
 /**
  * Class that represents the theme of the game.
  */
@@ -50,7 +50,7 @@ var Theme = /** @class */ (function () {
     /**
      * Gets the current array with items.
      *
-     * @returns { object [] } - an array with items.
+     * @returns { Item [] } - an array with items.
      */
     Theme.prototype.getItemArray = function () {
         try {
@@ -64,7 +64,7 @@ var Theme = /** @class */ (function () {
     /**
  * Gets the current array with items.
  *
- * @returns { String [] } - an array with items.
+ * @returns { string [] } - an array with items.
  */
     Theme.prototype.getThemeArray = function () {
         try {
@@ -100,19 +100,19 @@ var Theme = /** @class */ (function () {
     Theme.prototype.setThemeArray = function () {
         if (this.theme !== undefined) {
             if (this.theme === 'flags') {
-                this.themeArray = ['sweden', 'japan', 'italy', 'newzealand', 'kenya', 'china', 'brazil', 'uk'];
+                this.themeArray = ['Sweden', 'Japan', 'Italy', 'New Zealand', 'Kenya', 'China', 'Brazil', 'United Kingdom'];
             }
             if (this.theme === 'animals') {
-                this.themeArray = ['tiger', 'elefant', 'gorilla', 'whale', 'giraff', 'zebra', 'bear', 'crocodile'];
+                this.themeArray = ['Bear', 'Crocodile', 'Elefant', 'Giraff', 'Gorilla', 'Tiger', 'Whale', 'Zebra'];
             }
             if (this.theme === 'colors') {
-                this.themeArray = ['red', 'blue', 'green', 'yellow', 'pink', 'black', 'white', 'purple'];
+                this.themeArray = ['Black', 'Blue', 'Green', 'Pink', 'Purple', 'Red', 'Turquoise', 'Yellow'];
             }
             if (this.theme === 'professions') {
-                this.themeArray = ['police', 'doctor', 'pilot', 'developer', 'teacher', 'administrator', 'actor', 'chef'];
+                this.themeArray = ['Actor', 'Chef', 'Developer', 'Doctor', 'Fireman', 'Pilot', 'Police', 'Teacher'];
             }
             if (this.theme === 'movies') {
-                this.themeArray = ['titanic', 'leon', 'matrix', 'pulp fiction', 'casablanca', 'lord of the rings', 'alive', 'the shawshank redemption'];
+                this.themeArray = ['Alive', 'Casablanca', 'Leon', 'Lord of the rings', 'Matrix', 'Pulp fiction', 'The shawshank redemption', 'Titanic'];
             }
         }
         else {
@@ -126,7 +126,7 @@ var Theme = /** @class */ (function () {
     Theme.prototype.createItemArray = function () {
         if (this.themeArray !== undefined) {
             for (var i = 0; i < this.themeArray.length; i++) {
-                var item = new item_ts_1.default(i + 1, this.themeArray[i]);
+                var item = new Item_ts_1.default(i + 1, this.themeArray[i]);
                 this.itemArray.push(item);
             }
         }

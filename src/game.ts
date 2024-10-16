@@ -1,8 +1,8 @@
 import '../css/styles.css'
-import GameBoard from './gameboard.ts'
-import Theme from './theme.ts'
-import Computer from './computer.ts'
-import Item from './item.ts'
+import GameBoard from './Gameboard.ts'
+import Computer from './Computer.ts'
+import Item from './Item.ts'
+import GameUi from './GameUi.ts'
 
 /**
  * Class that represents the game.
@@ -10,100 +10,54 @@ import Item from './item.ts'
 class Game {
   private themeString: string = ''
   private gameBoard: GameBoard | undefined
-  private gameElement: HTMLElement
-  private userMessage: HTMLElement
+  private gameElement: HTMLElement | undefined
+  private userMessage: HTMLElement | undefined
   private answerButton: HTMLButtonElement
-  private numberOfItems: number = 3
+  private numberOfItems: number | undefined
+  private gameUi: GameUi
+  private username: string = ''
+  private computer: Computer | undefined
 
   constructor() {
     this.gameElement = document.getElementById('game') as HTMLElement
     this.userMessage = document.getElementById('user-message') as HTMLElement
     this.answerButton = document.getElementById('answer-button') as HTMLButtonElement
-
-    this.getUsername()
+    this.gameUi = new GameUi()
+    this.start()
   }
 
-  getUsername() {
-    const usernameText = document.createElement('p')
-    usernameText.textContent = 'Welcome! Enter your username and click on submit to begin!'
-    const startButton = document.createElement('button')
-    startButton.textContent = 'Submit'
-    const inputName = document.createElement('input')
-    this.gameElement.appendChild(usernameText)
-    this.gameElement.appendChild(startButton)
-    this.gameElement.appendChild(inputName)
-
-
-    startButton.addEventListener('click', (event) => {
-      event.preventDefault()
-      usernameText.textContent = ''
-      inputName.style.display = 'none'
-      this.getUsersChoosenTheme()
-      startButton.removeEventListener
-      startButton.style.display = 'none'
-    })
-  }
-
-  getUsersChoosenTheme() {
-    const theme = new Theme()
-    const availableThemes = theme.getAvailableThemes()
-
-    this.userMessage.textContent = 'Choose a theme for the game!'
-    let themeButtons = []
-    for (let i = 0; i < availableThemes.length; i++) {
-      const themeButton = document.createElement('button')
-      themeButton.textContent = `${availableThemes[i]}`
-      themeButtons.push(themeButton)
-      this.gameElement.appendChild(themeButton)
-      themeButton.addEventListener('click', (event) => {
-        event.preventDefault()
-        const theme = themeButton.textContent
-        if (theme) {
-          this.themeString = theme
-        }
-        this.getUsersNumberOfItems()
-        for (let i = 0; i < themeButtons.length; i++) {
-          themeButtons[i].remove()
-        }
-      })
+  async start() {
+    console.log('in start')
+    if (this.gameUi) {
+      this.username = await this.gameUi.getUsername()
+      console.log(`Hello ${this.username}`)
+      this.themeString = await this.gameUi.getChoosenTheme()
+      console.log(`theme ${this.themeString}`)
+      this.numberOfItems = await this.gameUi.getNumberOfItems()
+      console.log(`number of items${this.numberOfItems}`)
     }
-  }
-
-  getUsersNumberOfItems() {
-    this.userMessage.textContent = 'How many bricks would you like to play with? Choose a number between 2 and 8.'
-    const numberOfItemsInput = document.createElement('input')
-    this.gameElement.appendChild(numberOfItemsInput)
-    const submitNumberButton = document.createElement('button')
-    submitNumberButton.textContent = 'start game'
-    this.gameElement.appendChild(submitNumberButton)
-
-    submitNumberButton.addEventListener('click', (event) => {
-      if (numberOfItemsInput.value) {
-        this.numberOfItems = parseInt(numberOfItemsInput.value)
-      }
       this.createGame()
-      submitNumberButton.removeEventListener
-      submitNumberButton.style.display = 'none'
-      numberOfItemsInput.style.display = 'none'
-      this.userMessage.textContent = ''
-    })
   }
 
   createGame() {
-    const computer = new Computer(this.numberOfItems, this.themeString)
 
-    this.gameBoard = new GameBoard(this.numberOfItems, this.themeString)
+    if(this.numberOfItems && this.themeString) {
+      this.computer = new Computer(this.numberOfItems, this.themeString)
+
+      this.gameBoard = new GameBoard(this.numberOfItems, this.themeString) 
+  
+      this.gameUi.showUserInstructions(this.numberOfItems)
+    }
+      this.answerButton.textContent = 'check answer'
+      this.answerButton.style.display = 'block'
+  
+      this.answerButton.addEventListener('click', (event) => {
+          this.checkAnswer()
+      })
     
-    this.answerButton.textContent = 'check answer'
-    this.answerButton.style.display = 'block'
-
-    this.answerButton.addEventListener('click', (event) => {
-      event.preventDefault()
-      this.checkAnswer(computer)
-    })
   }
 
-  async checkAnswer(computer: Computer) {
+  async checkAnswer() {
 
     if (this.gameBoard) {
       const answer = this.gameBoard.getPlayerAnswer()
@@ -113,38 +67,35 @@ class Game {
         answerCopy.push(item)
       }
 
-      const result = await computer.checkAnswer(answerCopy)
-      console.log(result)
+      if (this.computer) {
+        const result = await this.computer.checkAnswer(answerCopy)
+        console.log(result)
 
-      const resultElement = document.getElementById('message')
-      const resultText = document.createElement('p')
-      let correctGuesses = 0
-      for (let i = 0; i < result.length; i++) {
-        if (result[i].getColor() === 'green') {
-          correctGuesses++
+        let correctGuesses = 0
+        for (let i = 0; i < result.length; i++) {
+          if (result[i].getColor() === 'green') {
+            correctGuesses++
+          }
         }
+        let resultText = ''
+        if (correctGuesses === this.numberOfItems) {
+          resultText = 'Congratulations! You made it!'
+        } else {
+          resultText = 'Wrong answer. Take a look at the frame colors and try again \n green = correct, yellow = wrong place, red = not in row'
+        }
+        this.gameUi.showMessage(resultText)
+        this.gameBoard.updateBorderColors(result)
+          this.updateNumberOfGuesses()
       }
-      if (correctGuesses === this.numberOfItems) {
-        resultText.textContent = 'Congratulations! You made it!'
-      } else {
-        resultText.textContent = 'Wrong answer. Take a look at the frame colors and try again \n green = correct, yellow = wrong place, red = not in row'
-      }
-      this.gameBoard.updateBorderColors(result)
-      resultElement?.appendChild(resultText)
-      if (resultElement) {
-        this.updateNumberOfGuesses(computer, resultElement)
-      }
+
+
     }
   }
 
-  updateNumberOfGuesses(computer: Computer, resultElement?: HTMLElement): void {
-    const numberOfGuessesElement = document.createElement('div')
-    let numberOfGuesses = computer.getNumberOfGuesses()
-    numberOfGuessesElement.textContent = `Number of guesses used: ${numberOfGuesses.toString()}`
-
-    resultElement?.appendChild(numberOfGuessesElement)
+  updateNumberOfGuesses(): void {
+      const numberOfGuesses = this.computer?.getNumberOfGuesses()
+      this.gameUi.showNumberOfGuesses(numberOfGuesses)   
   }
-
 }
 
 
