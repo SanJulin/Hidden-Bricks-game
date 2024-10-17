@@ -47,7 +47,6 @@ class GameUi {
         this.userMessageElement.appendChild(themeButton)
         themeButton.addEventListener('click', (event) => {
           const choosenTheme = themeButton.textContent
-          console.log(choosenTheme)
           for (let i = 0; i < themeButtons.length; i++) {
             themeButtons[i].remove()
           }
@@ -71,7 +70,6 @@ class GameUi {
       submitNumberButton.addEventListener('click', (event) => {
         if (numberOfItemsInput.value) {
           const numberOfItems = parseInt(numberOfItemsInput.value)
-          submitNumberButton.removeEventListener
           submitNumberButton.style.display = 'none'
           numberOfItemsInput.style.display = 'none'
           this.textMessage.textContent = ''
@@ -89,8 +87,8 @@ class GameUi {
     this.resultText.textContent = resultText
   }
 
-  showNumberOfGuesses(numberOfGuesses: number | undefined) {
-    this.numberOfGuessesElement.textContent = `Number of guesses used: \n${numberOfGuesses?.toString()} guesses`
+  showNumberOfGuesses(numberOfGuesses: number | undefined, username: string | undefined) {
+    this.numberOfGuessesElement.textContent = `Player ${username} has guessed \n${numberOfGuesses?.toString()} times.`
   }
 }
 export default GameUi

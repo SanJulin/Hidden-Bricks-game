@@ -12,6 +12,8 @@ class Theme {
     constructor(theme?: string) {
         if (theme !== undefined) {
             this.setTheme(theme)
+        } else {
+            this.theme = ''
         }
     }
 
@@ -36,8 +38,6 @@ class Theme {
         this.theme = theme
         if (this.theme !== undefined) {
             this.setThemeArray()
-        } else {
-            this.theme === ''
         }
     }
 
@@ -126,7 +126,7 @@ class Theme {
     /**
      * Creates an array with items based on the provided theme array. 
      */
-    private createItemArray() : void{
+    private createItemArray(): void {
         if (this.themeArray !== undefined) {
             for (let i = 0; i < this.themeArray.length; i++) {
                 const item = new Item(i + 1, this.themeArray[i])

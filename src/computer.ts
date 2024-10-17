@@ -86,19 +86,29 @@ class Computer {
         if (answer.length !== this.computerRow.length ) {
             throw new Error(`The guess must contain ${this.computerRow.length} items.`)
         } 
-        const answerFromPlayer = answer
 
-        for (let i = 0; i < answerFromPlayer.length; i++) {
-            if (answerFromPlayer[i].getName() === this.computerRow[i]) {
-                answerFromPlayer[i].setColor('green')
-                } else if (this.computerRow.includes(answerFromPlayer[i].getName())) {
-                    answerFromPlayer[i].setColor('yellow')    
+        const answerFromPlayer = this.addColorsToItems(answer)
+
+        this.updateNumberOfGuesses()
+        return answerFromPlayer
+    }
+
+    addColorsToItems(answer: Item []): Item[] {
+        for (let i = 0; i < answer.length; i++) {
+            if (answer[i].getName() === this.computerRow[i]) {
+                answer[i].setColor('green')
+                } else if (this.computerRow.includes(answer[i].getName())) {
+                    answer[i].setColor('yellow')    
             } else {
-                answerFromPlayer[i].setColor('red')
+                answer[i].setColor('red')
             }
         }
+        return answer
+    }
+
+    updateNumberOfGuesses() {
         this.numberOfGuesses ++
-        return answerFromPlayer
+
     }
 }
 

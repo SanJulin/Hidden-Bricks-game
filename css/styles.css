@@ -6,7 +6,12 @@ html {
     margin: 20px;
     justify-content: center;
     background-color: rgb(213, 225, 228);
-    font-size: 18px;
+    font-size: 19px;
+  }
+
+  h2 {
+    text-align: center;
+    margin: 30px;
   }
    
   #game-board {
@@ -19,6 +24,7 @@ html {
     border: 1px solid;
     display: flex;
     padding: 10px;
+    margin: 20px;
   }
   
   .guess {
@@ -40,6 +46,7 @@ html {
     border: 1px solid;
     display: flex;
     padding: 10px;
+    margin: 20px;
   }
   
   .option {
@@ -97,10 +104,17 @@ html {
   }
 
   #number-of-guesses {
-    margin: 40px;
+    margin-right: 40px;
     font-weight: bold;
+    float: right;
+    font-size: 22px;
   }
 
   #result {
+    margin: 20px;
+    font-weight: bold;
+  }
+
+  #user-message-element {
     margin: 20px;
   }
