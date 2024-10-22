@@ -129,10 +129,8 @@ class Theme {
     private createItemArray(): void {
         if (this.themeArray !== undefined) {
             for (let i = 0; i < this.themeArray.length; i++) {
-                const image = document.createElement('img')
-                image.setAttribute('src', `../img/${this.theme}/${(this.themeArray[i])}.jpg`)
-                image.setAttribute('alt', `${this.themeArray[i]}`)
-                const item = new Item(i + 1, this.themeArray[i], image)
+                const url = `../img/${this.theme}/${(this.themeArray[i])}.jpg`
+                const item = new Item(i + 1, this.themeArray[i], url)
                 this.itemArray.push(item)
             }
         } else {

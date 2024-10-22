@@ -1,7 +1,6 @@
 import '../css/styles.css'
 import GameBoard from './Gameboard.ts'
 import Computer from './Computer.ts'
-import Item from './Item.ts'
 import GameUi from './GameUi.ts'
 
 /**
@@ -59,11 +58,9 @@ class Game {
 
     if (this.gameBoard) {
       const answer = this.gameBoard.getPlayerAnswer()
-      console.log (answer)
 
       if (this.computer) {
         const result = await this.computer.checkAnswer(answer)
-        console.log(result)
 
         let correctGuesses = 0
         for (let i = 0; i < result.length; i++) {
@@ -89,7 +86,6 @@ class Game {
       this.gameUi.showNumberOfGuesses(numberOfGuesses, this.username)   
   }
 }
-
 
 export default Game
 

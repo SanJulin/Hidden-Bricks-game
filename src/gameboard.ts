@@ -1,4 +1,4 @@
-import Item from './Item'
+import Item from './Item.ts'
 import Theme from './Theme.ts'
 
 /**
@@ -140,9 +140,9 @@ class GameBoard {
         let answerArray: Item[] = []
         for (let i = 0; i < this.playerGuessRow.children.length; i++) {
             if (this.playerGuessRow.children[i].firstElementChild !== null) {
-                const answer = this.playerGuessRow.children[i].firstElementChild
-                console.log(answer)
-                answerArray.push(answer)
+                const answer = this.playerGuessRow.children[i].firstElementChild.textContent
+                const item = new Item(i, answer)
+                answerArray.push(item)
             }
         }
         return answerArray

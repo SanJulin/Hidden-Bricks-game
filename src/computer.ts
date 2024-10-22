@@ -86,7 +86,6 @@ class Computer {
         if (answer.length !== this.computerRow.length ) {
             throw new Error(`The guess must contain ${this.computerRow.length} items.`)
         } 
-
         const answerFromPlayer = this.addColorsToItems(answer)
 
         this.updateNumberOfGuesses()

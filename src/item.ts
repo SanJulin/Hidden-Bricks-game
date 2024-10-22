@@ -7,11 +7,11 @@ class Item {
     private color: string = ''
     private image: HTMLImageElement | undefined
 
-    constructor(id: number, name: string, img?: HTMLImageElement) {
+    constructor(id: number, name: string, url?: string) {
         this.setId(id)
         this.setName(name)
-        if (img) {
-            this.image = img
+        if (url) {
+            this.setImage(url)
         }
     }
 
@@ -88,6 +88,13 @@ class Item {
         if (this.image) {
             return this.image
         }
+    }
+
+    public setImage(url: string) { 
+        const image = document.createElement('img')
+        image.setAttribute('src', url)
+        image.setAttribute('alt', this.name)
+        this.image = image
     }
 }
 
