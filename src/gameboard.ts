@@ -8,14 +8,12 @@ class GameBoard {
     private numberOfItems: number = 5
     private theme: string
     private gameArray: Item[] = []
-    private gameBoard: any = ''
     private playerGuessRow: any
     private optionRow: HTMLDivElement
 
     constructor(numberOfItems: number, theme: string) {
         this.numberOfItems = numberOfItems
         this.theme = theme
-        this.gameBoard = document.getElementById('game-board')
         this.dragstartHandler = this.dragstartHandler.bind(this)
         this.dragoverHandler = this.dragoverHandler.bind(this)
         this.dropHandler = this.dropHandler.bind(this)
@@ -32,7 +30,14 @@ class GameBoard {
     }
 
     createGameBoard() {
+        this.createPlayerGuessRow()
+        this.createOptionRow()
 
+        this.createClearAllButton()
+        this.createClearWrongButton()
+    }
+
+    createPlayerGuessRow() {
         for (let i = 0; i < this.numberOfItems; i++) {
             const playerGuessBox = document.createElement('div')
             playerGuessBox.className = 'guess'
@@ -40,9 +45,26 @@ class GameBoard {
             playerGuessBox.addEventListener('dragover', this.dragoverHandler)
             playerGuessBox.addEventListener('drop', this.dropHandler)
             this.playerGuessRow.appendChild(playerGuessBox)
-
         }
+    }
 
+    createOptionRow() {
+        for (let i = 0; i < this.gameArray.length; i++) {
+            const option = document.createElement(`div`)
+            option.className = 'option'
+            option.id = `option${this.gameArray[i].getId()}`
+            option.textContent = this.gameArray[i].getName()
+            const image = this.gameArray[i].getImage()
+            if (image) {
+                option.appendChild(image)
+            }
+            option.setAttribute('draggable', 'true')
+            option.addEventListener('dragstart', this.dragstartHandler)
+            this.optionRow.appendChild(option)
+        }
+    }
+
+    createClearAllButton() {
         const clearAllButton = document.createElement('button')
         clearAllButton.textContent = 'clear all'
 
@@ -50,7 +72,10 @@ class GameBoard {
             event.preventDefault()
             this.clearAllGuesses()
         })
+        this.playerGuessRow.appendChild(clearAllButton)
+    }
 
+    createClearWrongButton() {
         const clearWrongGuessesButton = document.createElement('button')
         clearWrongGuessesButton.textContent = 'clear wrong guesses'
 
@@ -58,32 +83,9 @@ class GameBoard {
             event.preventDefault()
             this.clearWrongGuesses()
         })
-
-        this.playerGuessRow.appendChild(clearAllButton)
         this.playerGuessRow.appendChild(clearWrongGuessesButton)
-
-        this.createOptionRow()
-
-
     }
 
-    createOptionRow() {
-        if (this.optionRow) {
-            for (let i = 0; i < this.gameArray.length; i++) {
-                const option = document.createElement(`div`)
-                option.className = 'option'
-                option.id = `option${i + 1}`
-                option.textContent = this.gameArray[i].getName()
-                const img = document.createElement('img')
-                img.setAttribute('src', `../img/${this.theme}/${(this.gameArray[i].getName())}.jpg`)
-                img.setAttribute('alt', `${this.gameArray[i].getName()}`)
-                option.appendChild(img)
-                option.setAttribute('draggable', 'true')
-                option.addEventListener('dragstart', this.dragstartHandler)
-                this.optionRow.appendChild(option)
-            }
-        }
-    }
 
     updatePlayerGuessItem(playerGuessItem: any, chosen: any) {
         const chosenItem = chosen
@@ -124,7 +126,6 @@ class GameBoard {
         for (let i = 0; i < this.playerGuessRow.children.length; i++) {
             if (this.playerGuessRow.children[i].firstElementChild !== null && this.playerGuessRow.children[i].style.borderColor !== 'green') {
                 this.updatePlayersGuessBorders(i)
-
             }
         }
     }
@@ -136,10 +137,11 @@ class GameBoard {
     }
 
     getPlayerAnswer() {
-        let answerArray: String[] = []
+        let answerArray: Item[] = []
         for (let i = 0; i < this.playerGuessRow.children.length; i++) {
             if (this.playerGuessRow.children[i].firstElementChild !== null) {
-                const answer = this.playerGuessRow.children[i].firstElementChild.textContent
+                const answer = this.playerGuessRow.children[i].firstElementChild
+                console.log(answer)
                 answerArray.push(answer)
             }
         }

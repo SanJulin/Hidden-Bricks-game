@@ -13,12 +13,7 @@ html {
     text-align: center;
     margin: 30px;
   }
-   
-  #game-board {
-    display: block;
-    border: black;
-  }
-   
+     
   #player-guess-row {
     background-color: cadetblue;
     border: 1px solid;

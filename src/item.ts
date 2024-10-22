@@ -5,10 +5,14 @@ class Item {
     private id: number = 0
     private name: string = ''
     private color: string = ''
+    private image: HTMLImageElement | undefined
 
-    constructor(id: number, name: string) {
+    constructor(id: number, name: string, img?: HTMLImageElement) {
         this.setId(id)
         this.setName(name)
+        if (img) {
+            this.image = img
+        }
     }
 
     /**
@@ -74,6 +78,15 @@ class Item {
             this.color = color
         } else {
             throw new Error('Only green, yellow and red are valid colors')
+        }
+    }
+
+    /**
+     *  
+     */
+    public getImage(): HTMLImageElement | undefined {
+        if (this.image) {
+            return this.image
         }
     }
 }

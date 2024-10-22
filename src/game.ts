@@ -59,14 +59,11 @@ class Game {
 
     if (this.gameBoard) {
       const answer = this.gameBoard.getPlayerAnswer()
-      let answerCopy: Item[] = []
-      for (let i = 0; i < answer.length; i++) {
-        const item = new Item(i + 1, `${answer[i]}`)
-        answerCopy.push(item)
-      }
+      console.log (answer)
 
       if (this.computer) {
-        const result = await this.computer.checkAnswer(answerCopy)
+        const result = await this.computer.checkAnswer(answer)
+        console.log(result)
 
         let correctGuesses = 0
         for (let i = 0; i < result.length; i++) {
