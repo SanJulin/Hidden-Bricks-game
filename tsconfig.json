@@ -9,17 +9,17 @@
     "skipLibCheck": true,
     "noEmit": true,
     "baseUrl": "./",
-    "paths": {
-      "@components/*": ["src/*"],
-      "@items/*": ["src/*"],
-      "@themes/*": ["src/*"],
-      "@computers/*": ["src/*"],
-      "@computerrows/*": ["src/*"],
-      "@games/*": ["src/*"],
-      "@index/*": ["src/*"],
-      "@gameuis/*": ["src/*"],
-      "@gameboards/*": ["src/*"]
-    }
+"paths": {
+  "@items/*": ["src/*"],
+  "@themes/*": ["src/*"],
+  "@computers/*": ["src/*"],
+  "@computerrows/*": ["src/*"],
+  "@games/*": ["src/*"],
+  "@index/*": ["src/*"],
+  "@gameuis/*": ["src/*"],
+  "@gameboards/*": ["src/*"]
+}
+
   },
   "include": ["src/**/*"]
 }

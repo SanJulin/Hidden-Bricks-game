@@ -1,4 +1,4 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Game_ts_1 = require("./Game.ts");
-var game = new Game_ts_1.default();
+var Game_1 = require("./Game");
+var game = new Game_1.default();

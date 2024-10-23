@@ -37,18 +37,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 require("../css/styles.css");
-var Gameboard_ts_1 = require("./Gameboard.ts");
-var Computer_ts_1 = require("./Computer.ts");
-var GameUi_ts_1 = require("./GameUi.ts");
-var Theme_ts_1 = require("./Theme.ts");
+var Gameboard_1 = require("./Gameboard");
+var Computer_1 = require("./Computer");
+var GameUi_1 = require("./GameUi");
+var Theme_1 = require("./Theme");
 /**
  * Class that represents the game.
  */
 var Game = /** @class */ (function () {
     function Game() {
         this.themeDescription = '';
-        this.gameUi = new GameUi_ts_1.default();
-        this.themeObject = new Theme_ts_1.default();
+        this.gameUi = new GameUi_1.default();
+        this.themeObject = new Theme_1.default();
         this.answerButton = document.getElementById('answer-button');
         this.start();
     }
@@ -80,8 +80,8 @@ var Game = /** @class */ (function () {
     Game.prototype.createGame = function () {
         if (this.numberOfItems && this.themeDescription) {
             this.themeObject.setTheme(this.themeDescription);
-            this.computer = new Computer_ts_1.default(this.numberOfItems, this.themeDescription);
-            this.gameBoard = new Gameboard_ts_1.default(this.numberOfItems, this.themeObject);
+            this.computer = new Computer_1.default(this.numberOfItems, this.themeDescription);
+            this.gameBoard = new Gameboard_1.default(this.numberOfItems, this.themeObject);
             this.gameUi.showUserInstructions(this.numberOfItems);
             this.addAnswerButton();
         }

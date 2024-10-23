@@ -5,7 +5,14 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@components': '/src/components',
+      '@items': '/src',
+      '@themes': '/src',
+      '@computers': '/src/',
+      '@computerrows': '/src/',
+      '@games': '/src',
+      '@index': '/src/',
+      '@gameuis': '/src/',
+      '@gameboards': '/src/'
     },
   },
 });
