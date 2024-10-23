@@ -2,24 +2,25 @@
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "target": "ES2022",
-    "module": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "lib": ["ES2020", "dom"],
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "noEmit": true,
     "baseUrl": "./",
-"paths": {
-  "@items/*": ["src/*"],
-  "@themes/*": ["src/*"],
-  "@computers/*": ["src/*"],
-  "@computerrows/*": ["src/*"],
-  "@games/*": ["src/*"],
-  "@index/*": ["src/*"],
-  "@gameuis/*": ["src/*"],
-  "@gameboards/*": ["src/*"]
-}
-
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@items/*": ["src/items/*"],
+      "@themes/*": ["src/themes/*"],
+      "@computers/*": ["src/computers/*"],
+      "@computerrows/*": ["src/computerrows/*"],
+      "@games/*": ["src/games/*"],
+      "@index/*": ["src/index/*"],
+      "@gameuis/*": ["src/gameuis/*"],
+      "@gameboards/*": ["src/gameboards/*"]
+    }
   },
   "include": ["src/**/*"]
 }
