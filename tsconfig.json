@@ -2,7 +2,8 @@
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "target": "ES2022",
-    "module": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
     "lib": ["ES2020", "dom"],
     "strict": true,
     "esModuleInterop": true,

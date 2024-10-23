@@ -2,7 +2,7 @@
   "name": "l3",
   "private": true,
   "version": "1.0.0",
-  "type": "module",
+  "type": "NodeNext",
   "main": "index.js",
   "scripts": {
     "dev": "tsc && vite",
