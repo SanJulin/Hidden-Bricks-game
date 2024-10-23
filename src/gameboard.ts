@@ -1,5 +1,5 @@
-import Item from './Item.ts'
-import Theme from './Theme.ts'
+import Item from './item.ts'
+import Theme from './theme.ts'
 
 /**
  * Class that represents the game board.

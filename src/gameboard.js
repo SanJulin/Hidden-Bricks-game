@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Item_ts_1 = require("./Item.ts");
+var item_ts_1 = require("./item.ts");
 /**
  * Class that represents the game board.
  */
@@ -115,7 +115,7 @@ var GameBoard = /** @class */ (function () {
         var answerArray = [];
         for (var i = 0; i < this.numberOfItems; i++) {
             var answer = (_a = this.playerGuessRow.children[i].firstElementChild) === null || _a === void 0 ? void 0 : _a.textContent;
-            var item = new Item_ts_1.default(i, answer);
+            var item = new item_ts_1.default(i, answer);
             answerArray.push(item);
         }
         return answerArray;

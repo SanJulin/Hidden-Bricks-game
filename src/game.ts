@@ -1,8 +1,8 @@
 import '../css/styles.css'
-import GameBoard from './Gameboard.ts'
-import Computer from './Computer.ts'
-import GameUi from './GameUi.ts'
-import Theme from './Theme.ts'
+import GameBoard from './gameboard.ts'
+import Computer from './computer.ts'
+import GameUi from './gameUi.ts'
+import Theme from './theme.ts'
 
 /**
  * Class that represents the game.
