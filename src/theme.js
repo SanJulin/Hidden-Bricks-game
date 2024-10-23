@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Item_1 = require("./Item");
+var Item_ts_1 = require("./Item.ts");
 /**
  * Class that represents the theme of the game.
  */
@@ -127,7 +127,7 @@ var Theme = /** @class */ (function () {
         if (this.themeArray) {
             for (var i = 0; i < this.themeArray.length; i++) {
                 var url = "../img/".concat(this.theme, "/").concat((this.themeArray[i]), ".jpg");
-                var item = new Item_1.default(i + 1, this.themeArray[i], url);
+                var item = new Item_ts_1.default(i + 1, this.themeArray[i], url);
                 this.itemArray.push(item);
             }
         }
