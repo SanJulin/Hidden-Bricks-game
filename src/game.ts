@@ -2,37 +2,44 @@ import '../css/styles.css'
 import GameBoard from './Gameboard.ts'
 import Computer from './Computer.ts'
 import GameUi from './GameUi.ts'
+import Theme from './Theme.ts'
 
 /**
  * Class that represents the game.
  */
 class Game {
-  private themeString: string = ''
+  private themeDescription: string = ''
+  private themeObject: Theme 
   private gameBoard: GameBoard | undefined
   private answerButton: HTMLButtonElement
   private numberOfItems: number | undefined
-  private gameUi: GameUi = new GameUi()
+  private gameUi: GameUi
   private username?: string
   private computer: Computer | undefined
 
   constructor() {
+    this.gameUi = new GameUi()
+    this.themeObject = new Theme()
     this.answerButton = document.getElementById('answer-button') as HTMLButtonElement
+    
     this.start()
   }
 
   async start() {
     this.username = await this.gameUi.getUsername()
-    this.themeString = await this.gameUi.getChoosenTheme()
+    const availableThemes = this.themeObject.getAvailableThemes()
+    this.themeDescription = await this.gameUi.getChoosenTheme(availableThemes)
     this.numberOfItems = await this.gameUi.getNumberOfItems()
     this.createGame()
   }
 
   createGame() {
 
-    if (this.numberOfItems && this.themeString) {
-      this.computer = new Computer(this.numberOfItems, this.themeString)
+    if (this.numberOfItems && this.themeDescription) {
+      this.themeObject.setTheme(this.themeDescription)
+      this.computer = new Computer(this.numberOfItems, this.themeDescription)
 
-      this.gameBoard = new GameBoard(this.numberOfItems, this.themeString)
+      this.gameBoard = new GameBoard(this.numberOfItems, this.themeObject)
 
       this.gameUi.showUserInstructions(this.numberOfItems)
       this.addAnswerButton()

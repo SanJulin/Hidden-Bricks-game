@@ -1,5 +1,3 @@
-import Theme from './Theme.ts'
-
 class GameUi {
   private textMessage: HTMLElement
   private userMessageElement: HTMLDivElement
@@ -32,11 +30,8 @@ class GameUi {
     })
   }
 
-  getChoosenTheme(): Promise<string> {
+  getChoosenTheme(availableThemes : string []): Promise<string> {
     return new Promise((resolve) => {
-      const theme = new Theme()
-      const availableThemes = theme.getAvailableThemes()
-
       this.textMessage.textContent = 'Choose a theme for the game!'
       let themeButtons = []
       for (let i = 0; i < availableThemes.length; i++) {

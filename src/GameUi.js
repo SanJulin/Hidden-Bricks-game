@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Theme_ts_1 = require("./Theme.ts");
 var GameUi = /** @class */ (function () {
     function GameUi() {
         this.textMessage = document.getElementById('text-message');
@@ -11,7 +10,6 @@ var GameUi = /** @class */ (function () {
     GameUi.prototype.getUsername = function () {
         var _this = this;
         return new Promise(function (resolve) {
-            console.log(('in username'));
             var inputName = document.createElement('input');
             var startButton = document.createElement('button');
             startButton.textContent = 'Submit';
@@ -28,11 +26,9 @@ var GameUi = /** @class */ (function () {
             });
         });
     };
-    GameUi.prototype.getChoosenTheme = function () {
+    GameUi.prototype.getChoosenTheme = function (availableThemes) {
         var _this = this;
         return new Promise(function (resolve) {
-            var theme = new Theme_ts_1.default();
-            var availableThemes = theme.getAvailableThemes();
             _this.textMessage.textContent = 'Choose a theme for the game!';
             var themeButtons = [];
             var _loop_1 = function (i) {

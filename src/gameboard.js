@@ -1,29 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Item_ts_1 = require("./Item.ts");
-var Theme_ts_1 = require("./Theme.ts");
 /**
  * Class that represents the game board.
  */
 var GameBoard = /** @class */ (function () {
-    function GameBoard(numberOfItems, theme) {
+    function GameBoard(numberOfItems, themeObject) {
         this.numberOfItems = 5;
-        this.gameArray = [];
+        this.optionArray = [];
         this.numberOfItems = numberOfItems;
-        this.theme = theme;
+        this.theme = themeObject;
+        this.optionArray = this.theme.getItemArray();
+        this.playerGuessRow = document.getElementById('player-guess-row');
+        this.optionRow = document.getElementById('option-row');
         this.dragstartHandler = this.dragstartHandler.bind(this);
         this.dragoverHandler = this.dragoverHandler.bind(this);
         this.dropHandler = this.dropHandler.bind(this);
-        this.gameArray = this.getGameArray();
-        this.playerGuessRow = document.getElementById('player-guess-row');
-        this.optionRow = document.getElementById('option-row');
         this.createGameBoard();
     }
-    GameBoard.prototype.getGameArray = function () {
-        var theme = new Theme_ts_1.default(this.theme);
-        var itemArray = theme.getItemArray();
-        return itemArray;
-    };
     GameBoard.prototype.createGameBoard = function () {
         this.createPlayerGuessRow();
         this.createOptionRow();
@@ -41,12 +35,12 @@ var GameBoard = /** @class */ (function () {
         }
     };
     GameBoard.prototype.createOptionRow = function () {
-        for (var i = 0; i < this.gameArray.length; i++) {
+        for (var i = 0; i < this.optionArray.length; i++) {
             var option = document.createElement("div");
             option.className = 'option';
-            option.id = "option".concat(this.gameArray[i].getId());
-            option.textContent = this.gameArray[i].getName();
-            var image = this.gameArray[i].getImage();
+            option.id = "option".concat(this.optionArray[i].getId());
+            option.textContent = this.optionArray[i].getName();
+            var image = this.optionArray[i].getImage();
             if (image) {
                 option.appendChild(image);
             }
@@ -96,7 +90,7 @@ var GameBoard = /** @class */ (function () {
         var data = event.dataTransfer.getData("text/plain");
         var droppedElement = document.getElementById(data);
         var droppedElementCopy = droppedElement === null || droppedElement === void 0 ? void 0 : droppedElement.cloneNode(true);
-        if (droppedElementCopy && event.target instanceof HTMLElement) {
+        if (droppedElementCopy && event.target instanceof HTMLElement && event.target.children.length === 0) {
             event.target.appendChild(droppedElementCopy);
         }
     };
@@ -104,15 +98,15 @@ var GameBoard = /** @class */ (function () {
         for (var i = 0; i < this.playerGuessRow.children.length; i++) {
             var element = this.playerGuessRow.children[i];
             var elementChild = this.playerGuessRow.children[i].firstElementChild;
-            if (element && elementChild && clearingType === 'wrong') {
-                if (elementChild.style.borderColor !== 'green') {
+            if (element && elementChild) {
+                if (clearingType === 'wrong' && element.style.borderColor !== 'green') {
                     element.removeChild(elementChild);
                     element.style.border = '3px solid black';
                 }
-            }
-            else if (clearingType === 'all') {
-                element.removeChild(elementChild);
-                element.style.border = '3px solid black';
+                else if (clearingType === 'all') {
+                    element.removeChild(elementChild);
+                    element.style.border = '3px solid black';
+                }
             }
         }
     };

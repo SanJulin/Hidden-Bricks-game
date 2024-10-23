@@ -6,37 +6,10 @@ import Item from './Item.ts';
  */
 class Computer {
     private computerRow: string[] = []
-    private numberOfItems: number = 0
     private numberOfGuesses: number = 0
 
-    constructor(numberOfItems: number, theme: string) {
-        this.setNumberOfItems(numberOfItems)
-        this.createComputerRow(theme)
-    }
-
-    /**
-     * Gets the number of items that is used in the game. 
-     * 
-     * @returns { number } - number of items used in the game.
-     */
-    public getNumberOfItems(): number {
-        if (this.numberOfItems === null) {
-            throw Error('Number of items has not been set')
-        }
-        return this.numberOfItems
-    }
-
-    /**
-    * Sets the number of items that should be included in the computer row. 
-    * 
-    * @param numberOfItems { number } - number of items that should be used in the game.
-    */
-    public setNumberOfItems(numberOfItems: number): void {
-        if (numberOfItems < 1 || numberOfItems > 8) {
-            throw new Error('Pls provide a valid number between 1-8')
-        } else {
-            this.numberOfItems = numberOfItems
-        }
+    constructor(numberOfItems: number, themeDescription: string) {
+        this.createComputerRow(numberOfItems, themeDescription)
     }
 
     /**
@@ -45,13 +18,9 @@ class Computer {
      * @param themeArray { object [] } - the array with items from the chosen theme. 
      * @returns 
      */
-    private createComputerRow(theme: string): void {
-        if (this.numberOfItems !== undefined) {
-            const computerRow = new ComputerRow(this.numberOfItems, theme)
+    private createComputerRow(numberOfItems: number, themeDescription: string): void {
+            const computerRow = new ComputerRow(numberOfItems, themeDescription)
             this.computerRow = computerRow.generateRow()
-        } else {
-            throw Error('Number of items has not been set yet')
-        }
     }
 
     /**

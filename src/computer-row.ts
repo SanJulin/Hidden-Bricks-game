@@ -8,9 +8,9 @@ class ComputerRow {
     private computerRow: string[] = []
     private themeArray: string[] = []
 
-    constructor(numberOfItems: number, theme: string) {
+    constructor(numberOfItems: number, themeDecription: string) {
         this.setNumberOfItems(numberOfItems)
-        this.setItemArray(theme)
+        this.getThemeArray(themeDecription)
     }
 
     /**
@@ -41,25 +41,24 @@ class ComputerRow {
     /**
      * Sets the itemArray if there are 8 items in the provided array.
      * 
-     * @param itemArray object [] - the array with themed items chosen for the game. 
+     * @param themeArray object [] - the array with themed items chosen for the game. 
      */
-    private setItemArray(theme: string): void {
-        const newTheme = new Theme(theme)
-        this.themeArray = newTheme.getThemeArray()
+    private getThemeArray(themeDecription: string): void {
+        const theme = new Theme(themeDecription)
+        this.themeArray = theme.getThemeArray()
     }
 
     /**
      * Creates a random row based on the itemArray and returns it to the computer. 
      * 
-     * @returns {object [] } - A row with items. 
+     * @returns {string [] } - A row with items. 
      */
     public generateRow(): string[] {
-
         const rowLength = this.numberOfItems
         for (let i = 0; i < rowLength; i++) {
             const nextItemIndex = Math.floor(Math.random() * this.themeArray.length)
-            const nextItem = this.themeArray[nextItemIndex]
-            this.computerRow.push(nextItem)
+            const themeItem = this.themeArray[nextItemIndex]
+            this.computerRow.push(themeItem)
         }
         return this.computerRow
     }

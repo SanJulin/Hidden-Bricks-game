@@ -40,38 +40,37 @@ require("../css/styles.css");
 var Gameboard_ts_1 = require("./Gameboard.ts");
 var Computer_ts_1 = require("./Computer.ts");
 var GameUi_ts_1 = require("./GameUi.ts");
+var Theme_ts_1 = require("./Theme.ts");
 /**
  * Class that represents the game.
  */
 var Game = /** @class */ (function () {
     function Game() {
-        this.themeString = '';
-        this.answerButton = document.getElementById('answer-button');
+        this.themeDescription = '';
         this.gameUi = new GameUi_ts_1.default();
+        this.themeObject = new Theme_ts_1.default();
+        this.answerButton = document.getElementById('answer-button');
         this.start();
     }
     Game.prototype.start = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, _b, _c;
+            var _a, availableThemes, _b, _c;
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
-                        console.log('in start');
-                        if (!this.gameUi) return [3 /*break*/, 4];
                         _a = this;
                         return [4 /*yield*/, this.gameUi.getUsername()];
                     case 1:
                         _a.username = _d.sent();
+                        availableThemes = this.themeObject.getAvailableThemes();
                         _b = this;
-                        return [4 /*yield*/, this.gameUi.getChoosenTheme()];
+                        return [4 /*yield*/, this.gameUi.getChoosenTheme(availableThemes)];
                     case 2:
-                        _b.themeString = _d.sent();
+                        _b.themeDescription = _d.sent();
                         _c = this;
                         return [4 /*yield*/, this.gameUi.getNumberOfItems()];
                     case 3:
                         _c.numberOfItems = _d.sent();
-                        _d.label = 4;
-                    case 4:
                         this.createGame();
                         return [2 /*return*/];
                 }
@@ -79,9 +78,10 @@ var Game = /** @class */ (function () {
         });
     };
     Game.prototype.createGame = function () {
-        if (this.numberOfItems && this.themeString) {
-            this.computer = new Computer_ts_1.default(this.numberOfItems, this.themeString);
-            this.gameBoard = new Gameboard_ts_1.default(this.numberOfItems, this.themeString);
+        if (this.numberOfItems && this.themeDescription) {
+            this.themeObject.setTheme(this.themeDescription);
+            this.computer = new Computer_ts_1.default(this.numberOfItems, this.themeDescription);
+            this.gameBoard = new Gameboard_ts_1.default(this.numberOfItems, this.themeObject);
             this.gameUi.showUserInstructions(this.numberOfItems);
             this.addAnswerButton();
         }
@@ -96,17 +96,20 @@ var Game = /** @class */ (function () {
     };
     Game.prototype.checkAnswer = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var answer, result, correctGuesses, i, resultText;
+            var answer, resultArray, correctGuesses, i, resultIndex, color, resultText;
             return __generator(this, function (_a) {
                 if (this.gameBoard) {
                     answer = this.gameBoard.getPlayerAnswer();
                     if (this.computer) {
-                        result = this.computer.checkAnswer(answer);
+                        resultArray = this.computer.checkAnswer(answer);
                         correctGuesses = 0;
-                        for (i = 0; i < result.length; i++) {
-                            if (result[i].getColor() === 'green') {
+                        for (i = 0; i < resultArray.length; i++) {
+                            resultIndex = i;
+                            color = resultArray[i].getColor();
+                            if (color === 'green') {
                                 correctGuesses++;
                             }
+                            this.gameBoard.updateBorderColors(resultIndex, color);
                         }
                         resultText = '';
                         if (correctGuesses === this.numberOfItems) {
@@ -116,8 +119,6 @@ var Game = /** @class */ (function () {
                             resultText = 'Wrong answer! Take a look at the frame colors and try again \n               green = correct, yellow = wrong place, red = not in row';
                         }
                         this.gameUi.showMessage(resultText);
-                        console.log(result);
-                        // this.gameBoard.updateBorderColors(result)
                         this.updateNumberOfGuesses();
                     }
                 }

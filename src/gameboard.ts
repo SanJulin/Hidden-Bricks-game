@@ -6,27 +6,21 @@ import Theme from './Theme.ts'
  */
 class GameBoard {
     private numberOfItems: number = 5
-    private theme: string
-    private gameArray: Item[] = []
+    private theme: Theme
+    private optionArray: Item[] = []
     private playerGuessRow: HTMLDivElement
     private optionRow: HTMLDivElement
 
-    constructor(numberOfItems: number, theme: string) {
+    constructor(numberOfItems: number, themeObject: Theme) {
         this.numberOfItems = numberOfItems
-        this.theme = theme
+        this.theme = themeObject
+        this.optionArray = this.theme.getItemArray()
+        this.playerGuessRow = document.getElementById('player-guess-row') as HTMLDivElement
+        this.optionRow = document.getElementById('option-row') as HTMLDivElement
         this.dragstartHandler = this.dragstartHandler.bind(this)
         this.dragoverHandler = this.dragoverHandler.bind(this)
         this.dropHandler = this.dropHandler.bind(this)
-        this.gameArray = this.getGameArray()
-        this.playerGuessRow = document.getElementById('player-guess-row') as HTMLDivElement
-        this.optionRow = document.getElementById('option-row') as HTMLDivElement
         this.createGameBoard()
-    }
-
-    getGameArray(): Item[] {
-        const theme = new Theme(this.theme)
-        const itemArray = theme.getItemArray()
-        return itemArray
     }
 
     createGameBoard() {
@@ -49,12 +43,12 @@ class GameBoard {
     }
 
     createOptionRow() {
-        for (let i = 0; i < this.gameArray.length; i++) {
+        for (let i = 0; i < this.optionArray.length; i++) {
             const option = document.createElement(`div`) as HTMLDivElement
             option.className = 'option'
-            option.id = `option${this.gameArray[i].getId()}`
-            option.textContent = this.gameArray[i].getName()
-            const image = this.gameArray[i].getImage()
+            option.id = `option${this.optionArray[i].getId()}`
+            option.textContent = this.optionArray[i].getName()
+            const image = this.optionArray[i].getImage()
 
             if (image) {
                 option.appendChild(image)
@@ -112,7 +106,7 @@ class GameBoard {
         const droppedElement = document.getElementById(data) as HTMLDivElement
         const droppedElementCopy = droppedElement?.cloneNode(true)
 
-        if (droppedElementCopy && event.target instanceof HTMLElement) {
+        if (droppedElementCopy && event.target instanceof HTMLElement && event.target.children.length === 0) {
             event.target.appendChild(droppedElementCopy)
         }
     }
@@ -122,7 +116,7 @@ class GameBoard {
             const element = this.playerGuessRow.children[i] as HTMLDivElement
             const elementChild = this.playerGuessRow.children[i].firstElementChild as HTMLDivElement
             if (element && elementChild) {
-                if (clearingType === 'wrong' && elementChild.style.borderColor !== 'green') {
+                if (clearingType === 'wrong' && element.style.borderColor !== 'green') {
                     element.removeChild(elementChild)
                     element.style.border = '3px solid black'   
                 } else if (clearingType === 'all') {
