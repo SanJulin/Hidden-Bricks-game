@@ -81,20 +81,26 @@ var Computer = /** @class */ (function () {
         if (answer.length !== this.computerRow.length) {
             throw new Error("The guess must contain ".concat(this.computerRow.length, " items."));
         }
-        var answerFromPlayer = answer;
-        for (var i = 0; i < answerFromPlayer.length; i++) {
-            if (answerFromPlayer[i].getName() === this.computerRow[i]) {
-                answerFromPlayer[i].setColor('green');
+        var answerFromPlayer = this.addColorsToItems(answer);
+        this.updateNumberOfGuesses();
+        return answerFromPlayer;
+    };
+    Computer.prototype.addColorsToItems = function (answer) {
+        for (var i = 0; i < answer.length; i++) {
+            if (answer[i].getName() === this.computerRow[i]) {
+                answer[i].setColor('green');
             }
-            else if (this.computerRow.includes(answerFromPlayer[i].getName())) {
-                answerFromPlayer[i].setColor('yellow');
+            else if (this.computerRow.includes(answer[i].getName())) {
+                answer[i].setColor('yellow');
             }
             else {
-                answerFromPlayer[i].setColor('red');
+                answer[i].setColor('red');
             }
         }
+        return answer;
+    };
+    Computer.prototype.updateNumberOfGuesses = function () {
         this.numberOfGuesses++;
-        return answerFromPlayer;
     };
     return Computer;
 }());

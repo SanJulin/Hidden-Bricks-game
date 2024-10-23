@@ -10,7 +10,7 @@ class Theme {
     private availableThemes: string[] = ['flags', 'animals', 'colors', 'professions', 'movies']
 
     constructor(theme?: string) {
-        if (theme !== undefined) {
+        if (theme) {
             this.setTheme(theme)
         } else {
             this.theme = ''
@@ -23,7 +23,7 @@ class Theme {
     * @returns { string } - the theme of the items used in the game.
     */
     public getTheme(): string {
-        if (this.theme === undefined) {
+        if (this.theme) {
             throw new Error('No theme has been set for the game')
         }
         return this.theme
@@ -36,7 +36,7 @@ class Theme {
      */
     public setTheme(theme: string): void {
         this.theme = theme
-        if (this.theme !== undefined) {
+        if (this.theme) {
             this.setThemeArray()
         }
     }
@@ -101,7 +101,7 @@ class Theme {
      * Checks if this.theme is undefined and throws an error if it is. Sets the array with items that should be used in the game by checking what the current theme is.  
      */
     private setThemeArray(): void {
-        if (this.theme !== undefined) {
+        if (this.theme) {
             if (this.theme === 'flags') {
                 this.themeArray = ['Sweden', 'Japan', 'Italy', 'New Zealand', 'Kenya', 'China', 'Brazil', 'United Kingdom']
             }
@@ -127,7 +127,7 @@ class Theme {
      * Creates an array with items based on the provided theme array. 
      */
     private createItemArray(): void {
-        if (this.themeArray !== undefined) {
+        if (this.themeArray) {
             for (let i = 0; i < this.themeArray.length; i++) {
                 const url = `../img/${this.theme}/${(this.themeArray[i])}.jpg`
                 const item = new Item(i + 1, this.themeArray[i], url)

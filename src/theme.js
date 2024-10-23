@@ -10,8 +10,11 @@ var Theme = /** @class */ (function () {
         this.themeArray = [];
         this.itemArray = [];
         this.availableThemes = ['flags', 'animals', 'colors', 'professions', 'movies'];
-        if (theme !== undefined) {
+        if (theme) {
             this.setTheme(theme);
+        }
+        else {
+            this.theme = '';
         }
     }
     /**
@@ -20,7 +23,7 @@ var Theme = /** @class */ (function () {
     * @returns { string } - the theme of the items used in the game.
     */
     Theme.prototype.getTheme = function () {
-        if (this.theme === undefined) {
+        if (this.theme) {
             throw new Error('No theme has been set for the game');
         }
         return this.theme;
@@ -32,11 +35,8 @@ var Theme = /** @class */ (function () {
      */
     Theme.prototype.setTheme = function (theme) {
         this.theme = theme;
-        if (this.theme !== undefined) {
+        if (this.theme) {
             this.setThemeArray();
-        }
-        else {
-            this.theme === '';
         }
     };
     /**
@@ -98,7 +98,7 @@ var Theme = /** @class */ (function () {
      * Checks if this.theme is undefined and throws an error if it is. Sets the array with items that should be used in the game by checking what the current theme is.
      */
     Theme.prototype.setThemeArray = function () {
-        if (this.theme !== undefined) {
+        if (this.theme) {
             if (this.theme === 'flags') {
                 this.themeArray = ['Sweden', 'Japan', 'Italy', 'New Zealand', 'Kenya', 'China', 'Brazil', 'United Kingdom'];
             }
@@ -124,9 +124,10 @@ var Theme = /** @class */ (function () {
      * Creates an array with items based on the provided theme array.
      */
     Theme.prototype.createItemArray = function () {
-        if (this.themeArray !== undefined) {
+        if (this.themeArray) {
             for (var i = 0; i < this.themeArray.length; i++) {
-                var item = new Item_ts_1.default(i + 1, this.themeArray[i]);
+                var url = "../img/".concat(this.theme, "/").concat((this.themeArray[i]), ".jpg");
+                var item = new Item_ts_1.default(i + 1, this.themeArray[i], url);
                 this.itemArray.push(item);
             }
         }

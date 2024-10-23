@@ -11,33 +11,29 @@ class Game {
   private gameBoard: GameBoard | undefined
   private answerButton: HTMLButtonElement
   private numberOfItems: number | undefined
-  private gameUi: GameUi
+  private gameUi: GameUi = new GameUi()
   private username?: string
   private computer: Computer | undefined
 
   constructor() {
     this.answerButton = document.getElementById('answer-button') as HTMLButtonElement
-    this.gameUi = new GameUi()
     this.start()
   }
 
   async start() {
-    console.log('in start')
-    if (this.gameUi) {
-      this.username = await this.gameUi.getUsername()
-      this.themeString = await this.gameUi.getChoosenTheme()
-      this.numberOfItems = await this.gameUi.getNumberOfItems()
-    }
-      this.createGame()
+    this.username = await this.gameUi.getUsername()
+    this.themeString = await this.gameUi.getChoosenTheme()
+    this.numberOfItems = await this.gameUi.getNumberOfItems()
+    this.createGame()
   }
 
   createGame() {
 
-    if(this.numberOfItems && this.themeString) {
+    if (this.numberOfItems && this.themeString) {
       this.computer = new Computer(this.numberOfItems, this.themeString)
 
-      this.gameBoard = new GameBoard(this.numberOfItems, this.themeString) 
-  
+      this.gameBoard = new GameBoard(this.numberOfItems, this.themeString)
+
       this.gameUi.showUserInstructions(this.numberOfItems)
       this.addAnswerButton()
     }
@@ -48,11 +44,9 @@ class Game {
     this.answerButton.style.display = 'block'
 
     this.answerButton.addEventListener('click', (event) => {
-        this.checkAnswer()
+      this.checkAnswer()
     })
   }
-
-  
 
   async checkAnswer() {
 
@@ -60,13 +54,18 @@ class Game {
       const answer = this.gameBoard.getPlayerAnswer()
 
       if (this.computer) {
-        const result = await this.computer.checkAnswer(answer)
+        const resultArray = this.computer.checkAnswer(answer)
+
 
         let correctGuesses = 0
-        for (let i = 0; i < result.length; i++) {
-          if (result[i].getColor() === 'green') {
+        for (let i = 0; i < resultArray.length; i++) {
+          const resultIndex = i
+          const color = resultArray[i].getColor()
+          if (color === 'green') {
             correctGuesses++
           }
+
+          this.gameBoard.updateBorderColors(resultIndex, color)
         }
         let resultText = ''
         if (correctGuesses === this.numberOfItems) {
@@ -75,15 +74,15 @@ class Game {
           resultText = 'Wrong answer! Take a look at the frame colors and try again \n               green = correct, yellow = wrong place, red = not in row'
         }
         this.gameUi.showMessage(resultText)
-        this.gameBoard.updateBorderColors(result)
+
         this.updateNumberOfGuesses()
       }
     }
   }
 
   updateNumberOfGuesses(): void {
-      const numberOfGuesses = this.computer?.getNumberOfGuesses()
-      this.gameUi.showNumberOfGuesses(numberOfGuesses, this.username)   
+    const numberOfGuesses = this.computer?.getNumberOfGuesses()
+    this.gameUi.showNumberOfGuesses(numberOfGuesses, this.username)
   }
 }
 

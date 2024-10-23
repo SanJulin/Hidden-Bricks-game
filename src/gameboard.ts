@@ -8,7 +8,7 @@ class GameBoard {
     private numberOfItems: number = 5
     private theme: string
     private gameArray: Item[] = []
-    private playerGuessRow: any
+    private playerGuessRow: HTMLDivElement
     private optionRow: HTMLDivElement
 
     constructor(numberOfItems: number, theme: string) {
@@ -25,8 +25,8 @@ class GameBoard {
 
     getGameArray(): Item[] {
         const theme = new Theme(this.theme)
-        const themeArray = theme.getItemArray()
-        return themeArray
+        const itemArray = theme.getItemArray()
+        return itemArray
     }
 
     createGameBoard() {
@@ -39,7 +39,7 @@ class GameBoard {
 
     createPlayerGuessRow() {
         for (let i = 0; i < this.numberOfItems; i++) {
-            const playerGuessBox = document.createElement('div')
+            const playerGuessBox = document.createElement('div') as HTMLDivElement
             playerGuessBox.className = 'guess'
             playerGuessBox.id = `guess${i + 1}`
             playerGuessBox.addEventListener('dragover', this.dragoverHandler)
@@ -50,11 +50,12 @@ class GameBoard {
 
     createOptionRow() {
         for (let i = 0; i < this.gameArray.length; i++) {
-            const option = document.createElement(`div`)
+            const option = document.createElement(`div`) as HTMLDivElement
             option.className = 'option'
             option.id = `option${this.gameArray[i].getId()}`
             option.textContent = this.gameArray[i].getName()
             const image = this.gameArray[i].getImage()
+
             if (image) {
                 option.appendChild(image)
             }
@@ -70,7 +71,8 @@ class GameBoard {
 
         clearAllButton.addEventListener('click', (event) => {
             event.preventDefault()
-            this.clearAllGuesses()
+            const clearingType = 'all'
+            this.clearGuesses(clearingType)
         })
         this.playerGuessRow.appendChild(clearAllButton)
     }
@@ -81,13 +83,14 @@ class GameBoard {
 
         clearWrongGuessesButton.addEventListener('click', (event) => {
             event.preventDefault()
-            this.clearWrongGuesses()
+            const clearingType = 'wrong'
+            this.clearGuesses(clearingType)
         })
         this.playerGuessRow.appendChild(clearWrongGuessesButton)
     }
 
 
-    updatePlayerGuessItem(playerGuessItem: any, chosen: any) {
+    updatePlayerGuessItem(playerGuessItem: HTMLDivElement, chosen: HTMLDivElement) {
         const chosenItem = chosen
         playerGuessItem.appendChild(chosenItem)
     }
@@ -106,7 +109,7 @@ class GameBoard {
     dropHandler(event: DragEvent) {
         event.preventDefault()
         const data = event.dataTransfer!.getData("text/plain")
-        const droppedElement = document.getElementById(data)
+        const droppedElement = document.getElementById(data) as HTMLDivElement
         const droppedElementCopy = droppedElement?.cloneNode(true)
 
         if (droppedElementCopy && event.target instanceof HTMLElement) {
@@ -114,46 +117,38 @@ class GameBoard {
         }
     }
 
-    clearAllGuesses() {
+    clearGuesses(clearingType: string) {
         for (let i = 0; i < this.playerGuessRow.children.length; i++) {
-            if (this.playerGuessRow.children[i].firstElementChild !== null) {
-                this.updatePlayersGuessBorders(i)
-            }
+            const element = this.playerGuessRow.children[i] as HTMLDivElement
+            const elementChild = this.playerGuessRow.children[i].firstElementChild as HTMLDivElement
+            if (element && elementChild) {
+                if (clearingType === 'wrong' && elementChild.style.borderColor !== 'green') {
+                    element.removeChild(elementChild)
+                    element.style.border = '3px solid black'   
+                } else if (clearingType === 'all') {
+                    element.removeChild(elementChild)
+                    element.style.border = '3px solid black'   
+                }
+            } 
         }
     }
 
-    clearWrongGuesses() {
-        for (let i = 0; i < this.playerGuessRow.children.length; i++) {
-            if (this.playerGuessRow.children[i].firstElementChild !== null && this.playerGuessRow.children[i].style.borderColor !== 'green') {
-                this.updatePlayersGuessBorders(i)
-            }
-        }
-    }
-
-    updatePlayersGuessBorders(i: any) {
-        const child = this.playerGuessRow.children[i].firstElementChild
-        this.playerGuessRow.children[i].removeChild(child)
-        this.playerGuessRow.children[i].style.border = '3px solid black'
-    }
-
-    getPlayerAnswer() {
+    getPlayerAnswer(): Item[] {
         let answerArray: Item[] = []
-        for (let i = 0; i < this.playerGuessRow.children.length; i++) {
-            if (this.playerGuessRow.children[i].firstElementChild !== null) {
-                const answer = this.playerGuessRow.children[i].firstElementChild.textContent
-                const item = new Item(i, answer)
-                answerArray.push(item)
-            }
+        for (let i = 0; i < this.numberOfItems; i++) {
+            const answer = this.playerGuessRow.children[i].firstElementChild?.textContent as string
+            const item = new Item(i, answer)
+            answerArray.push(item)
         }
         return answerArray
     }
 
-    updateBorderColors(result: Item[]) {
-        for (let i = 0; i < result.length; i++) {
-            const color = result[i].getColor()
-            this.playerGuessRow.children[i].style.border = '10px solid ' + color
-        }
+    updateBorderColors(itemIndex: number, color: string) {
+        const element = this.playerGuessRow.children[itemIndex] as HTMLDivElement
+        element.style.border = '10px solid ' + color
     }
 }
 
 export default GameBoard
+
+

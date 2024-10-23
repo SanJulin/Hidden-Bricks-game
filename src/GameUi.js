@@ -5,7 +5,7 @@ var GameUi = /** @class */ (function () {
     function GameUi() {
         this.textMessage = document.getElementById('text-message');
         this.userMessageElement = document.getElementById('user-message-element');
-        this.resultText = document.getElementById('result');
+        this.resultText = document.getElementById('result-element');
         this.numberOfGuessesElement = document.getElementById('number-of-guesses');
     }
     GameUi.prototype.getUsername = function () {
@@ -42,7 +42,6 @@ var GameUi = /** @class */ (function () {
                 _this.userMessageElement.appendChild(themeButton);
                 themeButton.addEventListener('click', function (event) {
                     var choosenTheme = themeButton.textContent;
-                    console.log(choosenTheme);
                     for (var i_1 = 0; i_1 < themeButtons.length; i_1++) {
                         themeButtons[i_1].remove();
                     }
@@ -68,7 +67,6 @@ var GameUi = /** @class */ (function () {
             submitNumberButton.addEventListener('click', function (event) {
                 if (numberOfItemsInput.value) {
                     var numberOfItems = parseInt(numberOfItemsInput.value);
-                    submitNumberButton.removeEventListener;
                     submitNumberButton.style.display = 'none';
                     numberOfItemsInput.style.display = 'none';
                     _this.textMessage.textContent = '';
@@ -83,8 +81,8 @@ var GameUi = /** @class */ (function () {
     GameUi.prototype.showMessage = function (resultText) {
         this.resultText.textContent = resultText;
     };
-    GameUi.prototype.showNumberOfGuesses = function (numberOfGuesses) {
-        this.numberOfGuessesElement.textContent = "Number of guesses used: ".concat(numberOfGuesses === null || numberOfGuesses === void 0 ? void 0 : numberOfGuesses.toString(), " guesses");
+    GameUi.prototype.showNumberOfGuesses = function (numberOfGuesses, username) {
+        this.numberOfGuessesElement.textContent = "Player ".concat(username, " has guessed \n").concat(numberOfGuesses === null || numberOfGuesses === void 0 ? void 0 : numberOfGuesses.toString(), " times.");
     };
     return GameUi;
 }());

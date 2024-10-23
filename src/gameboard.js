@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var Item_ts_1 = require("./Item.ts");
 var Theme_ts_1 = require("./Theme.ts");
 /**
  * Class that represents the game board.
@@ -8,66 +9,73 @@ var GameBoard = /** @class */ (function () {
     function GameBoard(numberOfItems, theme) {
         this.numberOfItems = 5;
         this.gameArray = [];
-        this.gameBoard = '';
         this.numberOfItems = numberOfItems;
         this.theme = theme;
-        this.gameBoard = document.getElementById('game-board');
         this.dragstartHandler = this.dragstartHandler.bind(this);
         this.dragoverHandler = this.dragoverHandler.bind(this);
         this.dropHandler = this.dropHandler.bind(this);
         this.gameArray = this.getGameArray();
+        this.playerGuessRow = document.getElementById('player-guess-row');
+        this.optionRow = document.getElementById('option-row');
         this.createGameBoard();
     }
     GameBoard.prototype.getGameArray = function () {
         var theme = new Theme_ts_1.default(this.theme);
-        var themeArray = theme.getItemArray();
-        return themeArray;
+        var itemArray = theme.getItemArray();
+        return itemArray;
     };
     GameBoard.prototype.createGameBoard = function () {
-        var _this = this;
-        this.playerGuessRow = document.getElementById('player-guess-row');
-        if (this.playerGuessRow) {
-            for (var i = 0; i < this.numberOfItems; i++) {
-                var playerGuessBox = document.createElement('div');
-                playerGuessBox.className = 'guess';
-                playerGuessBox.id = "guess".concat(i + 1);
-                playerGuessBox.addEventListener('dragover', this.dragoverHandler);
-                playerGuessBox.addEventListener('drop', this.dropHandler);
-                this.playerGuessRow.appendChild(playerGuessBox);
-            }
+        this.createPlayerGuessRow();
+        this.createOptionRow();
+        this.createClearAllButton();
+        this.createClearWrongButton();
+    };
+    GameBoard.prototype.createPlayerGuessRow = function () {
+        for (var i = 0; i < this.numberOfItems; i++) {
+            var playerGuessBox = document.createElement('div');
+            playerGuessBox.className = 'guess';
+            playerGuessBox.id = "guess".concat(i + 1);
+            playerGuessBox.addEventListener('dragover', this.dragoverHandler);
+            playerGuessBox.addEventListener('drop', this.dropHandler);
+            this.playerGuessRow.appendChild(playerGuessBox);
         }
+    };
+    GameBoard.prototype.createOptionRow = function () {
+        for (var i = 0; i < this.gameArray.length; i++) {
+            var option = document.createElement("div");
+            option.className = 'option';
+            option.id = "option".concat(this.gameArray[i].getId());
+            option.textContent = this.gameArray[i].getName();
+            var image = this.gameArray[i].getImage();
+            if (image) {
+                option.appendChild(image);
+            }
+            option.setAttribute('draggable', 'true');
+            option.addEventListener('dragstart', this.dragstartHandler);
+            this.optionRow.appendChild(option);
+        }
+    };
+    GameBoard.prototype.createClearAllButton = function () {
+        var _this = this;
         var clearAllButton = document.createElement('button');
-        clearAllButton.textContent = 'Clear all';
+        clearAllButton.textContent = 'clear all';
         clearAllButton.addEventListener('click', function (event) {
             event.preventDefault();
-            _this.clearAllGuesses();
-        });
-        var clearWrongGuessesButton = document.createElement('button');
-        clearWrongGuessesButton.textContent = 'Clear wrong guesses';
-        clearWrongGuessesButton.addEventListener('click', function (event) {
-            event.preventDefault();
-            _this.clearWrongGuesses();
+            var clearingType = 'all';
+            _this.clearGuesses(clearingType);
         });
         this.playerGuessRow.appendChild(clearAllButton);
+    };
+    GameBoard.prototype.createClearWrongButton = function () {
+        var _this = this;
+        var clearWrongGuessesButton = document.createElement('button');
+        clearWrongGuessesButton.textContent = 'clear wrong guesses';
+        clearWrongGuessesButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            var clearingType = 'wrong';
+            _this.clearGuesses(clearingType);
+        });
         this.playerGuessRow.appendChild(clearWrongGuessesButton);
-        this.gameBoard.appendChild(this.playerGuessRow);
-        this.optionRow = document.getElementById('option-row');
-        if (this.optionRow) {
-            for (var i = 0; i < this.gameArray.length; i++) {
-                var option = document.createElement("div");
-                option.className = 'option';
-                option.id = "option".concat(i + 1);
-                option.textContent = this.gameArray[i].getName();
-                var img = document.createElement('img');
-                img.setAttribute('src', "../img/".concat(this.theme, "/").concat((this.gameArray[i].getName()), ".jpg"));
-                img.setAttribute('alt', "".concat(this.gameArray[i].getName()));
-                option.appendChild(img);
-                option.setAttribute('draggable', 'true');
-                option.addEventListener('dragstart', this.dragstartHandler);
-                this.optionRow.appendChild(option);
-            }
-        }
-        this.gameBoard.appendChild(this.optionRow);
     };
     GameBoard.prototype.updatePlayerGuessItem = function (playerGuessItem, chosen) {
         var chosenItem = chosen;
@@ -92,39 +100,35 @@ var GameBoard = /** @class */ (function () {
             event.target.appendChild(droppedElementCopy);
         }
     };
-    GameBoard.prototype.clearAllGuesses = function () {
+    GameBoard.prototype.clearGuesses = function (clearingType) {
         for (var i = 0; i < this.playerGuessRow.children.length; i++) {
-            if (this.playerGuessRow.children[i].firstElementChild !== null) {
-                var child = this.playerGuessRow.children[i].firstElementChild;
-                this.playerGuessRow.children[i].removeChild(child);
-                this.playerGuessRow.children[i].style.border = '3px solid black';
+            var element = this.playerGuessRow.children[i];
+            var elementChild = this.playerGuessRow.children[i].firstElementChild;
+            if (element && elementChild && clearingType === 'wrong') {
+                if (elementChild.style.borderColor !== 'green') {
+                    element.removeChild(elementChild);
+                    element.style.border = '3px solid black';
+                }
             }
-        }
-    };
-    GameBoard.prototype.clearWrongGuesses = function () {
-        for (var i = 0; i < this.playerGuessRow.children.length; i++) {
-            if (this.playerGuessRow.children[i].firstElementChild !== null && this.playerGuessRow.children[i].style.borderColor !== 'green') {
-                var child = this.playerGuessRow.children[i].firstElementChild;
-                this.playerGuessRow.children[i].removeChild(child);
-                this.playerGuessRow.children[i].style.border = '3px solid black';
+            else if (clearingType === 'all') {
+                element.removeChild(elementChild);
+                element.style.border = '3px solid black';
             }
         }
     };
     GameBoard.prototype.getPlayerAnswer = function () {
+        var _a;
         var answerArray = [];
-        for (var i = 0; i < this.playerGuessRow.children.length; i++) {
-            if (this.playerGuessRow.children[i].firstElementChild !== null) {
-                var answer = this.playerGuessRow.children[i].firstElementChild.textContent;
-                answerArray.push(answer);
-            }
+        for (var i = 0; i < this.numberOfItems; i++) {
+            var answer = (_a = this.playerGuessRow.children[i].firstElementChild) === null || _a === void 0 ? void 0 : _a.textContent;
+            var item = new Item_ts_1.default(i, answer);
+            answerArray.push(item);
         }
         return answerArray;
     };
-    GameBoard.prototype.updateBorderColors = function (result) {
-        for (var i = 0; i < result.length; i++) {
-            var color = result[i].getColor();
-            this.playerGuessRow.children[i].style.border = '10px solid ' + color;
-        }
+    GameBoard.prototype.updateBorderColors = function (itemIndex, color) {
+        var element = this.playerGuessRow.children[itemIndex];
+        element.style.border = '10px solid ' + color;
     };
     return GameBoard;
 }());

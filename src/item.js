@@ -4,12 +4,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Class that represents one item in the game.
  */
 var Item = /** @class */ (function () {
-    function Item(id, name) {
+    function Item(id, name, url) {
         this.id = 0;
         this.name = '';
         this.color = '';
         this.setId(id);
         this.setName(name);
+        if (url) {
+            this.setImage(url);
+        }
     }
     /**
      * Gets the name of the current item used in the game.
@@ -73,6 +76,20 @@ var Item = /** @class */ (function () {
         else {
             throw new Error('Only green, yellow and red are valid colors');
         }
+    };
+    /**
+     *
+     */
+    Item.prototype.getImage = function () {
+        if (this.image) {
+            return this.image;
+        }
+    };
+    Item.prototype.setImage = function (url) {
+        var image = document.createElement('img');
+        image.setAttribute('src', url);
+        image.setAttribute('alt', this.name);
+        this.image = image;
     };
     return Item;
 }());

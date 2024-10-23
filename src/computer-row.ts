@@ -5,8 +5,8 @@ import Theme from './Theme.ts'
  */
 class ComputerRow {
     private numberOfItems: number = 0
-    private computerRow: string [] = []
-    private themeArray: string [] = []
+    private computerRow: string[] = []
+    private themeArray: string[] = []
 
     constructor(numberOfItems: number, theme: string) {
         this.setNumberOfItems(numberOfItems)
@@ -30,7 +30,7 @@ class ComputerRow {
      * 
      * @param numberOfItems { number } - number of items that should be included in the computer row.
      */
-    private setNumberOfItems(numberOfItems: number) : void {
+    private setNumberOfItems(numberOfItems: number): void {
         if (numberOfItems < 1 || numberOfItems > 8) {
             throw new Error('Pls provide a number between 1 - 8')
         } else {
@@ -43,7 +43,7 @@ class ComputerRow {
      * 
      * @param itemArray object [] - the array with themed items chosen for the game. 
      */
-    private setItemArray(theme: string) : void{
+    private setItemArray(theme: string): void {
         const newTheme = new Theme(theme)
         this.themeArray = newTheme.getThemeArray()
     }

@@ -39,7 +39,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("../css/styles.css");
 var Gameboard_ts_1 = require("./Gameboard.ts");
 var Computer_ts_1 = require("./Computer.ts");
-var Item_ts_1 = require("./Item.ts");
 var GameUi_ts_1 = require("./GameUi.ts");
 /**
  * Class that represents the game.
@@ -47,9 +46,6 @@ var GameUi_ts_1 = require("./GameUi.ts");
 var Game = /** @class */ (function () {
     function Game() {
         this.themeString = '';
-        this.username = '';
-        this.gameElement = document.getElementById('game');
-        this.userMessage = document.getElementById('user-message');
         this.answerButton = document.getElementById('answer-button');
         this.gameUi = new GameUi_ts_1.default();
         this.start();
@@ -66,17 +62,14 @@ var Game = /** @class */ (function () {
                         return [4 /*yield*/, this.gameUi.getUsername()];
                     case 1:
                         _a.username = _d.sent();
-                        console.log("Hello ".concat(this.username));
                         _b = this;
                         return [4 /*yield*/, this.gameUi.getChoosenTheme()];
                     case 2:
                         _b.themeString = _d.sent();
-                        console.log("theme ".concat(this.themeString));
                         _c = this;
                         return [4 /*yield*/, this.gameUi.getNumberOfItems()];
                     case 3:
                         _c.numberOfItems = _d.sent();
-                        console.log("number of items".concat(this.numberOfItems));
                         _d.label = 4;
                     case 4:
                         this.createGame();
@@ -86,12 +79,15 @@ var Game = /** @class */ (function () {
         });
     };
     Game.prototype.createGame = function () {
-        var _this = this;
         if (this.numberOfItems && this.themeString) {
             this.computer = new Computer_ts_1.default(this.numberOfItems, this.themeString);
             this.gameBoard = new Gameboard_ts_1.default(this.numberOfItems, this.themeString);
             this.gameUi.showUserInstructions(this.numberOfItems);
+            this.addAnswerButton();
         }
+    };
+    Game.prototype.addAnswerButton = function () {
+        var _this = this;
         this.answerButton.textContent = 'check answer';
         this.answerButton.style.display = 'block';
         this.answerButton.addEventListener('click', function (event) {
@@ -100,22 +96,12 @@ var Game = /** @class */ (function () {
     };
     Game.prototype.checkAnswer = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var answer, answerCopy, i, item, result, correctGuesses, i, resultText;
+            var answer, result, correctGuesses, i, resultText;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!this.gameBoard) return [3 /*break*/, 2];
-                        answer = this.gameBoard.getPlayerAnswer();
-                        answerCopy = [];
-                        for (i = 0; i < answer.length; i++) {
-                            item = new Item_ts_1.default(i + 1, "".concat(answer[i]));
-                            answerCopy.push(item);
-                        }
-                        if (!this.computer) return [3 /*break*/, 2];
-                        return [4 /*yield*/, this.computer.checkAnswer(answerCopy)];
-                    case 1:
-                        result = _a.sent();
-                        console.log(result);
+                if (this.gameBoard) {
+                    answer = this.gameBoard.getPlayerAnswer();
+                    if (this.computer) {
+                        result = this.computer.checkAnswer(answer);
                         correctGuesses = 0;
                         for (i = 0; i < result.length; i++) {
                             if (result[i].getColor() === 'green') {
@@ -127,21 +113,22 @@ var Game = /** @class */ (function () {
                             resultText = 'Congratulations! You made it!';
                         }
                         else {
-                            resultText = 'Wrong answer. Take a look at the frame colors and try again \n green = correct, yellow = wrong place, red = not in row';
+                            resultText = 'Wrong answer! Take a look at the frame colors and try again \n               green = correct, yellow = wrong place, red = not in row';
                         }
                         this.gameUi.showMessage(resultText);
-                        this.gameBoard.updateBorderColors(result);
+                        console.log(result);
+                        // this.gameBoard.updateBorderColors(result)
                         this.updateNumberOfGuesses();
-                        _a.label = 2;
-                    case 2: return [2 /*return*/];
+                    }
                 }
+                return [2 /*return*/];
             });
         });
     };
     Game.prototype.updateNumberOfGuesses = function () {
         var _a;
         var numberOfGuesses = (_a = this.computer) === null || _a === void 0 ? void 0 : _a.getNumberOfGuesses();
-        this.gameUi.showNumberOfGuesses(numberOfGuesses);
+        this.gameUi.showNumberOfGuesses(numberOfGuesses, this.username);
     };
     return Game;
 }());

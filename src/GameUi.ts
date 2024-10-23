@@ -9,13 +9,12 @@ class GameUi {
   constructor() {
     this.textMessage = document.getElementById('text-message') as HTMLElement
     this.userMessageElement = document.getElementById('user-message-element') as HTMLDivElement
-    this.resultText = document.getElementById('result') as HTMLDivElement
+    this.resultText = document.getElementById('result-element') as HTMLDivElement
     this.numberOfGuessesElement = document.getElementById('number-of-guesses') as HTMLDivElement
   }
 
   getUsername(): Promise<string> {
     return new Promise((resolve) => {
-      console.log(('in username'))
       const inputName = document.createElement('input')
       const startButton = document.createElement('button')
       startButton.textContent = 'Submit'

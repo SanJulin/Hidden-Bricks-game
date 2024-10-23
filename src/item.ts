@@ -90,7 +90,7 @@ class Item {
         }
     }
 
-    public setImage(url: string) { 
+    public setImage(url: string) {
         const image = document.createElement('img')
         image.setAttribute('src', url)
         image.setAttribute('alt', this.name)

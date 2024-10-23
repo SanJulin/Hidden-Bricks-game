@@ -1,4 +1,4 @@
-import  ComputerRow from './Computer-row.ts';
+import ComputerRow from './Computer-row.ts';
 import Item from './Item.ts';
 
 /**
@@ -19,19 +19,19 @@ class Computer {
      * 
      * @returns { number } - number of items used in the game.
      */
-    public getNumberOfItems() : number {
+    public getNumberOfItems(): number {
         if (this.numberOfItems === null) {
             throw Error('Number of items has not been set')
         }
         return this.numberOfItems
     }
 
-     /**
-     * Sets the number of items that should be included in the computer row. 
-     * 
-     * @param numberOfItems { number } - number of items that should be used in the game.
-     */
-    public setNumberOfItems(numberOfItems: number) : void {
+    /**
+    * Sets the number of items that should be included in the computer row. 
+    * 
+    * @param numberOfItems { number } - number of items that should be used in the game.
+    */
+    public setNumberOfItems(numberOfItems: number): void {
         if (numberOfItems < 1 || numberOfItems > 8) {
             throw new Error('Pls provide a valid number between 1-8')
         } else {
@@ -45,7 +45,7 @@ class Computer {
      * @param themeArray { object [] } - the array with items from the chosen theme. 
      * @returns 
      */
-    private createComputerRow(theme: string) : void{
+    private createComputerRow(theme: string): void {
         if (this.numberOfItems !== undefined) {
             const computerRow = new ComputerRow(this.numberOfItems, theme)
             this.computerRow = computerRow.generateRow()
@@ -82,22 +82,22 @@ class Computer {
      * @returns { string } - A text if the user´s guess was correct.
      * @returns { object [] } - An array with objects if the user´s guess wasn´t correct. 
      */
-    public checkAnswer(answer: Item []): any {
-        if (answer.length !== this.computerRow.length ) {
+    public checkAnswer(answer: Item[]): Item[] {
+        if (answer.length !== this.computerRow.length) {
             throw new Error(`The guess must contain ${this.computerRow.length} items.`)
-        } 
+        }
         const answerFromPlayer = this.addColorsToItems(answer)
 
         this.updateNumberOfGuesses()
         return answerFromPlayer
     }
 
-    addColorsToItems(answer: Item []): Item[] {
+    addColorsToItems(answer: Item[]): Item[] {
         for (let i = 0; i < answer.length; i++) {
             if (answer[i].getName() === this.computerRow[i]) {
                 answer[i].setColor('green')
-                } else if (this.computerRow.includes(answer[i].getName())) {
-                    answer[i].setColor('yellow')    
+            } else if (this.computerRow.includes(answer[i].getName())) {
+                answer[i].setColor('yellow')
             } else {
                 answer[i].setColor('red')
             }
@@ -106,7 +106,7 @@ class Computer {
     }
 
     updateNumberOfGuesses() {
-        this.numberOfGuesses ++
+        this.numberOfGuesses++
 
     }
 }
