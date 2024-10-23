@@ -3,13 +3,11 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "dev": "tsc && vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",
-    "lint": "npx eslint ./src || exit 0",
-    "lint:fix": "npx eslint ./src --fix || exit 0"
+    "preview": "vite preview"
   },
   "contributor": [
        "Sandra Julin <sj223zn@student.lnu.se>"

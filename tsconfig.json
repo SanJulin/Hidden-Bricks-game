@@ -2,14 +2,16 @@
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "ESNext",
     "lib": ["ES2020", "dom"],
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "noEmit": true,
     "baseUrl": "./",
+    "paths": {
+      "@components/*": ["src/components/*"]
+    }
   },
   "include": ["src/**/*"]
 }
