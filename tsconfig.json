@@ -10,17 +10,6 @@
     "skipLibCheck": true,
     "noEmit": true,
     "baseUrl": "./",
-    "paths": {
-      "@components/*": ["src/components/*"],
-      "@items/*": ["src/items/*"],
-      "@themes/*": ["src/themes/*"],
-      "@computers/*": ["src/computers/*"],
-      "@computerrows/*": ["src/computerrows/*"],
-      "@games/*": ["src/games/*"],
-      "@index/*": ["src/index/*"],
-      "@gameuis/*": ["src/gameuis/*"],
-      "@gameboards/*": ["src/gameboards/*"]
-    }
   },
   "include": ["src/**/*"]
 }
