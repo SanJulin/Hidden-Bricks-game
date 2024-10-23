@@ -10,7 +10,7 @@
     "noEmit": true,
     "baseUrl": "./",
     "paths": {
-      "@components/*": ["src/components/*"]
+      "@components/*": ["src/*"]
     }
   },
   "include": ["src/**/*"]
