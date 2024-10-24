@@ -3,25 +3,26 @@ import GameBoard from './gameboard.ts'
 import Computer from './computer.ts'
 import GameUi from './game-ui.ts'
 import Theme from './theme.ts'
+import Item from 'item'
 
 /**
  * Class that represents the game.
  */
 class Game {
   private themeDescription: string = ''
-  private themeObject: Theme 
-  private gameBoard: GameBoard | undefined
+  private themeObject: Theme
+  private gameBoard!: GameBoard
   private answerButton: HTMLButtonElement
   private numberOfItems: number | undefined
   private gameUi: GameUi
   private username?: string
-  private computer: Computer | undefined
+  private computer!: Computer
 
   constructor() {
     this.gameUi = new GameUi()
     this.themeObject = new Theme()
     this.answerButton = document.getElementById('answer-button') as HTMLButtonElement
-    
+
     this.start()
   }
 
@@ -34,15 +35,20 @@ class Game {
   }
 
   createGame() {
-
     if (this.numberOfItems && this.themeDescription) {
-      this.themeObject.setTheme(this.themeDescription)
-      this.computer = new Computer(this.numberOfItems, this.themeDescription)
-
-      this.gameBoard = new GameBoard(this.numberOfItems, this.themeObject)
-
-      this.gameUi.showUserInstructions(this.numberOfItems)
-      this.addAnswerButton()
+      try {
+        this.themeObject.setTheme(this.themeDescription)
+        this.computer = new Computer(this.numberOfItems, this.themeDescription) as Computer
+  
+        this.gameBoard = new GameBoard(this.numberOfItems, this.themeObject) as GameBoard
+  
+        this.gameUi.showUserInstructions(this.numberOfItems)
+        this.addAnswerButton()
+      } catch (error) {
+        if (error instanceof Error) {
+          this.gameUi.showMessage(error.message)
+        }
+      }
     }
   }
 
@@ -51,40 +57,45 @@ class Game {
     this.answerButton.style.display = 'block'
 
     this.answerButton.addEventListener('click', (event) => {
-      this.checkAnswer()
+      this.checkResultWithComputer()
     })
   }
 
-  async checkAnswer() {
+  async checkResultWithComputer() {
+    try {
+      const answerFromPlayer = this.gameBoard.getPlayerAnswer()
+      console.log(answerFromPlayer)
+      const resultArray = this.computer.checkAnswer(answerFromPlayer)
 
-    if (this.gameBoard) {
-      const answer = this.gameBoard.getPlayerAnswer()
+      this.showResultToUser(resultArray)
 
-      if (this.computer) {
-        const resultArray = this.computer.checkAnswer(answer)
-
-
-        let correctGuesses = 0
-        for (let i = 0; i < resultArray.length; i++) {
-          const resultIndex = i
-          const color = resultArray[i].getColor()
-          if (color === 'green') {
-            correctGuesses++
-          }
-
-          this.gameBoard.updateBorderColors(resultIndex, color)
-        }
-        let resultText = ''
-        if (correctGuesses === this.numberOfItems) {
-          resultText = 'Congratulations! You made it!'
-        } else {
-          resultText = 'Wrong answer! Take a look at the frame colors and try again \n               green = correct, yellow = wrong place, red = not in row'
-        }
-        this.gameUi.showMessage(resultText)
-
-        this.updateNumberOfGuesses()
-      }
+    } catch (error) {
+      if (error instanceof Error)
+        this.gameUi.showMessage(error.message)
     }
+
+  }
+
+  showResultToUser(resultArray: Item[]) {
+    let correctGuesses = 0
+    for (let i = 0; i < resultArray.length; i++) {
+      const resultIndex = i
+      const color = resultArray[i].getColor()
+      if (color === 'green') {
+        correctGuesses++
+      }
+
+      this.gameBoard.updateBorderColors(resultIndex, color)
+    }
+    let resultText = ''
+    if (correctGuesses === this.numberOfItems) {
+      resultText = 'Congratulations! You made it!'
+    } else {
+      resultText = 'Wrong answer! Take a look at the frame colors and try again! Green = Correct, Yellow = Wrong place, Red = Not in row'
+    }
+    this.gameUi.showMessage(resultText)
+
+    this.updateNumberOfGuesses()
   }
 
   updateNumberOfGuesses(): void {

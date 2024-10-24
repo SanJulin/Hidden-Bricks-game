@@ -83,7 +83,6 @@ class GameBoard {
         this.playerGuessRow.appendChild(clearWrongGuessesButton)
     }
 
-
     updatePlayerGuessItem(playerGuessItem: HTMLDivElement, chosen: HTMLDivElement) {
         const chosenItem = chosen
         playerGuessItem.appendChild(chosenItem)
@@ -115,7 +114,7 @@ class GameBoard {
         for (let i = 0; i < this.playerGuessRow.children.length; i++) {
             const element = this.playerGuessRow.children[i] as HTMLDivElement
             const elementChild = this.playerGuessRow.children[i].firstElementChild as HTMLDivElement
-            if (element && elementChild) {
+            if (elementChild) {
                 if (clearingType === 'wrong' && element.style.borderColor !== 'green') {
                     element.removeChild(elementChild)
                     element.style.border = '3px solid black'   
@@ -123,7 +122,7 @@ class GameBoard {
                     element.removeChild(elementChild)
                     element.style.border = '3px solid black'   
                 }
-            } 
+            }
         }
     }
 
@@ -131,8 +130,10 @@ class GameBoard {
         let answerArray: Item[] = []
         for (let i = 0; i < this.numberOfItems; i++) {
             const answer = this.playerGuessRow.children[i].firstElementChild?.textContent as string
-            const item = new Item(i, answer)
-            answerArray.push(item)
+            if (answer !== undefined) {
+                const item = new Item(i, answer)
+                answerArray.push(item)
+            }
         }
         return answerArray
     }

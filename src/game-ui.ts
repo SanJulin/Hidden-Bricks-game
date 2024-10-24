@@ -1,3 +1,5 @@
+import userEvent from "../../../../../node_modules/@testing-library/user-event/dist/types/index"
+
 class GameUi {
   private textMessage: HTMLElement
   private userMessageElement: HTMLDivElement
@@ -17,20 +19,37 @@ class GameUi {
       const startButton = document.createElement('button')
       startButton.textContent = 'Submit'
       this.textMessage.textContent = 'Welcome! Enter your username and click on submit to begin!'
-      this.userMessageElement.appendChild(startButton)
       this.userMessageElement.appendChild(inputName)
+      this.userMessageElement.appendChild(startButton)
       startButton.addEventListener('click', () => {
-        const username = inputName.value
-        this.textMessage.textContent = ''
-        inputName.style.display = 'none'
-        startButton.removeEventListener
-        startButton.style.display = 'none'
-        resolve(username)
+        try {
+          const username = inputName.value
+          const validLetters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'y', 'z', 'å','ä', 'ö']
+          for (let i = 0; i < username.length; i++) {
+            if (!validLetters.includes(username[i].toLowerCase())) {
+              throw new Error('Only letters are allowed')
+            }
+          }
+     
+          if (username.length > 20 || username.length < 2)  {
+            throw new Error('Pls enter a username with 2 - 20 letters')
+          } else {
+          this.textMessage.textContent = ''
+          inputName.style.display = 'none'
+          startButton.removeEventListener
+          startButton.style.display = 'none'
+          resolve(username)
+          }
+        } catch (error) {
+          if (error instanceof Error) {
+            this.showMessage(error.message)
+          }
+        }
       })
     })
   }
 
-  getChoosenTheme(availableThemes : string []): Promise<string> {
+  getChoosenTheme(availableThemes: string[]): Promise<string> {
     return new Promise((resolve) => {
       this.textMessage.textContent = 'Choose a theme for the game!'
       let themeButtons = []
@@ -62,13 +81,25 @@ class GameUi {
       this.userMessageElement.appendChild(submitNumberButton)
 
       submitNumberButton.addEventListener('click', (event) => {
-        if (numberOfItemsInput.value) {
+        try {
+          if (numberOfItemsInput.value.length > 1) {
+            throw new Error('Pls enter a number between 2 - 8')
+          }
           const numberOfItems = parseInt(numberOfItemsInput.value)
-          submitNumberButton.style.display = 'none'
-          numberOfItemsInput.style.display = 'none'
-          this.textMessage.textContent = ''
-          resolve(numberOfItems)
+          if (numberOfItems > 1 && numberOfItems < 9) {
+            submitNumberButton.style.display = 'none'
+            numberOfItemsInput.style.display = 'none'
+            this.textMessage.textContent = ''
+            resolve(numberOfItems)
+          } else {
+            throw new Error('Pls enter a number between 2 - 8')
+          }
+        } catch (error) {
+          if (error instanceof Error) {
+            this.showMessage(error.message)
+          }
         }
+
       })
     })
   }
