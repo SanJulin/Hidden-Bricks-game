@@ -1,7 +1,7 @@
 import '../css/styles.css'
 import GameBoard from './gameboard.ts'
 import Computer from './computer.ts'
-import GameUi from './gameUi.ts'
+import GameUi from './game-ui.ts'
 import Theme from './theme.ts'
 
 /**

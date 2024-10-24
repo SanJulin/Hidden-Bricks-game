@@ -39,7 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("../css/styles.css");
 var gameboard_ts_1 = require("./gameboard.ts");
 var computer_ts_1 = require("./computer.ts");
-var gameUi_ts_1 = require("./gameUi.ts");
+var game_ui_ts_1 = require("./game-ui.ts");
 var theme_ts_1 = require("./theme.ts");
 /**
  * Class that represents the game.
@@ -47,7 +47,7 @@ var theme_ts_1 = require("./theme.ts");
 var Game = /** @class */ (function () {
     function Game() {
         this.themeDescription = '';
-        this.gameUi = new gameUi_ts_1.default();
+        this.gameUi = new game_ui_ts_1.default();
         this.themeObject = new theme_ts_1.default();
         this.answerButton = document.getElementById('answer-button');
         this.start();
