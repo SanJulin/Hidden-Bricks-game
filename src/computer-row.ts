@@ -32,7 +32,7 @@ class ComputerRow {
      */
     private setNumberOfItems(numberOfItems: number): void {
         if (numberOfItems < 1 || numberOfItems > 8) {
-            throw new Error('Pls provide a number between 1 - 8')
+            throw new Error('Pls provide a number between 2 - 8')
         } else {
             this.numberOfItems = numberOfItems
         }

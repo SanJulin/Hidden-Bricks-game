@@ -6,7 +6,7 @@
     2. Användaren ska ha möjlighet att välja mellan olika teman för att variera brickornas utseende.
     3. Användaren ska kunna välja hur många brickor som ska användas i datorns rad, men det ska bara vara möjlighet att välja 1 - 8 brickor. 
     4. Det ska finnas instruktioner som användaren kan följa för att förstå spellogiken. 
-    5. Användaren ska kunna skapa en rad med brickor i gissningsraden som motsvarar exakt det antal som användaren valde innan spelet startades. 
+    5. Användaren ska kunna skapa en rad med brickor i gissningsraden som motsvarar exakt det antal som användaren valde innan spelet startades och skicka in sin gissning. 
     6. Efter att användaren skickat in sin gissning så ska ett resultat visas. 
     7. Om användaren gissade fel så ska användaren kunna välja mellan att ta bort alla brickor eller bara felaktiga och därefter kunna välja nya brickor. 
     8. Användaren ska kunna se hur många gissningar som har använts. 
@@ -15,8 +15,6 @@
 ### Ickefunktionella produktkrav (non-functional product requirements)
 
     Applikationen ska ha en användarvänlig design.
-
-    Applikationen ska ha god prestanda och snabb laddningstid.
 
     Koden ska vara välstrukturerad och lätt att förstå.
 

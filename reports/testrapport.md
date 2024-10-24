@@ -1,0 +1,17 @@
+_____________________________________________________________________
+
+|Testfall | Resultat | Anteckning                                 |
+|---------|----------|--------------------------------------------|
+| 1.1     | ok       |                                            |
+| 1.2     | nok      | Inget felmeddelande visas                  |
+| 2       | ok       |                                            |
+| 3.1     | ok       |                                            |
+| 3.2     | nok      | Inget felmeddelande visas                  |
+| 4       | ok       |                                            |
+| 5.1     | ok       |                                            |
+| 5.2     | nok      | Inget felmeddelande visas                  |
+| 6.1     | ok       |                                            |
+| 6.2     | ok       |                                            |
+| 7.1     | ok       |                                            |
+| 7.2     | ok       |                                            |
+| 8       | ok       |                                            |
