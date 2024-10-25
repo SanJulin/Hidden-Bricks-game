@@ -1,4 +1,3 @@
-import userEvent from "../../../../../node_modules/@testing-library/user-event/dist/types/index"
 
 class GameUi {
   private textMessage: HTMLElement
