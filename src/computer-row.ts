@@ -11,7 +11,7 @@ class ComputerRow {
     constructor(numberOfItems: number, themeDecription: string) {
         this.setNumberOfItems(numberOfItems)
         this.setThemeArray(themeDecription)
-        this.generateRow()
+        this.generateComputerRow()
     }
 
     /**
@@ -62,11 +62,13 @@ class ComputerRow {
     }
 
     /**
-     * Creates a random row based on the itemArray and returns it to the computer. 
+     * Creates a random row with names from the chosen theme that has been set in themeArray. 
+     * The computer will use the secret row in the game.
+     * The number of items will decide how many names that should be included. 
      * 
-     * @returns {string [] } - A row with items. 
+     * @returns {string [] } - A row with names from the chosen theme.
      */
-    private generateRow(): void {
+    private generateComputerRow(): void {
         const rowLength = this.numberOfItems
         for (let i = 0; i < rowLength; i++) {
             const nextItemIndex = Math.floor(Math.random() * this.themeArray.length)
