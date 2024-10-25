@@ -12,12 +12,12 @@ class Computer {
         this.createComputerRow(numberOfItems, themeDescription)
     }
 
-    /**
-     * Creates a new instance of the ComputerRow class and calls the generateRow method in the ComputerRow class in order to generate a new row that will represent the computer´s row of items.
-     * 
-     * @param themeArray { object [] } - the array with items from the chosen theme. 
-     * @returns 
-     */
+   /**
+    * Creates a new instance of the ComputerRow class and calls the generateRow method in the ComputerRow class in order to generate a new row that will represent the computer´s row of items.
+    * 
+    * @param numberOfItems - the number of items that should be used in the computer row.
+    * @param themeDescription - the chosen theme
+    */
     private createComputerRow(numberOfItems: number, themeDescription: string): void {
             const computerRow = new ComputerRow(numberOfItems, themeDescription)
             this.computerRow = computerRow.getComputerRow()

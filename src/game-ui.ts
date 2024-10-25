@@ -12,6 +12,11 @@ class GameUi {
     this.numberOfGuessesElement = document.getElementById('number-of-guesses') as HTMLDivElement
   }
 
+  /**
+   * Get the username from the player.
+   *
+   * @returns - the username chosen by the player. 
+   */
   getUsername(): Promise<string> {
     return new Promise((resolve) => {
       const inputName = document.createElement('input')
@@ -47,6 +52,11 @@ class GameUi {
     })
   }
 
+    /**
+   * Get the theme from the player.
+   *
+   * @returns - the theme chosen by the player. 
+   */
   getChoosenTheme(availableThemes: string[]): Promise<string> {
     return new Promise((resolve) => {
       this.textMessage.textContent = 'Choose a theme for the game!'
@@ -69,6 +79,11 @@ class GameUi {
     })
   }
 
+    /**
+   * Get the number of items from the player.
+   *
+   * @returns - the number of items chosen by the player. 
+   */
   getNumberOfItems(): Promise<number> {
     return new Promise((resolve) => {
       this.textMessage.textContent = 'How many bricks would you like to play with? Choose a number between 2 and 8.'
@@ -102,14 +117,29 @@ class GameUi {
     })
   }
 
+  /**
+   * Shows instructions to the player
+   * 
+   * @param numberOfItems - number of items
+   */
   showUserInstructions(numberOfItems: number) {
     this.textMessage.textContent = `Guess which ${numberOfItems} items that should be in the computer row by dropping the pictures in the above row and click on check answer!`
   }
 
+  /**
+   * Shows different kind of messages to the player
+   * @param resultText 
+   */
   showMessage(resultText: string) {
     this.resultText.textContent = resultText
   }
 
+  /**
+   * Shows number of guesses that the player has used. 
+   * 
+   * @param numberOfGuesses - number of guesses that the user used.
+   * @param username - the players username
+   */
   showNumberOfGuesses(numberOfGuesses: number | undefined, username: string | undefined) {
     this.numberOfGuessesElement.textContent = `Player ${username} has guessed \n${numberOfGuesses?.toString()} times.`
   }

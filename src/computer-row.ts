@@ -39,10 +39,11 @@ class ComputerRow {
         }
     }
 
+
     /**
      * Sets the itemArray if there are 8 items in the provided array.
      * 
-     * @param themeArray object [] - the array with themed items chosen for the game. 
+     * @param themeDecription - the chosen theme
      */
     private setThemeArray(themeDecription: string): void {
         const theme = new Theme(themeDecription)
@@ -65,8 +66,6 @@ class ComputerRow {
      * Creates a random row with names from the chosen theme that has been set in themeArray. 
      * The computer will use the secret row in the game.
      * The number of items will decide how many names that should be included. 
-     * 
-     * @returns {string [] } - A row with names from the chosen theme.
      */
     private generateComputerRow(): void {
         try {

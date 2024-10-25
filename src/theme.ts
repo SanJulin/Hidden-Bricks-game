@@ -82,7 +82,7 @@ class Theme {
      * Sets the theme and itemArray for other themes than the available themes included in the module. The user of the module must provide a theme name and an array that includes 8 items in order to create a themes of their choice.
      * 
      * @param theme { string } - the name of the theme
-     * @param themeArray { object [] } - the array with 8 items that should be included in the itemArray.
+     * @param themeArray { string [] } - the array with 8 items that should be included in the itemArray.
      */
     public setOtherTheme(theme: string, themeArray: string[]): void {
         if (themeArray.length !== 8) {

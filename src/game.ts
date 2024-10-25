@@ -28,6 +28,9 @@ class Game {
     this.start()
   }
 
+  /**
+   * Starts the game and collects information from the player.
+   */
   async start() {
     this.username = await this.gameUi.getUsername()
     const availableThemes = this.themeObject.getAvailableThemes()
@@ -36,6 +39,9 @@ class Game {
     this.createGame()
   }
 
+  /**
+   * Creates the game by creating a computer opponent and gameboard.
+   */
   createGame() {
     if (this.numberOfItems && this.themeDescription) {
       try {
@@ -54,6 +60,7 @@ class Game {
     }
   }
 
+  //Button to be used when the player would like to submit an answer. 
   addAnswerButton() {
     this.answerButton.textContent = 'check answer'
     this.answerButton.style.display = 'block'
@@ -63,6 +70,9 @@ class Game {
     })
   }
 
+  /**
+   * Checks with the computer if the bricks in the guessed row are in the right place or not.
+   */
   async checkResultWithComputer() {
     try {
       const answerFromPlayer = this.gameBoard.getPlayerAnswer()
@@ -77,6 +87,11 @@ class Game {
 
   }
 
+  /**
+   * Shows an array with Items that has a color connected to them depending on if the player dropped the bricks in the correct boxes or not. 
+   * 
+   * @param resultArray - an array with Items that has a color connected to them. 
+   */
   showResultToUser(resultArray: Item[]) {
     let correctGuesses = 0
     for (let i = 0; i < resultArray.length; i++) {
@@ -99,6 +114,9 @@ class Game {
     this.updateNumberOfGuesses()
   }
 
+  /**
+   * Updates the number of guesses that the player used.
+   */
   updateNumberOfGuesses(): void {
     const numberOfGuesses = this.computer?.getNumberOfGuesses()
     this.gameUi.showNumberOfGuesses(numberOfGuesses, this.username)
