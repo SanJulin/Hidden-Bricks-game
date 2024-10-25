@@ -6,6 +6,7 @@ Redan när jag arbetade med L2 så funderade jag i de flesta fall på vad jag ku
 
 I L2an hade jag nedan metod där det var mycket som var otydligt i namngivningen.   
 ![chapter 2](./example-images/image1-2.png)
+
 I min uppdaterade metod har jag ändrat metodnamnen för att tydliggöra att det är feedback från computerklassen som efterfrågas och att det är spelarens svar som kommer in som parameter vilket gör att jag vilket minskar brytandet mot principerna Avoid disinformation och use intention-revealing names. Jag har även skapat en separat metod för updateNumberOfGuesses eftersom det inte var tydligt att checkAnswermetoden även uppdaterade antalet gissningar.   
 ![chapter 2](./example-images/image2-2.png)  
 
@@ -16,6 +17,22 @@ I min modul använder jag items och därför använde jag itembenämningen även
 
 **Kapitel 3: Functions**
 
+En stor utmaning har varit att försöka korta ner metoderna så mycket som möjligt i koden. Som jag nämnde i reflektionen för L2 så misstänker jag att det är för att jag är nybörjare som gör att jag tycker att det är lättare att läsa långa metoder än att hoppa runt bland en massa olika metoder och klasser. Jag har försökt korta ner metoder och I vissa fall har jag lyckats bra, men i andra fall insåg jag att det var bättre att behålla metoden som den var för att undvika för många parametrar eller duplicerad kod.  
+
+När jag har arbetat med L3an har jag även försökt tänka på att metoder bara ska göra en sak för att inte bryta mot principen Do one thing och Command query separation, men jag misstänker att det fortfarande finns metoder kvar som inte är godkända enligt Clean code, så det är något jag får fortsätta att arbeta med. 
+
+Nedan är ett exempel från min inlämnade kod i L2an. Metoden är dels för lång , men sen gör den fler än en sak, den gör fler saker än vad namnet hintar om och den returnerar mer än en sak vilket bryter mot principerna “Small”, “Do one thing”, “Command query separation”, “Structure programming” och “Have no side effects”
+![chapter 3](./example-images/image1-3.png)
+
+Den uppdaterade koden är uppdelad i flera metoder och har fått tydligare namn:
+![chapter 3](./example-images/image2-3.png)
+
+Även i min app-kod har jag försökt bekämpa långa metoder. När jag har arbetat med L3 så har jag märkt att det är lätt hänt att jag skriver långa metoder om jag inte aktivt tänker på vad som kan läggas i en separat metod. När jag tänker på Clean Code principerna samtidigt som jag skriver så går det bättre och det har under senaste veckorna hänt vid ett flertal tillfällen att jag medvetet påbörjat en eller flera nya metoder samtidigt för att undvika att skriva allt i samma metod och det verkar fungera. 
+
+Nedan är ett exempel från min Gameklass på hur koden såg ut förut och hur den ser ut nu. I den nya versionen fördelar den ut ansvaret på andra metoder på ett mycket bättre sätt i start och createGame:
+![chapter 3](./example-images/image3-3.png)
+
+![chapter 3](./example-images/image4-3.png)
 
 
 **Kapitel 4: Comments**
@@ -53,8 +70,10 @@ I min uppdaterade kod har jag istället valt att låta Computer-klassen efterfr�
 
 I min app-kod lade jag tidigare till en bild i varje item i koden som kördes i Gameboard-klassen, men i min uppdaterade kod har jag valt att istället låta Item-klassen själv lägga till bilden. Jag tror att även detta kan vara ett exempel på “Hiding structure” och “data abstraction” eftersom app-utvecklaren tillåts ändra data i Item utan att veta om implementationen. 
 ![chapter 6](./example-images/image4-6.png)  
+
 Nu ser koden istället ut så här i Game:
 ![chapter 6](./example-images/image5-6.png)  
+
  Och så här i Item:
 ![chapter 6](./example-images/image6-6.png)  
 
