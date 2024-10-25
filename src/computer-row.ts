@@ -54,7 +54,7 @@ class ComputerRow {
     * 
     * @returns { string [] } - the computer row.
     */
-    public getComputerRow(): string [] {
+    public getComputerRow(): string[] {
         if (this.computerRow === undefined) {
             throw new Error('No computer row has been set for the game')
         }
@@ -69,11 +69,17 @@ class ComputerRow {
      * @returns {string [] } - A row with names from the chosen theme.
      */
     private generateComputerRow(): void {
-        const rowLength = this.numberOfItems
-        for (let i = 0; i < rowLength; i++) {
-            const nextItemIndex = Math.floor(Math.random() * this.themeArray.length)
-            const themeItem = this.themeArray[nextItemIndex]
-            this.computerRow.push(themeItem)
+        try {
+            const rowLength = this.numberOfItems
+            for (let i = 0; i < rowLength; i++) {
+                const nextItemIndex = Math.floor(Math.random() * this.themeArray.length)
+                const themeItem = this.themeArray[nextItemIndex]
+                this.computerRow.push(themeItem)
+            }
+        } catch (error) {
+            if (error instanceof Error) {
+                console.log(error)
+            }
         }
     }
 }

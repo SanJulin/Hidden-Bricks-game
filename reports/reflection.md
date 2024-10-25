@@ -40,6 +40,28 @@ Här är den omskrivna kommentaren:
 **Kapitel 6: Objects and Data Structures**
 
 **Kapitel 7: Error handling**
+Felhantering är också ett område som jag behöver öva mer på. Ofta använder jag samma typ av felkoder, undantag och felmeddelanden eftersom jag känner mig osäker på vad som passar bäst i den aktuella situationen. När jag har programmerat i Java så har jag kommit i kontakt med flera typer av Unchecked Exceptions som exempelvis NullPointerException och ArrayIndexOutOfBounds och har lärt mig hantera dessa typer av undantag, men när det gäller Typescript så behöver jag öva mer. 
+
+I boken läste jag även att man bör undvika att returnera null och att det är ännu värre att skicka in null som en parameter. När jag började programmera med Typescript så hade jag många sådana fall i min app, men jag har försökt bygga bort det och har även plockat bort flera parametrar och retursatser av typen “any” för att undvika potentiella fel. När jag returnerar felmeddelanden så har jag försökt tänka på att skicka med tillräckligt med information för att användaren ska förstå vad det är som gått fel vilket följer principen “Provide context with exceptions”
+
+Jag tycker även att det är svårt att veta när jag bör kasta ett undantag och när det passar bättre med ett error.  I Clean code läste jag att try, catch, finally är den bästa varianten av felhantering (enligt “Define exception classes in terms of a caller's needs”), men när jag försökte implementera det så lyckades jag inte få det att fungera tillsammans med Typescript. Jag har googlat en del, men inte hittat någon bra lösning, så min plan är att be ChatGPT visa hur jag ska göra efter att jag har lämnat in L3 så vet jag iallafall hur jag ska göra i fortsättningen. I L3 fick det istället bli vanliga Try - Catch satser, men jag försökte undvika mer än en catch så gott jag kunde eftersom det inte rekommenderas. 
+
+Nedan visar hur min generateRow såg ut när jag lämnade in L2, men efter att ha läst Clean Code insåg jag att den här typen av kod behöver en try - catch sats eftersom det är en körning av kod där mycket kan gå fel. 
+![chapter 7](./example-images/image1-7.png)
+
+Nu ser koden istället ut så här: 
+![chapter 7](./example-images/image2-7.png)
+
+Jag har lagt in en hel del felhantering, men boken säger även att för mycket felhantering gör att koden blir ologisk och stökig, så jag har även plockat bort felhantering där jag anser att det inte behövs. 
+
+Nedan finns ett exempel på hur min createGame-metod såg ut tidigare. Även där har jag lagt in en try -catch sats eftersom det är mycket som kan gå fel: 
+![chapter 7](./example-images/image3-7.png)
+
+Nu ser koden istället ut så här: 
+![chapter 7](./example-images/image4-7.png)
+
+Nedan är ett exempel på en metod som jag har plockat bort i L3 eftersom det räcker att computer-Row kontrollerar att numberOfItems är korrekt eftersom den är den klassen som ska använda variabeln. 
+![chapter 7](./example-images/image5-7.png)
 
 
 **Kapitel 8: Bounderies**
