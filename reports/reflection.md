@@ -54,6 +54,24 @@ Här är den omskrivna kommentaren:
 
 **Kapitel 5: Formatting**
 
+Kap 5: Formatting
+
+Formatering är något som jag alltid tyckt varit viktigt när jag programmerar för att det ska vara lätt att läsa min kod. Jag brukar lämna tomma rader där det passar (“Vertical openness between concepts”), undviker långa rader (“Horizontal formatting”) och jag försöker tänka på att hålla metoder som hör ihop nära varandra (“Conceptual affinity”) och deklarerar variabler så nära som möjligt där de ska användas om de inte är instansvariabler. 
+
+När jag läser Clean Code och lyssnar på föreläsningarna så förstår jag att jag har en del kvar att arbeta med och att jag bla behöver tänka mer på att undvika för många privata variabler (“Horizontal alignment”) och på indenteringen. Breaking indentation är tyvärr vanligt i min kod pga av många for och if loopar, men jag har lyckats minska indenteringen i några metoder när jag arbetat med L3. Den stora utmaningen har varit Typescript-kod som är kopplad till element eftersom Typescript inte tillåter att man lägger till ett element inuti ett annat om det inte är helt säkert att elementet existerar. Jag har lagt mycket tid på detta problem och lyckats lösa många fall, men tyvärr har jag fortfarande en del fall kvar i Gameboard och GameUi klasserna som jag inte lyckats lösa.
+
+Något som jag också lärt mig under den här kursen är att indenteringen inte ska vara vågig utan öka ju längre ner i metoden man kommer. I min L2 modul hade jag den här metoden som definitivt inte gör det. Dessutom ligger den på gränsen när det gäller hur många indenteringsteg som är ok.  
+![chapter 5](./example-images/image1-5.png)  
+
+Den nya metoden är mycket kortare och därför var det lättare att behålla en liten indentering. 
+![chapter 5](./example-images/image2-5.png)  
+
+I min Gameboardklass hade jag tidigare nedan kod som användes för att tömma raden som innehåller spelarens gissningar: 
+![chapter 5](./example-images/image3-5.png)  
+
+I min uppdaterade kod ökar tyvärr indenteringen jämfört med innan, men jag valde att bygga ihop metoderna för att undvika duplicerad kod. Sen har jag försökt bygga bort if-satsen som kollar om elementChild existerar, men tyvärr inte lyckats så indenteringen i den här metoden är jag inte stolt över. 
+![chapter 5](./example-images/image4-5.png)  
+
 **Kapitel 6: Objects and Data Structures**
 
 Innan jag läste kapitel 6 och lyssnade på föreläsningen så hade jag inte koll på skillnaden mellan objekt och datastruktur, men nu förstår jag skillnaden bättre. Datastrukturer är publik och brukar inte ha några meningsfulla funktioner och det är lätt att lägga till nya funktioner utan att ändra på existerande datastrukturer. Objekt gömmer istället sin data genom inkapsling och har metoder som hanterar datan och det är lätt att lägga till nya klasser.
@@ -148,3 +166,12 @@ Om jag fortsätter arbeta med min app så skulle jag vilja skapa fler klasser so
 
 **Kapitel 11: Systems**
 
+När jag läser om Systems så känner jag att nivån höjs och kommer lite längre från min egen kod, men även i denna text har jag tagit till mig information eftersom det är bra kunskap att ha i framtiden när jag tillsammans med andra ska bygga större system. I kapitlet  “Separating constructing a system from using it” diskuteras bland annat Inpendency injection och SRP - single responsibility principle. 
+
+Separation of Main handlar om att flödet alltid går bort från Main så att Main inte känner till hur resten av systemet fungerar. När jag programmerar i Java så brukar jag ha en mainklass som bara har som ansvar att starta upp systemet, men i L2 och L3 använder jag index.ts istället. 
+
+Lärde mig även att man kan använda Abstract factory för att ge applikationen kontroll över när den ska bygga. Då hålls detaljerna i konstruktionen separerade från appkoden. I min app är detta mönster ingen passande lösning eftersom appen behöver ha en kommunikation med spelaren. 
+
+För det här kapitlet var det svårt att hitta exempel från min kod, men nedan finns ett exempel på hur jag har flyttat tilläggandet av bilder från min Gameboard -klass till Item-klassen eftersom det är Item-klassen som bör ansvara för denna uppgift. 
+![chapter 11](./example-images/image1-11.png)  
+![chapter 11](./example-images/image2-11.png)  
