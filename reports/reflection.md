@@ -39,6 +39,25 @@ Här är den omskrivna kommentaren:
 
 **Kapitel 6: Objects and Data Structures**
 
+Innan jag läste kapitel 6 och lyssnade på föreläsningen så hade jag inte koll på skillnaden mellan objekt och datastruktur, men nu förstår jag skillnaden bättre. Datastrukturer är publik och brukar inte ha några meningsfulla funktioner och det är lätt att lägga till nya funktioner utan att ändra på existerande datastrukturer. Objekt gömmer istället sin data genom inkapsling och har metoder som hanterar datan och det är lätt att lägga till nya klasser.
+
+Jag har försökt ha “The law of Demeter” och “Tala med grannar - inte med främlingar” principerna i bakhuvudet när jag programmerat och jag tror att jag har lyckats i de flesta fall. Något som jag är lite osäker på är om det är ok att skicka runt Itemobjekt på det sätt som jag gör i min kod och ändra färgen för en item. Något som jag däremot är säker på att jag inte använt är sk train wreck metoder, dvs metoder som ser ut som tågvagnar för att de anropar metoder på objekt som är returnerade från någon av de tillåtna funktionerna.
+
+Nedan tror jag är ett exempel från min L2 kod på “Hiding structure” och “Data abstraction” eftersom Computerklassen säger åt ComputerRowobjektet att göra något som den känner till, men som inte är känt utifrån.
+
+![chapter 6](./example-images/image1-6.png) 
+
+I min uppdaterade kod har jag istället valt att låta Computer-klassen efterfråga computerRow istället för att kunna hålla metoden privat inuti ComputerRow klassen. 
+![chapter 6](./example-images/image2-6.png)  
+![chapter 6](./example-images/image3-6.png)  
+
+I min app-kod lade jag tidigare till en bild i varje item i koden som kördes i Gameboard-klassen, men i min uppdaterade kod har jag valt att istället låta Item-klassen själv lägga till bilden. Jag tror att även detta kan vara ett exempel på “Hiding structure” och “data abstraction” eftersom app-utvecklaren tillåts ändra data i Item utan att veta om implementationen. 
+![chapter 6](./example-images/image4-6.png)  
+Nu ser koden istället ut så här i Game:
+![chapter 6](./example-images/image5-6.png)  
+ Och så här i Item:
+![chapter 6](./example-images/image6-6.png)  
+
 **Kapitel 7: Error handling**
 Felhantering är också ett område som jag behöver öva mer på. Ofta använder jag samma typ av felkoder, undantag och felmeddelanden eftersom jag känner mig osäker på vad som passar bäst i den aktuella situationen. När jag har programmerat i Java så har jag kommit i kontakt med flera typer av Unchecked Exceptions som exempelvis NullPointerException och ArrayIndexOutOfBounds och har lärt mig hantera dessa typer av undantag, men när det gäller Typescript så behöver jag öva mer. 
 
@@ -64,7 +83,7 @@ Nedan är ett exempel på en metod som jag har plockat bort i L3 eftersom det r�
 ![chapter 7](./example-images/image5-7.png)
 
 
-**Kapitel 8: Bounderies**
+**Kapitel 8: Boundaries**
 
  När jag läser kapitlet om boundaries så förstår jag mer om varför det är viktigt att skriva publika moduler på ett bra sätt, så att användaren av koden får så lite problem som möjligt. Det är en fördel om modulskrivaren kapslar in koden så mycket som möjligt för att dölja den delen av koden som användaren av koden inte har någon direkt kontakt med i sin kod. 
 
