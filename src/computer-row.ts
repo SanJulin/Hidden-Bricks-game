@@ -10,7 +10,8 @@ class ComputerRow {
 
     constructor(numberOfItems: number, themeDecription: string) {
         this.setNumberOfItems(numberOfItems)
-        this.getThemeArray(themeDecription)
+        this.setThemeArray(themeDecription)
+        this.generateRow()
     }
 
     /**
@@ -19,7 +20,7 @@ class ComputerRow {
      * @returns { number } - number of items included in the computer row.
      */
     public getNumberOfItems(): number {
-        if (this.numberOfItems === null) {
+        if (!this.numberOfItems) {
             throw new Error('Number of items has not been set for the game')
         }
         return this.numberOfItems
@@ -43,9 +44,21 @@ class ComputerRow {
      * 
      * @param themeArray object [] - the array with themed items chosen for the game. 
      */
-    private getThemeArray(themeDecription: string): void {
+    private setThemeArray(themeDecription: string): void {
         const theme = new Theme(themeDecription)
         this.themeArray = theme.getThemeArray()
+    }
+
+    /**
+    * Gets the computer row. 
+    * 
+    * @returns { string [] } - the computer row.
+    */
+    public getComputerRow(): string [] {
+        if (this.computerRow === undefined) {
+            throw new Error('No computer row has been set for the game')
+        }
+        return this.computerRow
     }
 
     /**
@@ -53,14 +66,13 @@ class ComputerRow {
      * 
      * @returns {string [] } - A row with items. 
      */
-    public generateRow(): string[] {
+    private generateRow(): void {
         const rowLength = this.numberOfItems
         for (let i = 0; i < rowLength; i++) {
             const nextItemIndex = Math.floor(Math.random() * this.themeArray.length)
             const themeItem = this.themeArray[nextItemIndex]
             this.computerRow.push(themeItem)
         }
-        return this.computerRow
     }
 }
 

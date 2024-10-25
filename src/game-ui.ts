@@ -36,7 +36,6 @@ class GameUi {
           } else {
           this.textMessage.textContent = ''
           inputName.style.display = 'none'
-          startButton.removeEventListener
           startButton.style.display = 'none'
           resolve(username)
           }

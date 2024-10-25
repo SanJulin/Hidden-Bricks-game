@@ -101,9 +101,8 @@ html {
 
   #number-of-guesses {
     margin-right: 40px;
-    font-weight: bold;
     float: right;
-    font-size: 22px;
+    font-size: 26px;
   }
 
   #result {

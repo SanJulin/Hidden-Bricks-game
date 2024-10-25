@@ -20,19 +20,7 @@ class Computer {
      */
     private createComputerRow(numberOfItems: number, themeDescription: string): void {
             const computerRow = new ComputerRow(numberOfItems, themeDescription)
-            this.computerRow = computerRow.generateRow()
-    }
-
-    /**
-     * Returns an array with the items that represent the current computer row.
-     * 
-     * @returns { string [] } - an array with items
-     */
-    public getComputerRow(): string[] {
-        if (this.computerRow === undefined) {
-            throw new Error('The computer row has not been created yet')
-        }
-        return this.computerRow
+            this.computerRow = computerRow.getComputerRow()
     }
 
     /**
@@ -45,38 +33,45 @@ class Computer {
     }
 
     /**
-     * Method that checks if the row of items provided by the user matches the computer´s row by checking if the item and the position of the item is the same. An object is created for each item. If the item is in the correct place - the item will get the color green. If the item is present in the row, but in the wrong place - the item will get the color yellow and the color red will be used for items that are not present in the computer´s row. 
+     * Public method that calls other private methods in the same class to give the player feedback on the result and update the number of guesses used.
      * 
-     * @param answer { object [] } - array with items from the user
-     * @returns { string } - A text if the user´s guess was correct.
-     * @returns { object [] } - An array with objects if the user´s guess wasn´t correct. 
+     * @param answerFromPlayer { Item [] } - array with items from the user
+     * @returns { Item [] } - An array with objects if the user´s guess wasn´t correct. 
      */
-    public checkAnswer(answer: Item[]): Item[] {
-        if (answer.length !== this.computerRow.length) {
+    public getFeedBackFromComputer(answerFromPlayer: Item[]): Item[] {
+        if (answerFromPlayer.length !== this.computerRow.length) {
             throw new Error(`The guess must contain ${this.computerRow.length} items.`)
         }
-        const answerFromPlayer = this.addColorsToItems(answer)
-
+        
+        const feedbackFromComputer = this.addColorsToItems(answerFromPlayer)
         this.updateNumberOfGuesses()
+
+        return feedbackFromComputer
+    }
+
+    /**
+     * Checks with the computer if the answer is correct. If the item is in the correct place - the item will get the color green. If the item is present in the row, but in the wrong place - the item will get the color yellow and the color red will be used for items that are not present in the computer´s row. 
+     * @param answerFromPlayer - the array with items in the players answer.
+     * @returns answerFromPlayer - the same array, but with feedback in form of colors.
+     */
+    private addColorsToItems(answerFromPlayer: Item[]): Item[] {
+        for (let i = 0; i < answerFromPlayer.length; i++) {
+            if (answerFromPlayer[i].getName() === this.computerRow[i]) {
+                answerFromPlayer[i].setColor('green')
+            } else if (this.computerRow.includes(answerFromPlayer[i].getName())) {
+                answerFromPlayer[i].setColor('yellow')
+            } else {
+                answerFromPlayer[i].setColor('red')
+            }
+        }
         return answerFromPlayer
     }
 
-    addColorsToItems(answer: Item[]): Item[] {
-        for (let i = 0; i < answer.length; i++) {
-            if (answer[i].getName() === this.computerRow[i]) {
-                answer[i].setColor('green')
-            } else if (this.computerRow.includes(answer[i].getName())) {
-                answer[i].setColor('yellow')
-            } else {
-                answer[i].setColor('red')
-            }
-        }
-        return answer
-    }
-
-    updateNumberOfGuesses() {
+    /**
+     * Updates the number of guesses the player has used with 1 for each round. 
+     */
+    private updateNumberOfGuesses() {
         this.numberOfGuesses++
-
     }
 }
 

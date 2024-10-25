@@ -6,7 +6,9 @@ import Theme from './theme.ts'
 import Item from 'item'
 
 /**
- * Class that represents the game.
+ * Class that handles the game logic of the Hidden Bricks game. 
+ * Is responsible for creating the computer opponent, gameboard and gameUi and the
+ * communication between objects in the class. 
  */
 class Game {
   private themeDescription: string = ''
@@ -64,8 +66,7 @@ class Game {
   async checkResultWithComputer() {
     try {
       const answerFromPlayer = this.gameBoard.getPlayerAnswer()
-      console.log(answerFromPlayer)
-      const resultArray = this.computer.checkAnswer(answerFromPlayer)
+      const resultArray = this.computer.getFeedBackFromComputer(answerFromPlayer)
 
       this.showResultToUser(resultArray)
 

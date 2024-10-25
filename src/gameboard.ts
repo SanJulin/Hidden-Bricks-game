@@ -5,14 +5,14 @@ import Theme from './theme.ts'
  * Class that represents the game board.
  */
 class GameBoard {
-    private numberOfItems: number = 5
+    private numberOfBricks: number = 5
     private theme: Theme
     private optionArray: Item[] = []
     private playerGuessRow: HTMLDivElement
     private optionRow: HTMLDivElement
 
     constructor(numberOfItems: number, themeObject: Theme) {
-        this.numberOfItems = numberOfItems
+        this.numberOfBricks = numberOfItems
         this.theme = themeObject
         this.optionArray = this.theme.getItemArray()
         this.playerGuessRow = document.getElementById('player-guess-row') as HTMLDivElement
@@ -32,7 +32,7 @@ class GameBoard {
     }
 
     createPlayerGuessRow() {
-        for (let i = 0; i < this.numberOfItems; i++) {
+        for (let i = 0; i < this.numberOfBricks; i++) {
             const playerGuessBox = document.createElement('div') as HTMLDivElement
             playerGuessBox.className = 'guess'
             playerGuessBox.id = `guess${i + 1}`
@@ -83,9 +83,15 @@ class GameBoard {
         this.playerGuessRow.appendChild(clearWrongGuessesButton)
     }
 
-    updatePlayerGuessItem(playerGuessItem: HTMLDivElement, chosen: HTMLDivElement) {
-        const chosenItem = chosen
-        playerGuessItem.appendChild(chosenItem)
+    /**
+     * Adds the brick that the player has moved to the box that the player dropped the brick on. 
+     *
+     * @param playerGuessBox - the box where the player can place the brick that the want to include in the row.
+     * @param chosenBrick - the brick that the player has chosen. 
+     */
+    updatePlayerGuessBrick(playerGuessBox: HTMLDivElement, playersChosenBrick: HTMLDivElement) {
+        const chosenBrick = playersChosenBrick
+        playerGuessBox.appendChild(chosenBrick)
     }
 
     dragstartHandler(event: DragEvent) {
@@ -128,7 +134,7 @@ class GameBoard {
 
     getPlayerAnswer(): Item[] {
         let answerArray: Item[] = []
-        for (let i = 0; i < this.numberOfItems; i++) {
+        for (let i = 0; i < this.numberOfBricks; i++) {
             const answer = this.playerGuessRow.children[i].firstElementChild?.textContent as string
             if (answer !== undefined) {
                 const item = new Item(i, answer)

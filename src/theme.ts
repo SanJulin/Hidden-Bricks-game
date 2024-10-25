@@ -65,10 +65,10 @@ class Theme {
     }
 
     /**
- * Gets the current array with items.
- * 
- * @returns { string [] } - an array with items.
- */
+    * Gets the current array with items.
+    * 
+    * @returns { string [] } - an array with items.
+    */
     public getThemeArray(): string[] {
         try {
             return this.themeArray
